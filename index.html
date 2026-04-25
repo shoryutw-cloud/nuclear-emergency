@@ -94,7 +94,7 @@ body{
 .banner-update{font-size:11px;color:rgba(255,255,255,0.45);white-space:nowrap;flex-shrink:0;padding-top:2px;}
 
 /* ═══════ PAGE BODY ═══════ */
-.page{padding:0 32px 80px;}
+.page{padding:6px 32px 80px;}
 
 /* ═══════ SECTION LABEL ═══════ */
 .sec{
@@ -128,7 +128,7 @@ body{
   .banner-status-text{font-size:12px;min-height:auto;}
   .banner-update{font-size:11px;}
   /* Page padding */
-  .page{padding:0 14px 60px;}
+  .page{padding:6px 14px 60px;}
   /* Grids */
   .two-col{grid-template-columns:1fr !important;}
   .lifestyle-grid{grid-template-columns:1fr 1fr !important;}
@@ -599,95 +599,62 @@ body{
 
 
 /* ═══════ RESPONSE TIMELINE ═══════ */
+.timeline-section{margin-bottom:0;}
 .timeline-wrap{
   background:var(--white);border:1.5px solid var(--gray-border);
-  border-radius:16px;padding:20px 24px 16px;
-  margin-bottom:20px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.06);
+  border-radius:16px;padding:20px 20px 16px;
+  margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);
 }
-.timeline-title{
-  font-size:14px;font-weight:700;color:var(--text-muted);
-  margin-bottom:16px;letter-spacing:0.04em;
+/* 6-column grid timeline */
+.tl-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  position:relative;margin-bottom:0;gap:0;
 }
-.timeline-rail{
-  position:relative;display:flex;align-items:flex-start;
-  gap:0;margin-bottom:0;overflow-x:auto;padding-bottom:4px;
+.tl-line{
+  position:absolute;top:20px;left:8.33%;right:8.33%;height:3px;
+  background:linear-gradient(90deg,#64748B,#D4820A,#E06B10 45%,#C0392B 55%,#8B1010,#4A0000);
+  z-index:0;
 }
-.timeline-line{
-  position:absolute;top:18px;left:0;right:0;height:3px;
-  background:var(--gray-border);z-index:0;
-}
-.timeline-node{
-  flex:1;min-width:72px;display:flex;flex-direction:column;
-  align-items:center;position:relative;z-index:1;cursor:pointer;
+.tnode{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;z-index:1;cursor:pointer;padding:0 2px;
 }
 .tnode-dot{
-  width:36px;height:36px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:900;
-  border:3px solid var(--gray-border);
-  background:var(--white);
-  transition:all 0.2s;color:var(--text-muted);
+  font-size:12px;font-weight:900;color:#fff;
+  border:3px solid transparent;
+  transition:transform 0.18s,box-shadow 0.18s;
+  flex-shrink:0;
 }
-.timeline-node:hover .tnode-dot{
-  border-color:var(--blue-mid);color:var(--blue-mid);
-  transform:scale(1.1);
-}
-.timeline-node.active .tnode-dot{
-  background:var(--orange);border-color:var(--orange);
-  color:#fff;box-shadow:0 0 0 4px rgba(224,107,16,0.25);
-}
-.timeline-node.passed .tnode-dot{
-  background:var(--blue-mid);border-color:var(--blue-mid);color:#fff;
-}
-.timeline-node.future .tnode-dot{
-  background:var(--white);border-color:#CBD5E8;color:#aaa;
-}
-.tnode-label{
-  font-size:12px;font-weight:700;margin-top:7px;text-align:center;
-  color:var(--text-muted);line-height:1.4;
-}
-.timeline-node.active .tnode-label{color:var(--orange);}
-.timeline-node.passed .tnode-label{color:var(--blue-mid);}
-.tnode-sub{font-size:11px;color:#aaa;text-align:center;margin-top:2px;}
-/* Line fill for passed nodes */
-.timeline-node.passed::before{
-  content:'';position:absolute;top:18px;right:-50%;
-  height:3px;background:var(--blue-mid);z-index:0;width:100%;
-}
-.timeline-node.active::before{
-  content:'';position:absolute;top:18px;right:-50%;
-  height:3px;background:linear-gradient(90deg,var(--blue-mid),var(--orange));
-  z-index:0;width:100%;
-}
+.tnode:hover .tnode-dot{transform:scale(1.15);}
+.tnode.active .tnode-dot{transform:scale(1.1);}
+.tnode-label{font-size:13px;font-weight:700;margin-top:8px;text-align:center;color:var(--text-main);}
+.tnode-sub{font-size:11px;color:var(--text-muted);text-align:center;margin-top:2px;}
+/* Suspension note row */
+.tl-note-row{display:grid;grid-template-columns:1fr 5fr;gap:0;margin-top:10px;align-items:center;}
+.tl-note-spacer{}
+.tl-note-bar{border-left:2px solid #C0392B;border-right:2px solid #C0392B;border-top:2px solid #C0392B;border-radius:4px 4px 0 0;padding:6px 10px 0;margin-top:-2px;}
+.tl-note-text{font-size:13px;color:#C0392B;font-weight:600;text-align:center;padding-bottom:6px;}
 /* Detail panel */
 .timeline-detail{
   margin-top:14px;padding:14px 16px;
   background:var(--gray-bg);border-radius:12px;
   border-left:4px solid var(--orange);
-  display:none;
 }
-.timeline-detail.show{display:block;}
-.td-title{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}
 .td-items{list-style:none;display:flex;flex-direction:column;gap:6px;}
-.td-items li{font-size:14px;color:var(--text-main);line-height:1.6;display:flex;gap:8px;}
-.td-num{
-  width:20px;height:20px;min-width:20px;border-radius:50%;
-  background:var(--blue-mid);color:#fff;font-size:11px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;margin-top:2px;
-}
+.td-items li{font-size:14px;color:var(--text-main);line-height:1.6;display:flex;gap:8px;align-items:flex-start;}
+.td-num{min-width:20px;height:20px;border-radius:50%;background:var(--blue-mid);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px;flex-shrink:0;}
 .td-num.star{background:var(--amber);}
-.td-note{
-  margin-top:10px;font-size:12px;color:var(--text-muted);
-  background:rgba(18,96,168,0.07);padding:7px 10px;border-radius:8px;
+.td-note{margin-top:10px;font-size:12px;color:var(--text-muted);background:rgba(18,96,168,0.07);padding:7px 10px;border-radius:8px;}
+@media(max-width:600px){
+  .tnode-dot{width:32px;height:32px;font-size:10px;}
+  .tnode-label{font-size:11px;}
+  .tnode-sub{display:none;}
+  .tl-note-row{grid-template-columns:1fr 4fr;}
 }
-.suspension-note{
-  font-size:12px;font-weight:700;color:var(--red-mid);
-  background:var(--red-lt);border:1px solid rgba(192,57,43,0.3);
-  border-radius:20px;padding:4px 12px;display:inline-block;margin-bottom:10px;
-}
-
 /* ═══ MARQUEE ═══ */
+
 .marquee-track{
   display:flex;white-space:nowrap;
   animation:marquee 14s linear infinite;
@@ -909,16 +876,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <div class="page">
 
 <!-- ═══ NEWS TABS ═══ -->
-<div style="padding:4px 0 14px;overflow:hidden;border-radius:8px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);">
-  <div style="display:flex;align-items:center;gap:0;">
-    <div style="background:#C0392B;color:#fff;font-size:14px;font-weight:900;padding:8px 16px;white-space:nowrap;flex-shrink:0;letter-spacing:0.08em;">輻射外釋情形</div>
-    <div style="flex:1;overflow:hidden;">
-      <div class="marquee-track">
-        <span class="marquee-text" id="radiationStatus">無任何外釋</span>
-        <span class="marquee-text">無任何外釋</span>
-      </div>
-    </div>
-  </div>
+<div style="padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
+  <span style="font-size:13px;font-weight:700;color:#C0392B;letter-spacing:0.08em;margin-right:10px;">輻射外釋情形</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;letter-spacing:0.02em;">目前無任何外釋</span>
 </div>
 <div class="news-tabs">
   <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
@@ -949,62 +908,112 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <div class="timeline-section">
   <div class="sec"><span class="sec-left">⏱ 核子事故應變階段</span></div>
   <div class="timeline-wrap">
-    <div class="timeline-header">
-      <div>
-        <div class="timeline-header-title">依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</div>
-        <div class="timeline-header-sub">點擊各階段查看詳細應變措施 ・ 目前處於第二級廠區緊急（T2）</div>
+
+    <!-- Header -->
+    <div style="background:linear-gradient(120deg,var(--blue-dark),#1B3A5C);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
+      <div style="font-size:16px;font-weight:900;color:#fff;">依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px;">點擊各階段查看詳細應變措施 ・ 目前處於第二級廠區緊急（T2）</div>
+    </div>
+
+    <!-- Timeline grid: 6 equal columns -->
+    <div class="tl-grid">
+      <!-- connector line layer -->
+      <div class="tl-line"></div>
+      <!-- nodes -->
+      <div class="tnode" onclick="selectStage(0)">
+        <div class="tnode-dot" style="background:#64748B;border-color:#64748B;">T0</div>
+        <div class="tnode-label">事故發生</div>
+        <div class="tnode-sub">起點</div>
+      </div>
+      <div class="tnode" onclick="selectStage(1)">
+        <div class="tnode-dot" style="background:#D4820A;border-color:#D4820A;">T1</div>
+        <div class="tnode-label">緊急戒備</div>
+        <div class="tnode-sub">一級警戒</div>
+      </div>
+      <div class="tnode active" onclick="selectStage(2)" id="tnode-T2">
+        <div class="tnode-dot" style="background:#E06B10;border-color:#E06B10;box-shadow:0 0 0 4px rgba(224,107,16,0.25);">T2</div>
+        <div class="tnode-label" style="color:#E06B10;font-weight:900;">廠區緊急</div>
+        <div class="tnode-sub">二級警戒 ▲</div>
+      </div>
+      <div class="tnode" onclick="selectStage(3)">
+        <div class="tnode-dot" style="background:#C0392B;border-color:#C0392B;opacity:0.55;font-size:11px;">T2'</div>
+        <div class="tnode-label">警報發布</div>
+        <div class="tnode-sub">警報階段</div>
+      </div>
+      <div class="tnode" onclick="selectStage(4)">
+        <div class="tnode-dot" style="background:#8B1010;border-color:#8B1010;opacity:0.55;">T3</div>
+        <div class="tnode-label">全面緊急</div>
+        <div class="tnode-sub">三級警戒</div>
+      </div>
+      <div class="tnode" onclick="selectStage(5)">
+        <div class="tnode-dot" style="background:#4A0000;border-color:#4A0000;opacity:0.55;">T4</div>
+        <div class="tnode-label">輻射外釋</div>
+        <div class="tnode-sub">最高警戒</div>
       </div>
     </div>
-    <div class="timeline-rail">
-      <div class="timeline-track" id="timelineTrack">
-        <!-- T0 -->
-        <div class="tnode" onclick="selectStage(0)">
-          <div class="tnode-dot" style="background:#64748B;">T0</div>
-          <div class="tnode-label">事故發生</div>
-          <div class="tnode-sub">起點</div>
-        </div>
-        <!-- T1 -->
-        <div class="tnode" onclick="selectStage(1)">
-          <div class="tnode-dot" style="background:#D4820A;">T1</div>
-          <div class="tnode-label">緊急戒備</div>
-          <div class="tnode-sub">一級警戒</div>
-        </div>
-        <!-- T2 active -->
-        <div class="tnode active" onclick="selectStage(2)">
-          <div class="tnode-dot" style="background:#E06B10;">T2</div>
-          <div class="tnode-label">廠區緊急</div>
-          <div class="tnode-sub">二級警戒</div>
-        </div>
-        <!-- T2' -->
-        <div class="tnode" onclick="selectStage(3)">
-          <div class="tnode-dot" style="background:#C0392B;">T2'</div>
-          <div class="tnode-label">警報發布</div>
-          <div class="tnode-sub">警報階段</div>
-        </div>
-        <!-- T3 -->
-        <div class="tnode" onclick="selectStage(4)">
-          <div class="tnode-dot" style="background:#8B1010;">T3</div>
-          <div class="tnode-label">全面緊急</div>
-          <div class="tnode-sub">三級警戒</div>
-        </div>
-        <!-- T4 -->
-        <div class="tnode" onclick="selectStage(5)">
-          <div class="tnode-dot" style="background:#4A0000;">T4</div>
-          <div class="tnode-label">輻射外釋</div>
-          <div class="tnode-sub">最高警戒</div>
-        </div>
-      </div>
-      <!-- T1-T2 bracket: school suspension notice -->
-      <div style="position:relative;height:26px;min-width:780px;">
-        <div style="position:absolute;left:22%;right:52%;top:4px;height:12px;border:2px solid #C0392B;border-bottom:none;border-radius:3px 3px 0 0;"></div>
-        <div style="position:absolute;left:33%;top:-2px;transform:translateX(-50%);font-size:10px;color:#C0392B;font-weight:700;background:#fff;padding:0 5px;white-space:nowrap;">視狀況宣布 EPZ 民眾（含設籍）停止上班上課</div>
+
+    <!-- School suspension note spanning T1-T4 -->
+    <div class="tl-note-row">
+      <div class="tl-note-spacer"></div><!-- T0 spacer -->
+      <div class="tl-note-bar">
+        <div class="tl-note-bracket"></div>
+        <div class="tl-note-text">視狀況宣布 EPZ 民眾（含設籍）<strong>停止上班上課</strong></div>
       </div>
     </div>
-    <div class="timeline-detail" id="timelineDetail">
+
+    <!-- Detail panel -->
+    <div class="timeline-detail" id="timelineDetail" style="display:none;">
       <div id="timelineContent"></div>
     </div>
+
   </div>
 </div>
+
+<script>
+const STAGES=[
+  {key:'T0',label:'T0 事故發生起點',color:'#64748B',
+   items:['核子事故發生，啟動事故通報程序','各單位進入預備狀態'],
+   stars:[], note:'事故起始點，尚未宣布任何警戒等級'},
+  {key:'T1',label:'T1 緊急戒備',color:'#D4820A',
+   items:['注意核子事故最新消息','災害應變中心二級開設','公告劃設警戒區域','遊憩景點關閉','遊客勸離','進行交通管制、警戒、秩序維持（非住戶）'],
+   stars:['碘片調查','醫院、安養中心預做預防性疏散及收容準備','前進指揮所開設準備','避難收容處所開設準備','防護站開設準備'],
+   note:'* 視情況啟動 ／ 視狀況宣布 EPZ 民眾（含設籍）停止上班上課'},
+  {key:'T2',label:'T2 廠區緊急（目前階段）',color:'#E06B10',
+   items:['注意核子事故最新消息','災害應變中心一級開設','開設前進指揮所','開設防護站（啟動登記編管）','避難收容處所開設','醫院、安養中心進行預防疏散及收容','警報發布','進行交通管制、警戒、秩序維持','EPZ 0–3 公里範圍內一般民眾預防性疏散及收容'],
+   stars:['EPZ 3–8 公里範圍內民眾進行室內掩蔽','碘片補充發放'],
+   note:'* 視情況啟動'},
+  {key:"T2'",label:"T2' 警報發布",color:'#C0392B',
+   items:['警報正式對外發布，全面通知民眾','透過 CBS 細胞廣播、警察廣播電台通知','民政（村里）廣播系統及巡迴廣播車啟動','民眾請停留室內等候官方指示'],
+   stars:[], note:"T2' 通常與 T2 同步或稍後宣布"},
+  {key:'T3',label:'T3 全面緊急',color:'#8B1010',
+   items:['注意核子事故最新消息（依中央災害應變中心指示行動）','區域警戒及秩序維持','EPZ 3–8 公里其他區域維持室內掩蔽'],
+   stars:['EPZ 3–8 公里範圍內下風向民眾預作疏散準備','啟動防護站除污及偵檢作業'],
+   note:'* 視下風向情況啟動'},
+  {key:'T4',label:'T4 輻射外釋',color:'#4A0000',
+   items:['災害應變指揮中心發布新聞及行政命令','依指示疏散 EPZ 3–8 公里範圍內下風向民眾','準備 EPZ 8 公里以外下風向民眾疏散','依指示疏散 EPZ 8 公里以外之區域'],
+   stars:[], note:'輻射外釋：立即服從官方疏散指示，不得延誤'},
+];
+
+function selectStage(idx){
+  const s=STAGES[idx];
+  const detail=document.getElementById('timelineDetail');
+  const content=document.getElementById('timelineContent');
+  // toggle off if same
+  if(detail.dataset.idx==idx && detail.style.display!=='none'){
+    detail.style.display='none'; detail.removeAttribute('data-idx'); return;
+  }
+  detail.dataset.idx=idx;
+  detail.style.borderColor=s.color;
+  const itemsHtml=s.items.map((t,i)=>`<li><span class="td-num" style="background:${s.color}">${i+1}</span>${t}</li>`).join('');
+  const starsHtml=s.stars.map(t=>`<li><span class="td-num star">✦</span>${t}</li>`).join('');
+  content.innerHTML=`
+    <div style="font-size:16px;font-weight:900;color:${s.color};margin-bottom:10px;">${s.label}</div>
+    <ul class="td-items">${itemsHtml}${starsHtml}</ul>
+    ${s.note?`<div class="td-note">${s.note}</div>`:''}`;
+  detail.style.display='block';
+}
+selectStage(2);
+</script>
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
