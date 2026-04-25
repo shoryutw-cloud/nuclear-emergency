@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新北市核子事故民眾防護指引</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans TC',sans-serif;background:#F5F3F0;color:#1a1a1a;min-height:100vh;}
+
+/* ===== TOP BANNER (image-1 style) ===== */
+.top-banner{
+  background:linear-gradient(135deg,#7a1010 0%,#A32D2D 60%,#c04040 100%);
+  padding:14px 20px;
+  display:flex;align-items:center;gap:14px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 12px rgba(0,0,0,0.25);
+}
+.banner-icon{
+  width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.18);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;
+}
+.banner-text-wrap{flex:1;}
+.banner-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.banner-main-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:0.02em;}
+.level-badge-pill{
+  background:rgba(255,255,255,0.22);border:1.5px solid rgba(255,255,255,0.5);
+  color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;
+  letter-spacing:0.05em;
+}
+.banner-sub{font-size:12px;color:rgba(255,255,255,0.85);margin-top:3px;letter-spacing:0.02em;}
+.pulse{animation:pulse 1.3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.banner-time{font-size:10px;color:rgba(255,255,255,0.6);text-align:right;flex-shrink:0;}
+
+/* ===== MAIN WRAPPER ===== */
+.main{max-width:600px;margin:0 auto;padding:0 0 100px;}
+
+/* ===== SECTION LABEL ===== */
+.sec-label{
+  font-size:10px;font-weight:700;letter-spacing:0.1em;color:#888;
+  text-transform:uppercase;padding:16px 20px 6px;
+}
+
+/* ===== LEVEL SELECTOR (image-1 style: light bg, colored border/fill) ===== */
+.level-wrap{padding:0 16px;}
+.level-row{display:flex;gap:8px;}
+.level-btn{
+  flex:1;padding:13px 6px;border-radius:12px;border:2px solid #e0ddd8;
+  cursor:pointer;font-family:inherit;text-align:center;
+  background:#fff;color:#888;transition:all 0.15s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.level-btn .lv-icon{font-size:18px;display:block;margin-bottom:4px;}
+.level-btn .lv-name{font-size:14px;font-weight:700;display:block;}
+.level-btn .lv-sub{font-size:10px;display:block;margin-top:2px;opacity:0.8;}
+.level-btn.l1{border-color:#EF9F27;}
+.level-btn.l2{border-color:#D85A30;}
+.level-btn.l3{border-color:#A32D2D;}
+.level-btn.l1:not(.active){color:#BA7517;background:#FFFBF3;}
+.level-btn.l2:not(.active){color:#993C1D;background:#FFF8F5;}
+.level-btn.l3:not(.active){color:#791F1F;background:#FFF5F5;}
+.level-btn.l1.active{background:#EF9F27;color:#fff;border-color:#BA7517;}
+.level-btn.l2.active{background:#D85A30;color:#fff;border-color:#993C1D;}
+.level-btn.l3.active{background:#A32D2D;color:#fff;border-color:#791F1F;}
+
+/* ===== STATUS SUMMARY CARD ===== */
+.status-card{
+  margin:12px 16px 0;border-radius:14px;padding:14px 16px;
+  background:#fff;border:1.5px solid #e8e5e0;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);transition:border-color 0.2s;
+}
+.status-card.l1{border-color:#EF9F27;background:#FFFBF0;}
+.status-card.l2{border-color:#D85A30;background:#FFF8F3;}
+.status-card.l3{border-color:#A32D2D;background:#FFF5F5;}
+.status-title{font-size:17px;font-weight:900;margin-bottom:5px;}
+.status-desc{font-size:12px;color:#666;line-height:1.7;}
+.status-tags{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;}
+.stag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+.l1 .stag{background:#FEF3DC;color:#854F0B;border:1px solid #EF9F27;}
+.l2 .stag{background:#FAECE7;color:#993C1D;border:1px solid #D85A30;}
+.l3 .stag{background:#FCEBEB;color:#791F1F;border:1px solid #A32D2D;}
+
+/* ===== GPS PANEL ===== */
+.gps-panel{
+  margin:12px 16px 0;background:#fff;border-radius:14px;border:1.5px solid #d8eaf8;
+  padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+.gps-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.gps-icon{font-size:22px;}
+.gps-title{font-size:14px;font-weight:700;color:#185FA5;}
+.gps-sub{font-size:11px;color:#888;margin-top:1px;}
+.gps-btn{
+  width:100%;padding:11px;border-radius:10px;border:none;
+  background:#185FA5;color:#fff;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.gps-btn:hover{background:#0C447C;}
+.gps-btn:disabled{background:#ccc;cursor:not-allowed;}
+.gps-result{
+  margin-top:10px;padding:10px 12px;border-radius:10px;
+  background:#EAF3FB;border:1px solid #85B7EB;
+}
+.gps-result-title{font-size:12px;font-weight:700;color:#0C447C;margin-bottom:4px;}
+.gps-result-body{font-size:12px;color:#185FA5;line-height:1.6;}
+.gps-zone-badge{
+  display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-top:6px;
+}
+.zone-3{background:#FCEBEB;color:#A32D2D;border:1px solid #A32D2D;}
+.zone-8{background:#FAECE7;color:#D85A30;border:1px solid #D85A30;}
+.zone-16{background:#FAEEDA;color:#BA7517;border:1px solid #EF9F27;}
+.zone-out{background:#EAF3DE;color:#3B6D11;border:1px solid #639922;}
+.gps-err{margin-top:10px;font-size:12px;color:#993C1D;background:#FAECE7;padding:8px 12px;border-radius:8px;}
+
+/* ===== PERSONA SELECTOR ===== */
+.persona-wrap{padding:0 16px;}
+.persona-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.persona-btn{
+  background:#fff;border:2px solid #e0ddd8;border-radius:14px;
+  padding:14px 6px;cursor:pointer;text-align:center;font-family:inherit;
+  transition:all 0.15s;color:#888;box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.persona-btn:hover{border-color:#aaa;}
+.persona-btn.active{background:#fff;border-color:#1a1a1a;color:#1a1a1a;}
+.persona-icon{font-size:26px;display:block;margin-bottom:6px;}
+.persona-name{font-size:12px;font-weight:700;display:block;}
+.persona-sub{font-size:10px;opacity:0.65;margin-top:2px;display:block;}
+
+/* ===== CONTENT AREA ===== */
+.content-area{padding:4px 16px 0;}
+
+/* ACTION BLOCKS */
+.action-block{border-radius:14px;padding:16px;margin-bottom:12px;}
+.action-block.red{background:#FFF5F5;border:1.5px solid #F09595;}
+.action-block.orange{background:#FFF8F3;border:1.5px solid #F0997B;}
+.action-block.amber{background:#FFFBF0;border:1.5px solid #FAC775;}
+.action-block.blue{background:#EEF6FF;border:1.5px solid #85B7EB;}
+.action-block.green{background:#F2F9EA;border:1.5px solid #C0DD97;}
+.block-title{font-size:15px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.red .block-title{color:#791F1F;}
+.orange .block-title{color:#4A1B0C;}
+.amber .block-title{color:#412402;}
+.blue .block-title{color:#042C53;}
+.green .block-title{color:#173404;}
+.block-steps{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.block-steps li{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.65;}
+.red .block-steps li{color:#4A1515;}
+.orange .block-steps li{color:#4A2010;}
+.amber .block-steps li{color:#412402;}
+.blue .block-steps li{color:#0C447C;}
+.green .block-steps li{color:#27500A;}
+.step-num{
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;color:#fff;
+}
+.red .step-num{background:#A32D2D;}
+.orange .step-num{background:#D85A30;}
+.amber .step-num{background:#BA7517;}
+.blue .step-num{background:#185FA5;}
+.green .step-num{background:#3B6D11;}
+
+/* LIFESTYLE GRID */
+.lifestyle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.lc{background:#fff;border:1px solid #e8e5e0;border-radius:12px;padding:13px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.lc-header{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.lc-icon{font-size:18px;}
+.lc-label{font-size:12px;font-weight:700;}
+.lc-body{font-size:12px;color:#555;line-height:1.7;}
+.lc-body strong{color:#1a1a1a;}
+.lc-warn{margin-top:7px;background:#FFF5F5;border-left:3px solid #A32D2D;padding:5px 8px;border-radius:4px;font-size:11px;color:#791F1F;}
+
+/* SCHOOL BLOCK */
+.school-block{
+  background:#fff;border:1px solid #e8e5e0;border-radius:14px;
+  padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.05);
+}
+.school-header{font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.school-notice{
+  font-size:11px;color:#888;margin-bottom:12px;padding:7px 10px;
+  background:#F5F3F0;border-radius:8px;line-height:1.6;
+}
+.school-table{width:100%;border-collapse:collapse;}
+.school-table th{
+  font-size:10px;color:#888;font-weight:700;text-align:left;
+  padding:5px 4px;border-bottom:1.5px solid #e8e5e0;
+}
+.school-table td{
+  font-size:12px;color:#444;padding:8px 4px;border-bottom:1px solid #F0EDE8;vertical-align:top;
+}
+.school-table tr:last-child td{border-bottom:none;}
+.badge-stop{background:#FCEBEB;color:#A32D2D;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid #F09595;}
+.badge-ok{background:#EAF3DE;color:#3B6D11;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid #C0DD97;}
+.badge-pending{background:#FFF8F0;color:#BA7517;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid #FAC775;}
+.nav-link{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#185FA5;text-decoration:none;margin-top:3px;}
+.nav-link:hover{text-decoration:underline;}
+
+/* ROUTE CARDS */
+.route-card{background:#fff;border:1.5px solid #e0ddd8;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.route-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.route-title{font-size:13px;font-weight:700;}
+.route-badge{font-size:10px;background:#F5F3F0;color:#888;padding:3px 8px;border-radius:6px;}
+.route-path{font-size:12px;color:#666;line-height:1.8;margin-bottom:10px;}
+.route-path span{color:#185FA5;font-weight:700;}
+.nav-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  background:#185FA5;color:#fff;border:none;border-radius:10px;
+  padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;
+  font-family:inherit;width:100%;text-decoration:none;
+}
+.nav-btn:hover{background:#0C447C;}
+.flow-hint{margin-top:10px;background:#F2F9EA;border:1px solid #C0DD97;border-radius:8px;padding:9px 12px;font-size:11px;color:#27500A;line-height:1.7;}
+
+/* SHELTER GRID */
+.shelter-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.shelter-card{background:#fff;border:1px solid #e8e5e0;border-radius:12px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.sc-name{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:2px;}
+.sc-addr{font-size:10px;color:#888;margin-bottom:8px;line-height:1.5;}
+.sc-btn{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  background:#185FA5;color:#fff;border:none;border-radius:8px;
+  padding:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;text-decoration:none;
+}
+.sc-btn:hover{background:#0C447C;}
+
+/* KI CARD */
+.ki-card{background:#FFFBEF;border:1.5px solid #FAC775;border-radius:14px;padding:14px;margin-bottom:12px;}
+.ki-title{font-size:14px;font-weight:700;color:#412402;margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.ki-body{font-size:12px;color:#633806;line-height:1.75;}
+.ki-table{width:100%;margin-top:8px;border-collapse:collapse;}
+.ki-table td{padding:5px 0;font-size:12px;color:#633806;border-bottom:1px solid #FAC77544;}
+.ki-table td:first-child{color:#888;width:50%;}
+.ki-warn{margin-top:9px;background:#FFF5DC;border-left:3px solid #BA7517;padding:7px 10px;border-radius:4px;font-size:11px;color:#633806;}
+
+/* DONT CARD */
+.dont-card{background:#fff;border:1px solid #e8e5e0;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.dont-title{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;color:#791F1F;}
+.dont-items{display:flex;flex-direction:column;gap:8px;}
+.dont-item{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#444;line-height:1.6;}
+.x-badge{background:#A32D2D;color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex-shrink:0;margin-top:2px;}
+
+/* VULN CARD */
+.vuln-card{background:#EEF6FF;border:1.5px solid #85B7EB;border-radius:14px;padding:14px;margin-bottom:12px;}
+.vuln-title{font-size:14px;font-weight:700;color:#042C53;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.vuln-items{display:flex;flex-direction:column;gap:9px;}
+.vuln-item{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:#185FA5;line-height:1.6;}
+.vuln-item strong{color:#042C53;}
+.vuln-item .badge-num{background:#185FA5;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+
+/* HOTLINES */
+.hotlines{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
+.hotline{background:#fff;border:1.5px solid #e0ddd8;border-radius:12px;padding:13px;text-align:center;text-decoration:none;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.hotline-num{font-size:20px;font-weight:900;color:#1a1a1a;}
+.hotline-label{font-size:10px;color:#888;margin-top:2px;line-height:1.4;}
+
+/* FOOTER STICKY */
+.sticky-footer{position:fixed;bottom:0;left:0;right:0;background:rgba(245,243,240,0.96);backdrop-filter:blur(8px);border-top:1px solid #e0ddd8;padding:8px 16px;display:flex;gap:8px;z-index:50;}
+.footer-btn{flex:1;padding:10px;border-radius:10px;border:none;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;}
+.footer-btn.red{background:#A32D2D;color:#fff;}
+.footer-btn.blue{background:#185FA5;color:#fff;}
+.footer-btn.gray{background:#1a1a1a;color:#fff;}
+
+.hidden{display:none;}
+@media(max-width:400px){.lifestyle-grid{grid-template-columns:1fr;}.shelter-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ===== BANNER ===== -->
+<div class="top-banner">
+  <div class="banner-icon">⚠</div>
+  <div class="banner-text-wrap">
+    <div class="banner-title-row">
+      <span class="banner-main-title">核子事故警報</span>
+      <span class="level-badge-pill pulse" id="bannerBadge">第二級警戒</span>
+    </div>
+    <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
+  </div>
+  <div class="banner-time" id="clockEl"></div>
+</div>
+
+<div class="main">
+
+<!-- ===== LEVEL SELECTOR ===== -->
+<div class="sec-label">目前警戒等級</div>
+<div class="level-wrap">
+  <div class="level-row">
+    <button class="level-btn l1" onclick="setLevel(1,this)">
+      <span class="lv-icon">⚡</span>
+      <span class="lv-name">第一級</span>
+      <span class="lv-sub">緊急戒備</span>
+    </button>
+    <button class="level-btn l2 active" onclick="setLevel(2,this)">
+      <span class="lv-icon">🔶</span>
+      <span class="lv-name">第二級</span>
+      <span class="lv-sub">廠區緊急</span>
+    </button>
+    <button class="level-btn l3" onclick="setLevel(3,this)">
+      <span class="lv-icon">🔴</span>
+      <span class="lv-name">第三級</span>
+      <span class="lv-sub">全面緊急</span>
+    </button>
+  </div>
+</div>
+
+<!-- STATUS CARD -->
+<div class="status-card l2" id="statusCard">
+  <div class="status-title" id="statusTitle">🔶 廠區緊急事故</div>
+  <div class="status-desc" id="statusDesc"></div>
+  <div class="status-tags" id="statusTags"></div>
+</div>
+
+<!-- ===== GPS PANEL ===== -->
+<div class="sec-label">我距核電廠多遠？</div>
+<div class="gps-panel">
+  <div class="gps-header">
+    <span class="gps-icon">📍</span>
+    <div>
+      <div class="gps-title">偵測您的位置</div>
+      <div class="gps-sub">授權定位後，系統自動計算您與核電廠的距離</div>
+    </div>
+  </div>
+  <button class="gps-btn" id="gpsBtn" onclick="requestGPS()">
+    📡 授權 GPS 定位
+  </button>
+  <div id="gpsResult" class="hidden"></div>
+</div>
+
+<!-- ===== PERSONA ===== -->
+<div class="sec-label">我的情況</div>
+<div class="persona-wrap">
+  <div class="persona-row">
+    <button class="persona-btn" onclick="setPersona('single',this)">
+      <span class="persona-icon">🧑</span>
+      <span class="persona-name">單身 / 單獨</span>
+      <span class="persona-sub">一個人住</span>
+    </button>
+    <button class="persona-btn active" onclick="setPersona('family',this)">
+      <span class="persona-icon">👨‍👩‍👧</span>
+      <span class="persona-name">有就學小孩</span>
+      <span class="persona-sub">孩子在學校</span>
+    </button>
+    <button class="persona-btn" onclick="setPersona('disabled',this)">
+      <span class="persona-icon">♿</span>
+      <span class="persona-name">行動不便</span>
+      <span class="persona-sub">家有需要協助的人</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== DYNAMIC CONTENT ===== -->
+<div class="sec-label" id="contentLabel">行動指引</div>
+<div class="content-area" id="mainContent"></div>
+
+</div><!-- /main -->
+
+<!-- STICKY FOOTER -->
+<div class="sticky-footer">
+  <a href="tel:119" class="footer-btn red">🚒 119</a>
+  <a href="tel:110" class="footer-btn blue">🚔 110</a>
+  <a href="tel:0800069599" class="footer-btn gray">☎ 0800-069-599</a>
+</div>
+
+<script>
+/* ============================================================
+   ██████╗  █████╗  ██████╗██╗  ██╗███████╗███╗   ██╗██████╗
+   ██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝████╗  ██║██╔══██╗
+   ██████╔╝███████║██║     █████╔╝ █████╗  ██╔██╗ ██║██║  ██║
+   ██╔══██╗██╔══██║██║     ██╔═██╗ ██╔══╝  ██║╚██╗██║██║  ██║
+   ██████╔╝██║  ██║╚██████╗██║  ██╗███████╗██║ ╚████║██████╔╝
+   ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═════╝
+
+   後台可設定區域：修改此處即可更新學校停課狀態
+   ============================================================ */
+
+// === 【後台設定】學校是否停課 ===
+// true = 已停課（由主管機關宣布）  false = 尚未宣布  null = 正常上課
+const SCHOOL_STATUS = {
+  '金山三和國小':     true,
+  '金山中角國小':     true,
+  '金山金山國小':     true,
+  '金山金山高中':     true,
+  '石門乾華國小':     true,
+  '石門石門國小':     true,
+  '石門石門國中':     true,
+  '三芝橫山國小':     true,
+  '石門老梅國小':     true,
+  '萬里大鵬國小':     false,  // 尚未宣布
+  '萬里野柳國小':     false,
+  '金山金美國小':     true,
+  '萬里萬里國小':     true,
+  '萬里萬里國中':     true,
+  '萬里大坪國小':     false,
+  '萬里崁腳國小':     false,
+  '私立中華商業海事': true,
+};
+// 停課公告資訊（在頁面上顯示）
+const SUSPENSION_AUTHORITY = '新北市政府教育局';
+const SUSPENSION_TIME      = '2026/04/25 13:30';
+
+/* ============================================================
+   核電廠坐標（WGS84）
+   核一廠（石門 / 金山交界）：25.2990°N, 121.5884°E
+   核二廠（萬里 / 金山）：    25.2145°N, 121.6593°E
+   ============================================================ */
+const PLANTS = [
+  { name:'核一廠', lat:25.2990, lng:121.5884 },
+  { name:'核二廠', lat:25.2145, lng:121.6593 },
+];
+
+let currentLevel   = 2;
+let currentPersona = 'family';
+let userZone       = null; // null | 3 | 8 | 16 | 99
+
+// ─── Haversine ───────────────────────────────────────────────
+function haversine(la1,lo1,la2,lo2){
+  const R=6371, toR=Math.PI/180;
+  const dL=(la2-la1)*toR, dO=(lo2-lo1)*toR;
+  const a=Math.sin(dL/2)**2+Math.cos(la1*toR)*Math.cos(la2*toR)*Math.sin(dO/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+// ─── GPS ─────────────────────────────────────────────────────
+function requestGPS(){
+  const btn=document.getElementById('gpsBtn');
+  btn.disabled=true; btn.textContent='📡 定位中...';
+  if(!navigator.geolocation){ showGpsError('您的瀏覽器不支援 GPS 定位，請手動確認所在區域'); return; }
+  navigator.geolocation.getCurrentPosition(
+    pos=>{ gotGPS(pos.coords.latitude, pos.coords.longitude); },
+    err=>{ showGpsError('無法取得位置（'+err.message+'）。請確認已開啟位置權限。'); btn.disabled=false; btn.textContent='📡 再試一次'; },
+    {timeout:12000,maximumAge:60000}
+  );
+}
+
+function gotGPS(lat,lng){
+  const dists = PLANTS.map(p=>({ name:p.name, km:haversine(lat,lng,p.lat,p.lng) }));
+  dists.sort((a,b)=>a.km-b.km);
+  const nearest=dists[0];
+  const km=nearest.km;
+  let zone, zoneLabel, zoneClass, advice;
+  if(km<=3){      zone=3;  zoneLabel='3公里內（緊急防護區）';  zoneClass='zone-3';  advice='⚠ 廠區緊急時須立即撤離，全面緊急時強制疏散';}
+  else if(km<=8){ zone=8;  zoneLabel='3–8公里（廠區緊急應變區）'; zoneClass='zone-8';  advice='廠區緊急時進行室內掩蔽；全面緊急下風向須疏散';}
+  else if(km<=16){zone=16; zoneLabel='8–16公里（預防計畫區）'; zoneClass='zone-16'; advice='全面緊急時視風向準備疏散';}
+  else{           zone=99; zoneLabel='16公里以外（一般注意區）'; zoneClass='zone-out'; advice='持續關注官方訊息，暫無疏散要求';}
+  userZone=zone;
+  const el=document.getElementById('gpsResult');
+  el.className='gps-result';
+  el.innerHTML=`
+    <div class="gps-result-title">📍 定位成功 — 距 ${nearest.name} 約 ${km.toFixed(1)} 公里</div>
+    <span class="gps-zone-badge ${zoneClass}">${zoneLabel}</span>
+    <div class="gps-result-body" style="margin-top:8px;">${advice}</div>
+    <div style="font-size:10px;color:#888;margin-top:6px;">另一座電廠：${dists[1].name} 約 ${dists[1].km.toFixed(1)} 公里</div>
+  `;
+  document.getElementById('gpsBtn').style.display='none';
+  renderContent();
+}
+
+function showGpsError(msg){
+  const el=document.getElementById('gpsResult');
+  el.className='gps-err';
+  el.innerHTML='⚠ '+msg;
+  el.classList.remove('hidden');
+}
+
+// ─── Level / Persona ─────────────────────────────────────────
+const LEVEL_INFO={
+  1:{name:'緊急戒備',cssClass:'l1',color:'#EF9F27',badgeText:'第一級警戒',
+     desc:'核子反應器設施安全狀況顯著劣化，尚不須執行民眾防護行動。景區關閉、遊客勸離。居民保持警覺，不需疏散。',
+     tags:['景區已關閉','碘片清點中','關注廣播']},
+  2:{name:'廠區緊急',cssClass:'l2',color:'#D85A30',badgeText:'第二級警戒',
+     desc:'核子反應器設施安全功能重大失效，需執行民眾防護行動。弱勢族群優先疏散；住家距電廠3公里內民眾準備撤離；3–8公里室內掩蔽。',
+     tags:['弱勢優先撤離','3公里內疏散','3–8公里室內掩蔽']},
+  3:{name:'全面緊急',cssClass:'l3',color:'#A32D2D',badgeText:'第三級警戒',
+     desc:'核子反應器設施爐心嚴重惡化或熔損，必須執行民眾防護行動。下風向民眾疏散；防護站除污啟動；8公里以外視風向準備疏散。',
+     tags:['3–8公里下風向疏散','除污站啟動','全面戒備']}
+};
+
+function setLevel(l,el){
+  currentLevel=l;
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const li=LEVEL_INFO[l];
+  const sc=document.getElementById('statusCard');
+  sc.className='status-card '+li.cssClass;
+  document.getElementById('statusTitle').textContent=['','⚡','🔶','🔴'][l]+' '+li.name+'事故';
+  document.getElementById('statusDesc').textContent=li.desc;
+  document.getElementById('statusTags').innerHTML=li.tags.map(t=>`<span class="stag">${t}</span>`).join('');
+  document.getElementById('bannerBadge').textContent=li.badgeText;
+  renderContent();
+}
+
+function setPersona(p,el){
+  currentPersona=p;
+  document.querySelectorAll('.persona-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderContent();
+}
+
+// ─── School data ──────────────────────────────────────────────
+const SCHOOLS=[
+  {epz:'金山三和國小',area:'核一廠區',placement:'三重三重國小',addr:'三重區三和路三段1號',tel:'02-29722095',min:53},
+  {epz:'金山中角國小',area:'核一/二廠',placement:'三重五華國小',addr:'三重區集賢路89號',tel:'02-28578087',min:50},
+  {epz:'金山金山國小',area:'核一/二廠',placement:'三重正義國小',addr:'三重區信義西街31號',tel:'02-29853138',min:53},
+  {epz:'金山金山高中',area:'核一/二廠',placement:'三重新北高中',addr:'三重區三信路1號',tel:'02-28577326',min:52},
+  {epz:'石門乾華國小',area:'核一廠區',placement:'八里大崁國小',addr:'八里區忠八街2號',tel:'02-86305678',min:42},
+  {epz:'石門石門國小',area:'核一廠區',placement:'八里八里國小',addr:'八里區中山路二段338號',tel:'02-26102217',min:45},
+  {epz:'石門石門國中',area:'核一廠區',placement:'八里八里國中',addr:'八里區荖阡坑路15號',tel:'02-26102016',min:47},
+  {epz:'三芝橫山國小',area:'核一廠區',placement:'八里長坑國小',addr:'八里區中華路三段236號',tel:'02-26102037',min:53},
+  {epz:'石門老梅國小',area:'核一廠區',placement:'八里大崁國小',addr:'八里區忠八街2號',tel:'02-86305678',min:42},
+  {epz:'金山金美國小',area:'核二廠區',placement:'三重厚德國小',addr:'三重區忠孝路一段70號',tel:'02-29868825',min:56},
+  {epz:'萬里野柳國小',area:'核二廠區',placement:'三重光榮國小',addr:'三重區介壽路32號',tel:'02-29730392',min:28},
+  {epz:'萬里萬里國小',area:'核二廠區',placement:'三重重陽國小',addr:'三重區中正北路113號',tel:'02-29822672',min:28},
+  {epz:'萬里萬里國中',area:'核二廠區',placement:'三重明志國中',addr:'三重區中正北路107號',tel:'02-29844132',min:29},
+  {epz:'萬里大鵬國小',area:'核二廠區',placement:'三重興穀國小',addr:'三重區五谷王北街46號',tel:'02-29990725',min:63},
+  {epz:'萬里崁腳國小',area:'核二廠區',placement:'三重碧華國小',addr:'三重區五華街160號',tel:'02-28577792',min:28},
+  {epz:'萬里大坪國小',area:'核二廠區',placement:'三重永福國小',addr:'三重區永福街66號',tel:'02-22876716',min:27},
+  {epz:'私立中華商業海事',area:'核二廠區',placement:'三重三重商工',addr:'三重區中正北路163號',tel:'02-29715606',min:29},
+];
+
+function statusBadge(schoolName){
+  const s=SCHOOL_STATUS[schoolName];
+  if(s===true)  return `<span class="badge-stop">已停課</span>`;
+  if(s===false) return `<span class="badge-pending">待宣布</span>`;
+  return `<span class="badge-ok">正常上課</span>`;
+}
+
+function schoolTable(){
+  return `
+  <div class="school-block">
+    <div class="school-header">🏫 EPZ區域學校 → 安置學校對照</div>
+    <div class="school-notice">
+      停課宣布機關：${SUSPENSION_AUTHORITY} ／ 宣布時間：${SUSPENSION_TIME}<br>
+      ※ 安置學校提供復課用途，<strong>不提供食宿</strong>。學生須與家長前往避難收容所安置。
+    </div>
+    <table class="school-table">
+      <tr>
+        <th>原就讀學校</th>
+        <th>是否停課</th>
+        <th>安置學校 ／ 導航</th>
+        <th style="text-align:right">車程</th>
+      </tr>
+      ${SCHOOLS.map(s=>`
+      <tr>
+        <td><div style="font-weight:700">${s.epz}</div><div style="font-size:10px;color:#aaa">${s.area}</div></td>
+        <td>${statusBadge(s.epz)}</td>
+        <td>
+          <div style="font-weight:700">${s.placement}</div>
+          <a class="nav-link" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.addr)}&travelmode=driving" target="_blank">🗺 導航前往</a>
+        </td>
+        <td style="text-align:right">${s.min}分</td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+// ─── Evacuation routes ────────────────────────────────────────
+function evacRoutes(){
+  return `
+  <div class="route-card">
+    <div class="route-header"><div class="route-title">核一廠 → 西行（往台北）</div><div class="route-badge">防護站：淺水灣停車場</div></div>
+    <div class="route-path"><span>台2線</span> → <span>淡金公路</span> → 三芝<span>淺水灣停車場</span>（12.3公里）→ 輻射除污 → <span>板橋/三重/新莊</span>收容所</div>
+    <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=25.2622,121.4995&travelmode=driving" target="_blank">🗺 導航至淺水灣防護站</a>
+  </div>
+  <div class="route-card">
+    <div class="route-header"><div class="route-title">核一廠 → 東行（往基隆）</div><div class="route-badge">防護站：翡翠灣俱樂部</div></div>
+    <div class="route-path"><span>台2線</span> → 往萬里 → <span>翡翠灣俱樂部</span>（14.8公里）→ 輻射除污 → <span>泰山/新莊</span>收容所</div>
+    <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=25.1411,121.7238&travelmode=driving" target="_blank">🗺 導航至翡翠灣防護站</a>
+  </div>
+  <div class="route-card">
+    <div class="route-header"><div class="route-title">核二廠 → 西行（往台北）</div><div class="route-badge">防護站：石門洞停車場</div></div>
+    <div class="route-path"><span>淡金公路</span> → 石門 → <span>石門洞停車場</span>（13公里）→ 輻射除污 → <span>三重/新莊</span>收容所</div>
+    <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=25.2901,121.5679&travelmode=driving" target="_blank">🗺 導航至石門洞防護站</a>
+  </div>
+  <div class="route-card">
+    <div class="route-header"><div class="route-title">核二廠 → 東行（往基隆）</div><div class="route-badge">防護站：基隆防災廣場</div></div>
+    <div class="route-path"><span>台2線</span> → 基金一路 → 基金二路 → <span>基隆防災廣場</span>（8.6公里）→ 輻射除污 → <span>三重/泰山</span>收容所</div>
+    <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=25.1313,121.7405&travelmode=driving" target="_blank">🗺 導航至基隆防災廣場</a>
+  </div>
+  <div class="flow-hint">✅ <strong>疏散流程</strong>：前往所在里<strong>集結點</strong> → <strong>防護站</strong>（輻射偵測＋除污） → 登記報到 → 前往<strong>避難收容所</strong><br>無車者：在集結點等候接駁公車（免費）</div>`;
+}
+
+function shelters(){
+  const list=[
+    {name:'板橋體育館',addr:'板橋區民權路117號',coords:'25.0138,121.4614'},
+    {name:'三重綜合體育館',addr:'三重區新北大道一段2號',coords:'25.0578,121.4869'},
+    {name:'新莊體育館',addr:'新莊區中華路一段75號',coords:'25.0326,121.4428'},
+    {name:'板樹體育館',addr:'樹林區水源街81號',coords:'24.9930,121.4207'},
+    {name:'泰山體育館',addr:'泰山區公園路52號',coords:'25.0564,121.4283'},
+    {name:'三重商工',addr:'三重區中正北路163號',coords:'25.0690,121.4941'},
+  ];
+  return `<div class="shelter-grid">${list.map(x=>`
+  <div class="shelter-card">
+    <div class="sc-name">${x.name}</div>
+    <div class="sc-addr">新北市${x.addr}</div>
+    <a class="sc-btn" href="https://www.google.com/maps/dir/?api=1&destination=${x.coords}&travelmode=driving" target="_blank">🗺 開啟導航</a>
+  </div>`).join('')}</div>`;
+}
+
+function kiCard(){
+  if(currentLevel===1) return '';
+  return `
+  <div class="sec-label">碘化鉀（KI）服用指引</div>
+  <div class="ki-card">
+    <div class="ki-title">💊 碘化鉀（KI）</div>
+    <div class="ki-body"><strong>必須等政府通知才服用。</strong>服用時機：收到疏散命令後，<strong>出發前30分鐘</strong>效果最佳。</div>
+    <table class="ki-table">
+      <tr><td>成人（18歲以上）</td><td><strong>130mg（1片）</strong></td></tr>
+      <tr><td>3–12歲兒童</td><td><strong>65mg（½片）</strong></td></tr>
+      <tr><td>1個月–3歲</td><td><strong>32mg（¼片）</strong></td></tr>
+      <tr><td>新生兒（1個月以下）</td><td><strong>16mg（⅛片）</strong></td></tr>
+    </table>
+    <div class="ki-warn">⚠ 甲狀腺疾病者請遵醫囑 ／ 孕婦及哺乳者優先服用 ／ 碘過敏者請就醫</div>
+  </div>`;
+}
+
+function dontDo(){
+  const items=['不要在戶外逗留、奔跑或揚起塵土','不要飲用地下水或食用戶外蔬菜水果','不要搶占緊急車道，讓救災車輛通行','不要輕信社群媒體謠言，只信官方廣播','不要擅自判斷服用碘化鉀（KI）'];
+  return `
+  <div class="sec-label">事故期間禁止事項</div>
+  <div class="dont-card">
+    <div class="dont-title">❌ 絕對禁止</div>
+    <div class="dont-items">${items.map(t=>`<div class="dont-item"><div class="x-badge">✕</div>${t}</div>`).join('')}</div>
+  </div>`;
+}
+
+function contacts(){
+  return `
+  <div class="sec-label">緊急聯絡電話</div>
+  <div class="hotlines">
+    <a href="tel:119" class="hotline"><div class="hotline-num">119</div><div class="hotline-label">消防 / 救護</div></a>
+    <a href="tel:110" class="hotline"><div class="hotline-num">110</div><div class="hotline-label">警察局</div></a>
+    <a href="tel:1999" class="hotline"><div class="hotline-num">1999</div><div class="hotline-label">新北市政府熱線</div></a>
+    <a href="tel:0800069599" class="hotline"><div class="hotline-num" style="font-size:14px">0800-069-599</div><div class="hotline-label">核安諮詢專線（免費）</div></a>
+  </div>
+  <div style="text-align:center;font-size:10px;color:#aaa;padding-bottom:10px;">資料來源：新北市核子事故區域民眾防護應變計畫（110年版）</div>`;
+}
+
+// ─── Render content ───────────────────────────────────────────
+function renderContent(){
+  const el=document.getElementById('mainContent');
+  let html='';
+
+  if(currentPersona==='single')   html=renderSingle();
+  else if(currentPersona==='family') html=renderFamily();
+  else html=renderDisabled();
+
+  html+=kiCard();
+  html+=dontDo();
+  html+=contacts();
+  el.innerHTML=html;
+}
+
+function renderSingle(){
+  if(currentLevel===1) return `
+  <div class="action-block amber">
+    <div class="block-title">📋 目前不需疏散，保持警覺</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>確認手機通知開啟，收聽中廣、警廣或電視新聞</li>
+      <li><span class="step-num">2</span>準備緊急包：身分證、健保卡、藥品、換洗衣物、3日份食物</li>
+      <li><span class="step-num">3</span>確認家中碘化鉀（KI）存量，向衛生所詢問發放情況</li>
+      <li><span class="step-num">4</span>遠離海灘、公園等戶外場所（景區已關閉）</li>
+    </ul>
+  </div>
+  <div class="sec-label">食衣住行</div>
+  ${lifestyleGrid([
+    ['🍱','食','正常飲食，備齊3日份不需烹調的食品（餅乾、罐頭）','避免購買當地戶外攤販食物'],
+    ['👕','衣','備好長袖衣物、口罩。若需外出，穿著覆蓋皮膚的衣物',''],
+    ['🏠','住','留在室內，暫不需密封。儲備一缸清潔飲用水',''],
+    ['🚗','行','暫不疏散。確認油量充足，熟悉疏散路線（往南往東）',''],
+  ])}`;
+
+  if(currentLevel===2) return `
+  <div class="action-block orange">
+    <div class="block-title">🔶 依您住家距電廠的距離行動</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>使用上方 GPS 確認您距核電廠的距離</li>
+      <li><span class="step-num">2</strong><strong>住家距電廠3公里以內</strong>：收到疏散命令後立即撤離，前往集結點</li>
+      <li><span class="step-num">3</span><strong>住家距電廠3–8公里</strong>：關閉門窗、密封縫隙，進行室內掩蔽，等待指示</li>
+      <li><span class="step-num">4</span>前往衛生所領取<strong>碘化鉀（KI）</strong>，等候通知服用</li>
+      <li><span class="step-num">5</span>持續收聽廣播，等待官方疏散命令</li>
+    </ul>
+  </div>
+  <div class="sec-label">食衣住行</div>
+  ${lifestyleGrid([
+    ['🍱','食','只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水','禁止食用戶外蔬菜水果'],
+    ['👕','衣','換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩',''],
+    ['🏠','住','關閉所有門窗，用濕毛巾封縫隙，關閉冷氣及換氣扇',''],
+    ['🚗','行','3公里內：收到命令後疏散。3–8公里：就地掩蔽等指示',''],
+  ])}
+  <div class="sec-label">疏散路線（3公里以內適用）</div>${evacRoutes()}`;
+
+  return `
+  <div class="action-block red">
+    <div class="block-title">🔴 依命令立即疏散</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>收到疏散命令後，<strong>立刻出發，不要猶豫</strong></li>
+      <li><span class="step-num">2</span>拿好緊急包：證件、藥品、手機充電器、現金、食物飲水</li>
+      <li><span class="step-num">3</span>關閉家中瓦斯、電源後離開並鎖門</li>
+      <li><span class="step-num">4</span>服用碘化鉀（KI）——出發前30分鐘服用效果最佳</li>
+      <li><span class="step-num">5</span>前往所在里的<strong>集結點</strong>，等候引導前往防護站</li>
+    </ul>
+  </div>
+  <div class="sec-label">疏散路線與集結點</div>${evacRoutes()}
+  <div class="sec-label">避難收容所</div>${shelters()}`;
+}
+
+function renderFamily(){
+  if(currentLevel===1) return `
+  <div class="action-block amber">
+    <div class="block-title">📢 學校暫未停課，保持聯繫</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>確認孩子就讀學校是否在 EPZ 警戒區（三芝、石門、金山、萬里）</li>
+      <li><span class="step-num">2</span>聯繫學校了解緊急應變計畫及接送安排</li>
+      <li><span class="step-num">3</span>準備全家緊急包，告知孩子聽到警報要<strong>留在學校等候</strong>，不要自行跑出</li>
+      <li><span class="step-num">4</span>確認學校已備案指定接送人名單</li>
+    </ul>
+  </div>
+  <div class="sec-label">孩子學校停課狀態</div>${schoolTable()}`;
+
+  if(currentLevel===2) return `
+  <div class="action-block orange">
+    <div class="block-title">🔔 學校已宣布停課，掌握孩子位置</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>政府宣布EPZ內<strong>停止上班上課</strong>，立即聯繫學校確認孩子狀況</li>
+      <li><span class="step-num">2</span>學校協助聯繫家屬並安排接送——<strong>等待學校通知</strong>或前往學校接孩子</li>
+      <li><span class="step-num">3</span>接到孩子後：若<strong>您的住家距電廠3公里以內</strong>，立即前往集結點疏散；若住家距電廠3–8公里，回家進行<strong>室內掩蔽</strong></li>
+      <li><span class="step-num">4</span>在防護站報到時，全家一起登記，確保不分散</li>
+    </ul>
+  </div>
+  <div class="sec-label">孩子學校停課狀態</div>${schoolTable()}
+  <div class="sec-label">一家人的食衣住行</div>
+  ${lifestyleGrid([
+    ['🍱','食','備好孩子副食品、奶粉或乾糧，3日份封裝食物','禁止食用外購或戶外食物'],
+    ['👕','衣','幫孩子穿長袖、帽子，帶兒童適用口罩及備用衣物',''],
+    ['🏠','住','3–8公里：密封家中，孩子留在室內最大房間',''],
+    ['🚗','行','接孩子後出發。無車者到集結點等候免費接駁巴士',''],
+  ])}
+  <div class="sec-label">疏散路線導航</div>${evacRoutes()}`;
+
+  return `
+  <div class="action-block red">
+    <div class="block-title">🚨 立即前往學校接孩子，一起疏散</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span><strong>立刻前往孩子學校接人</strong>，出示身分證明文件</li>
+      <li><span class="step-num">2</span>學校校方人員協助點交，確認孩子交給正確家屬</li>
+      <li><span class="step-num">3</span>接到孩子後，<strong>立刻前往所在里的集結點</strong></li>
+      <li><span class="step-num">4</span>依年齡服用碘化鉀（KI）——出發前30分鐘，等官方通知</li>
+      <li><span class="step-num">5</span>防護站完成輻射檢測除污後，全家前往避難收容所，<strong>一起登記入住</strong></li>
+    </ul>
+  </div>
+  <div class="sec-label">孩子學校停課狀態</div>${schoolTable()}
+  <div class="sec-label">疏散路線導航</div>${evacRoutes()}
+  <div class="sec-label">避難收容所（設有家庭區、哺乳室、兒童照護區）</div>${shelters()}`;
+}
+
+function renderDisabled(){
+  if(currentLevel===1) return `
+  <div class="vuln-card">
+    <div class="vuln-title">📋 現在就要做的準備</div>
+    <div class="vuln-items">
+      <div class="vuln-item">🏥 <div>向<strong>所在區公所社會課</strong>登記，列入弱勢族群名冊，事故時優先派員協助接送</div></div>
+      <div class="vuln-item">🚐 <div>政府備有 <span class="badge-num">復康巴士394輛</span>，提前向區公所確認您的接送需求已登記</div></div>
+      <div class="vuln-item">📞 <div>告知鄰居或里長您的行動狀況，建立互助聯繫</div></div>
+      <div class="vuln-item">💊 <div>準備好3日份常備藥品及輔具（輪椅、助行器）放在門邊方便取用</div></div>
+    </div>
+  </div>
+  ${contactsDisabled()}`;
+
+  if(currentLevel===2) return `
+  <div class="action-block blue">
+    <div class="block-title">🚐 弱勢族群優先疏散，政府主動聯繫</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>廠區緊急階段政府<strong>優先疏散弱勢族群</strong>（行動不便者、老人、嬰幼兒、孕婦）</li>
+      <li><span class="step-num">2</span>若已在名冊，里長或區公所人員會<strong>主動聯繫您</strong>安排接送</li>
+      <li><span class="step-num">3</span>若尚未登記，立即撥打<strong>1999</strong>或區公所電話報名</li>
+      <li><span class="step-num">4</span>等候時維持室內掩蔽、關閉門窗</li>
+    </ul>
+  </div>
+  <div class="vuln-card">
+    <div class="vuln-title">🚑 行動不便者接送安排</div>
+    <div class="vuln-items">
+      <div class="vuln-item">🚐 <div><strong>復康巴士：</strong>政府備有<span class="badge-num">394輛復康巴士</span>，專門接送行動不便者</div></div>
+      <div class="vuln-item">🚌 <div><strong>低底盤公車：</strong>接駁公車含無障礙低底盤車輛</div></div>
+      <div class="vuln-item">🛥 <div><strong>海上疏散：</strong>港口居民可由漁船、藍色公路船舶（約29艘）協助</div></div>
+      <div class="vuln-item">🏥 <div><strong>護理機構：</strong>EPZ內護理之家及安養中心已規劃後送醫院，無需自行安排</div></div>
+    </div>
+  </div>
+  ${contactsDisabled()}`;
+
+  return `
+  <div class="action-block red">
+    <div class="block-title">🚨 現在撥打1999或請鄰居協助</div>
+    <ul class="block-steps">
+      <li><span class="step-num">1</span>若尚未接到政府聯繫，<strong>立刻撥打1999或119</strong>，告知姓名、地址、行動狀況</li>
+      <li><span class="step-num">2</span>告知鄰居或里長您需要協助</li>
+      <li><span class="step-num">3</span>等待復康巴士抵達，<strong>不要自行嘗試步行</strong></li>
+      <li><span class="step-num">4</span>等官方通知後服用碘化鉀（KI）</li>
+      <li><span class="step-num">5</span>收容所設有<strong>弱勢特別照護寢區</strong>及醫護人員駐點</li>
+    </ul>
+  </div>
+  <div class="vuln-card">
+    <div class="vuln-title">♿ 收容所無障礙設施</div>
+    <div class="vuln-items">
+      <div class="vuln-item">🛏 <div>設有<strong>弱勢特別照護寢區</strong>，提供較寬敞空間及醫護支援</div></div>
+      <div class="vuln-item">🚿 <div><strong>無障礙浴廁</strong>及專人協助除污洗淨</div></div>
+      <div class="vuln-item">👩‍⚕️ <div>醫護人員及社工常駐，協助慢性病患、臥床者日常照護</div></div>
+    </div>
+  </div>
+  ${contactsDisabled()}
+  <div class="sec-label">避難收容所</div>${shelters()}`;
+}
+
+function lifestyleGrid(items){
+  return `<div class="lifestyle-grid">${items.map(([icon,label,body,warn])=>`
+  <div class="lc">
+    <div class="lc-header"><span class="lc-icon">${icon}</span><span class="lc-label">${label}</span></div>
+    <div class="lc-body">${body}</div>
+    ${warn?`<div class="lc-warn">⚠ ${warn}</div>`:''}
+  </div>`).join('')}</div>`;
+}
+
+function contactsDisabled(){
+  return `
+  <div class="sec-label">弱勢族群緊急聯絡</div>
+  <div class="hotlines">
+    <a href="tel:1999" class="hotline"><div class="hotline-num">1999</div><div class="hotline-label">新北市政府（行動不便協助）</div></a>
+    <a href="tel:119" class="hotline"><div class="hotline-num">119</div><div class="hotline-label">緊急救護</div></a>
+  </div>
+  <div class="vuln-card" style="margin-top:0">
+    <div class="vuln-title" style="font-size:12px">各區公所聯絡電話</div>
+    <div class="vuln-items" style="font-size:12px">
+      <div class="vuln-item">三芝區公所：<strong>02-2636-2111</strong></div>
+      <div class="vuln-item">金山區公所：<strong>02-2498-7136</strong></div>
+      <div class="vuln-item">萬里區公所：<strong>02-2492-2380</strong></div>
+      <div class="vuln-item">石門區公所：<strong>02-2638-1721</strong></div>
+    </div>
+  </div>`;
+}
+
+// ─── Init ─────────────────────────────────────────────────────
+function updateClock(){
+  const n=new Date();
+  document.getElementById('clockEl').textContent=n.toLocaleString('zh-TW',{hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+}
+updateClock(); setInterval(updateClock,30000);
+setLevel(2, document.querySelector('.level-btn.l2'));
+</script>
+</body>
+</html>
