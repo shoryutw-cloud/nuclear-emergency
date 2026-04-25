@@ -860,6 +860,17 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .evac-car .evac-step-num{background:#1A7A40;}
 .evac-nocar .evac-step-num{background:var(--blue-mid);}
 .evac-step-arrow{text-align:center;font-size:16px;color:#aaa;line-height:1.2;padding:0 0 0 11px;}
+
+/* ═══ ASSEMBLY PICKER ═══ */
+.assembly-picker{background:var(--blue-light);border:1.5px solid #85B7EB;border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+.assembly-picker-title{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}
+.assembly-picker-row{display:flex;gap:10px;flex-wrap:wrap;}
+.assembly-select{flex:1;min-width:140px;padding:8px 10px;border-radius:8px;border:1.5px solid #85B7EB;font-family:inherit;font-size:14px;color:var(--blue-dark);background:#fff;cursor:pointer;}
+.assembly-result{margin-top:12px;}
+.assembly-result-title{font-size:14px;font-weight:700;color:var(--blue-dark);margin-bottom:8px;}
+.assembly-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.assembly-list li{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-main);}
+.assembly-dot{width:8px;height:8px;border-radius:50%;background:var(--blue-mid);flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -1000,7 +1011,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   <div class="persona-label">我的情況是…</div>
   <div class="persona-row-h">
     <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
-    <button class="persona-btn-h active" onclick="setPersona('family',this)">家有就學中的小孩</button>
+    <button class="persona-btn-h active" onclick="setPersona('family',this)">家中小孩學校於EPZ範圍內</button>
     <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
   </div>
 </div>
@@ -1127,19 +1138,89 @@ const SHELTERS = [
 ];
 
 /* ═══ 疏散路線 ═══ */
+
+/* ═══ 集結點資料 (核二廠 EPZ, 依 PDF 表4-3 整理) ═══ */
+const ASSEMBLY_POINTS = {
+  '金山區': {
+    '磺港里': ['金山青年活動中心','磺港橋頭','磺港安檢所','舊漁會','承天宮'],
+    '清泉里': ['清泉市民活動中心','鎮天宮','清福宮'],
+    '兩湖里': ['三和國小兩湖分校','葵扇湖13-3號','倒照湖25號'],
+    '萬壽里': ['中角國小','萬壽市民活動中心'],
+    '六股里': ['六股市民活動中心','下六股1鄰1號'],
+    '五湖里': ['環金路與公館崙路口','環金路23號','金山消防隊','伍母樊慈宮前廣場','環金路200號（原皇家客運停車場）','金山郵局'],
+    '永興里': ['淡金公路與忠義路路口','濆水路與淡金公路路口','香菓園站牌處'],
+    '美田里': ['金山高中','金山青年活動中心'],
+    '三界里': ['聖德宮','六三市民活動中心','金寶山'],
+    '西湖里': ['金寶山','尖山子6號'],
+    '重和里': ['三和國小','朝天宮','天籟溫泉會館'],
+    '大同里': ['金山分局','金山國小','中山堂（溫泉路2巷10號）'],
+    '和平里': ['金山國小','中山堂（溫泉路2巷10號）'],
+    '豐漁里': ['豐漁市民活動中心'],
+    '金美里': ['金美國小','金山國小'],
+  },
+  '石門區': {
+    '草里里': ['乾華派出所','石門阿里荖藝術園區'],
+  },
+  '萬里區': {
+    '磺潭里': ['磺潭里老人活動中心','磺潭市民活動中心','金山財神廟'],
+    '大鵬里': ['停三停車場','韋馱寺','加投活動中心','頂寮市民活動中心'],
+    '野柳里': ['野柳市民活動中心'],
+    '萬里里': ['萬里區公所','新北市立圖書館萬里分館','獅頭路土地公廟'],
+    '北基里': ['孝一街前廣場'],
+    '龜吼里': ['新北市立仁愛之家','龜吼里福德宮','翡翠灣俱樂部','龜吼市民活動中心','景美候車亭'],
+    '中幅里': ['中幅市民活動中心'],
+    '雙興里': ['天祥寶塔禪寺','大坪國小'],
+    '溪底里': ['新興宮'],
+    '崁腳里': ['崁腳市民活動中心'],
+  },
+};
+
+/* 各里近似坐標（供 GPS 自動選里使用） */
+const VILLAGE_COORDS = {
+  '金山區磺港里': [25.2035, 121.6405],
+  '金山區清泉里': [25.2075, 121.6330],
+  '金山區兩湖里': [25.1855, 121.6315],
+  '金山區萬壽里': [25.2000, 121.6270],
+  '金山區六股里': [25.2100, 121.6270],
+  '金山區五湖里': [25.2070, 121.6200],
+  '金山區永興里': [25.2055, 121.6150],
+  '金山區美田里': [25.2080, 121.6350],
+  '金山區三界里': [25.1960, 121.6220],
+  '金山區西湖里': [25.1880, 121.6180],
+  '金山區重和里': [25.1905, 121.6095],
+  '金山區大同里': [25.2110, 121.6375],
+  '金山區和平里': [25.2130, 121.6390],
+  '金山區豐漁里': [25.2060, 121.6430],
+  '金山區金美里': [25.2130, 121.6410],
+  '石門區草里里': [25.2558, 121.5765],
+  '萬里區磺潭里': [25.1530, 121.6590],
+  '萬里區大鵬里': [25.1595, 121.6545],
+  '萬里區野柳里': [25.1995, 121.6870],
+  '萬里區萬里里': [25.1770, 121.6785],
+  '萬里區北基里': [25.1800, 121.6820],
+  '萬里區龜吼里': [25.2035, 121.6850],
+  '萬里區中幅里': [25.1695, 121.6755],
+  '萬里區雙興里': [25.1640, 121.6705],
+  '萬里區溪底里': [25.1610, 121.6690],
+  '萬里區崁腳里': [25.1575, 121.6650],
+};
+
 const ROUTES = [
   { label: '路線 D', dest: '基隆、瑞芳、板橋（火車接駁）',
     path: '台2線（往基隆）→ 基隆火車站 → 各火車站（往瑞芳、板橋）',
-    nav: '25.1313,121.7405' },
+    nav: '25.1313,121.7405', station: '基隆市消防局防災廣場', stationDist: '8.6公里' },
   { label: '路線 E', dest: '汐止、新莊、三重、五股',
     path: '台2線（往基隆）→ 台62線 → 國道1、3號 → 往汐止、新莊、三重及五股',
-    nav: '25.0578,121.4869' },
+    nav: '25.0578,121.4869', station: '基隆市消防局防災廣場', stationDist: '8.6公里' },
   { label: '路線 F', dest: '瑞芳區',
     path: '台2線（往基隆）→ 台62線 → 瑞芳區',
-    nav: '25.1078,121.7977' },
+    nav: '25.1078,121.7977', station: '基隆市消防局防災廣場', stationDist: '8.6公里' },
   { label: '路線 G', dest: '平溪區',
     path: '台2線（往基隆）→ 台62線 → 台2丁 → 縣道106線 → 平溪區',
-    nav: '24.9947,121.7375' },
+    nav: '24.9947,121.7375', station: '基隆市消防局防災廣場', stationDist: '8.6公里' },
+  { label: '路線 西', dest: '板橋、樹林、新莊（西行）',
+    path: '淡金公路 → 石門洞停車場（防護站）→ 台2線 → 關渡大橋 → 板橋／樹林／新莊',
+    nav: '25.2901,121.5679', station: '石門洞停車場', stationDist: '13公里' },
 ];
 
 /* ═══ 圖卡輪播 ═══ */
@@ -1198,6 +1279,7 @@ function gotGPS(lat, lng) {
   else if (km <= 16) { zc = 'z16';  zl = '8–16公里・預防計畫區';     advice = '視指示準備'; }
   else               { zc = 'zout'; zl = '16公里以外・一般注意區';    advice = '持續關注'; }
   const el = e('gpsInline');
+  autoSelectByGPS(lat, lng);
   el.innerHTML = '<span class="gps-inline-dot ok"></span>' +
     '距 <strong>' + n.name + '</strong> 約 <strong>' + km.toFixed(1) + ' 公里</strong>' +
     '&ensp;<span class="gips-zone ' + zc + '">' + zl + '</span>' +
@@ -1403,10 +1485,81 @@ function toggleSchool() {
 /* ═══════════════════════════════════════════════
    EVACUATION ROUTES
    ═══════════════════════════════════════════════ */
+
+/* ═══ 集結點選擇器 ═══ */
+function renderAssemblyPicker() {
+  var districts = Object.keys(ASSEMBLY_POINTS);
+  var distOpts = districts.map(function(d) {
+    return '<option value="' + d + '">' + d + '</option>';
+  }).join('');
+
+  return '<div class="assembly-picker" id="assemblyPicker">' +
+    '<div class="assembly-picker-title">📍 我的集結點在哪裡？</div>' +
+    '<div class="assembly-picker-row">' +
+    '<select id="districtSel" onchange="updateVillageSel()" class="assembly-select">' +
+    '<option value="">選擇行政區</option>' + distOpts + '</select>' +
+    '<select id="villageSel" onchange="showAssemblyPoints()" class="assembly-select">' +
+    '<option value="">選擇里別</option></select>' +
+    '</div>' +
+    '<div id="assemblyResult" class="assembly-result"></div>' +
+    '</div>';
+}
+
+function updateVillageSel() {
+  var district = document.getElementById('districtSel').value;
+  var vilSel = document.getElementById('villageSel');
+  vilSel.innerHTML = '<option value="">選擇里別</option>';
+  document.getElementById('assemblyResult').innerHTML = '';
+  if (!district) return;
+  var villages = Object.keys(ASSEMBLY_POINTS[district]);
+  villages.forEach(function(v) {
+    var opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    vilSel.appendChild(opt);
+  });
+}
+
+function showAssemblyPoints() {
+  var district = document.getElementById('districtSel').value;
+  var village = document.getElementById('villageSel').value;
+  var el = document.getElementById('assemblyResult');
+  if (!district || !village) { el.innerHTML = ''; return; }
+  var points = ASSEMBLY_POINTS[district][village];
+  if (!points) { el.innerHTML = ''; return; }
+  var navUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(district + village + ' ' + points[0]);
+  el.innerHTML = '<div class="assembly-result-title">' + district + ' ' + village + ' 集結點</div>' +
+    '<ul class="assembly-list">' +
+    points.map(function(p) {
+      var url = 'https://www.google.com/maps/search/' + encodeURIComponent(district + ' ' + p);
+      return '<li><span class="assembly-dot"></span>' + p + ' <a class="nav-link" href="' + url + '" target="_blank">🗺</a></li>';
+    }).join('') +
+    '</ul>' +
+    '<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">集結點等候接駁公車（第1套）前往防護站完成輻射偵測後，再搭第2套接駁車至收容所</div>';
+}
+
+function autoSelectByGPS(lat, lng) {
+  var minDist = Infinity, bestKey = null;
+  Object.keys(VILLAGE_COORDS).forEach(function(key) {
+    var c = VILLAGE_COORDS[key];
+    var d = haversine(lat, lng, c[0], c[1]);
+    if (d < minDist) { minDist = d; bestKey = key; }
+  });
+  if (!bestKey || minDist > 5) return; // >5km, don't auto-select
+  var parts = bestKey.match(/^(.+區)(.+里)$/);
+  if (!parts) return;
+  var district = parts[1], village = parts[2];
+  var distSel = document.getElementById('districtSel');
+  if (!distSel) return;
+  distSel.value = district;
+  updateVillageSel();
+  document.getElementById('villageSel').value = village;
+  showAssemblyPoints();
+}
+
 function evacRoutes() {
   var carRoute =
     '<div class="evac-mode-card evac-car">' +
-      '<div class="evac-mode-title">🚗 有自用車</div>' +
+      '<div class="evac-mode-title">🚗 有自用車（直接往防護站）</div>' +
       '<div class="evac-mode-steps">' +
         '<div class="evac-step"><span class="evac-step-num">1</span><span>直接開車沿 <strong>台2線往基隆方向</strong> 行駛</span></div>' +
         '<div class="evac-step-arrow">↓</div>' +
@@ -1420,7 +1573,7 @@ function evacRoutes() {
 
   var noCarRoute =
     '<div class="evac-mode-card evac-nocar">' +
-      '<div class="evac-mode-title">🚶 無自用車</div>' +
+      '<div class="evac-mode-title">🚶 無自用車（先到集結點）</div>' +
       '<div class="evac-mode-steps">' +
         '<div class="evac-step"><span class="evac-step-num">1</span><span>步行前往所在里的<strong>集結點</strong>（里長會引導）</span></div>' +
         '<div class="evac-step-arrow">↓</div>' +
@@ -1450,7 +1603,7 @@ function evacRoutes() {
       '</div>';
   }).join('');
 
-  return routeNote +
+  return routeNote + renderAssemblyPicker() +
     '<div class="evac-mode-grid">' + carRoute + noCarRoute + '</div>' +
     '<div class="sec" style="font-size:15px;margin-top:16px;">疏散方向（台2線往基隆方向）</div>' +
     '<div class="route-grid">' + cards + '</div>';
@@ -1492,7 +1645,7 @@ function kiCard() {
   if (currentLevel === 1) return '';
   return '<div class="sec">碘片服用指引</div>' +
     '<div class="ki-card">' +
-    '<div class="ki-title">💊 碘化鉀（KI）</div>' +
+    '<div class="ki-title">💊 碘片（KI）</div>' +
     '<div class="ki-body"><strong>必須等政府通知才服用。</strong>服用時機：收到疏散命令後，<strong>出發前30分鐘</strong>服用效果最佳。</div>' +
     '<table class="ki-table">' +
     '<tr><td>成人（18歲以上）及孕婦</td><td><strong>130mg（1片）</strong></td></tr>' +
@@ -1511,7 +1664,7 @@ function dontCard() {
     '不要飲用地下水或食用戶外蔬菜水果',
     '不要搶占緊急車道，讓救災車輛通行',
     '不要輕信社群媒體謠言，只信官方廣播',
-    '不要擅自判斷服用碘化鉀（KI）',
+    '不要擅自判斷服用碘片（KI）',
     '不要擅自離開，等待官方指示再行動',
   ];
   return '<div class="sec">注意事項</div>' +
@@ -1528,7 +1681,7 @@ function dontCard() {
    SCHOOL SECTION HELPER
    ═══════════════════════════════════════════════ */
 function schoolSection() {
-  return '<div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;font-size:15px;">' +
+  return '<div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;">' +
     '緊急應變計畫區 (EPZ) 範圍內學校停課狀態 <span id="schoolToggleIcon">▲</span>' +
     '</div>' +
     '<div id="schoolTableWrap">' + schoolTable() + '</div>';
@@ -1554,7 +1707,7 @@ function renderSingle() {
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span>確認手機通知開啟，收聽中廣、警廣或電視新聞</li>' +
       '<li><span class="step-num">2</span>準備緊急包：身分證、健保卡、藥品、換洗衣物、3日份食物</li>' +
-      '<li><span class="step-num">3</span>確認家中碘化鉀（KI）存量，向衛生所詢問發放情況</li>' +
+      '<li><span class="step-num">3</span>確認家中碘片（KI）存量，向衛生所詢問發放情況</li>' +
       '<li><span class="step-num">4</span>遠離海灘、公園等戶外場所（景區已關閉）</li>' +
       '</ul></div>' +
       '<div class="sec">食衣住行</div>' +
@@ -1567,15 +1720,15 @@ function renderSingle() {
   }
   if (currentLevel === 2) {
     return '<div class="action-block orange">' +
-      '<div class="block-title">🔶 依住家距電廠距離行動</div>' +
+      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span>使用上方 GPS 確認您住家距核電廠的距離</li>' +
       '<li><span class="step-num">2</span><strong>住家距電廠3公里以內</strong>：收到疏散命令後立即撤離，前往集結點</li>' +
       '<li><span class="step-num">3</span><strong>住家距電廠3–8公里</strong>：關閉門窗、密封縫隙，進行室內掩蔽，等待指示</li>' +
-      '<li><span class="step-num">4</span>前往衛生所領取碘化鉀（KI），等候官方通知服用</li>' +
+      '<li><span class="step-num">4</span>前往衛生所領取碘片（KI），等候官方通知服用</li>' +
       '<li><span class="step-num">5</span>持續收聽廣播，等待官方疏散命令</li>' +
       '</ul></div>' +
-      '<div class="sec">疏散路線</div>' + evacRoutes() +
+      '<div class="sec" style="font-size:15px;letter-spacing:0;">疏散路線－請先至防護站完成輻射偵測與除污，再至避難收容所或依親收容</div>' + evacRoutes() +
       '<div class="sec">食衣住行</div>' +
       lsGrid([
         ['食', '只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水', '禁止食用戶外蔬菜水果'],
@@ -1590,10 +1743,10 @@ function renderSingle() {
     '<li><span class="step-num">1</span>收到疏散命令後，<strong>立刻出發，不要猶豫</strong></li>' +
     '<li><span class="step-num">2</span>拿好緊急包：證件、藥品、手機充電器、現金、食物飲水</li>' +
     '<li><span class="step-num">3</span>關閉家中瓦斯、電源後離開並鎖門</li>' +
-    '<li><span class="step-num">4</span>服用碘化鉀（KI）——出發前30分鐘服用效果最佳</li>' +
+    '<li><span class="step-num">4</span>服用碘片（KI）——出發前30分鐘服用效果最佳</li>' +
     '<li><span class="step-num">5</span>前往所在里的集結點，等候引導前往防護站</li>' +
     '</ul></div>' +
-    '<div class="sec">疏散路線</div>' + evacRoutes() +
+    '<div class="sec" style="font-size:15px;letter-spacing:0;">疏散路線－請先至防護站完成輻射偵測與除污，再至避難收容所或依親收容</div>' + evacRoutes() +
     '<div class="sec">🏟 避難收容所</div>' + shelterCards();
 }
 
@@ -1611,7 +1764,7 @@ function renderFamily() {
   }
   if (currentLevel === 2) {
     return '<div class="action-block orange">' +
-      '<div class="block-title">🔔 學校已宣布停課，掌握孩子位置</div>' +
+      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span>政府宣布 EPZ 內<strong>停止上班上課</strong>。立即聯繫學校確認孩子狀況</li>' +
       '<li><span class="step-num">2</span>學校協助聯繫家屬並安排接送——<strong>等待學校通知</strong>或前往學校接孩子</li>' +
@@ -1619,7 +1772,7 @@ function renderFamily() {
       '<li><span class="step-num">4</span>在防護站報到時，全家一起登記，確保不分散</li>' +
       '</ul></div>' +
       schoolSection() +
-      '<div class="sec">疏散路線</div>' + evacRoutes() +
+      '<div class="sec" style="font-size:15px;letter-spacing:0;">疏散路線－請先至防護站完成輻射偵測與除污，再至避難收容所或依親收容</div>' + evacRoutes() +
       '<div class="sec">食衣住行</div>' +
       lsGrid([
         ['食', '備好孩子副食品、奶粉或乾糧，3日份封裝食物', '禁止食用外購或戶外食物'],
@@ -1634,11 +1787,11 @@ function renderFamily() {
     '<li><span class="step-num">1</span><strong>立刻前往孩子學校接人</strong>，出示身分證明文件</li>' +
     '<li><span class="step-num">2</span>學校校方人員協助點交，確認交給正確家屬</li>' +
     '<li><span class="step-num">3</span>接到孩子後，<strong>立刻前往所在里的集結點</strong></li>' +
-    '<li><span class="step-num">4</span>依孩子年齡服用碘化鉀（KI）——等官方通知，出發前30分鐘服用</li>' +
+    '<li><span class="step-num">4</span>依孩子年齡服用碘片（KI）——等官方通知，出發前30分鐘服用</li>' +
     '<li><span class="step-num">5</span>防護站完成輻射檢測除污後，全家前往避難收容所<strong>一起登記入住</strong></li>' +
     '</ul></div>' +
     schoolSection() +
-    '<div class="sec">疏散路線</div>' + evacRoutes() +
+    '<div class="sec" style="font-size:15px;letter-spacing:0;">疏散路線－請先至防護站完成輻射偵測與除污，再至避難收容所或依親收容</div>' + evacRoutes() +
     '<div class="sec">🏟 避難收容所（設有家庭區、哺乳室、兒童照護區）</div>' + shelterCards();
 }
 
@@ -1664,7 +1817,7 @@ function renderDisabled() {
   }
   if (currentLevel === 2) {
     return '<div class="action-block blue">' +
-      '<div class="block-title">🚐 弱勢族群優先疏散，政府主動聯繫</div>' +
+      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span>廠區緊急階段政府<strong>優先疏散弱勢族群</strong>（行動不便者、老人、嬰幼兒、孕婦）</li>' +
       '<li><span class="step-num">2</span>若已在名冊，里長或區公所人員會<strong>主動聯繫您</strong>安排接送</li>' +
@@ -1686,7 +1839,7 @@ function renderDisabled() {
     '<li><span class="step-num">1</span>若尚未接到政府聯繫，<strong>立刻撥打1999或119</strong>，告知姓名、地址、行動狀況</li>' +
     '<li><span class="step-num">2</span>告知鄰居或里長您需要協助搬運輔具</li>' +
     '<li><span class="step-num">3</span>等待復康巴士抵達，<strong>不要自行嘗試步行</strong></li>' +
-    '<li><span class="step-num">4</span>等官方通知後服用碘化鉀（KI）</li>' +
+    '<li><span class="step-num">4</span>等官方通知後服用碘片（KI）</li>' +
     '<li><span class="step-num">5</span>收容所設有<strong>弱勢特別照護寢區</strong>及醫護人員駐點</li>' +
     '</ul></div>' +
     '<div class="vuln-card">' +
