@@ -41,29 +41,63 @@ body{
 /* ═══════ BANNER ═══════ */
 .banner{
   background:linear-gradient(120deg,var(--blue-dark) 0%,#162E52 55%,#1C3F6E 100%);
-  padding:10px 32px;
-  display:flex;align-items:center;gap:14px;
+  padding:10px 28px;
+  display:flex;align-items:stretch;gap:0;
   position:sticky;top:0;z-index:100;
   box-shadow:0 3px 16px rgba(0,0,0,0.3);
 }
-.banner-shield{
-  width:40px;height:40px;border-radius:50%;
-  background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.35);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;flex-shrink:0;
+/* Left section: radiation icon + title */
+.banner-left{
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;padding-right:22px;
+  border-right:1px solid rgba(255,255,255,0.18);
 }
-.banner-text{flex:1;}
-.banner-row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.banner-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:0.02em;}
+.banner-shield{
+  width:38px;height:38px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Radiation trefoil SVG */
+.radiation-icon{width:38px;height:38px;}
+.banner-text-wrap{}
+.banner-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.banner-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:0.02em;}
 .level-pill{
   background:var(--orange);color:#fff;
-  font-size:13px;font-weight:700;
-  padding:3px 12px;border-radius:30px;
-  letter-spacing:0.06em;
+  font-size:12px;font-weight:700;
+  padding:2px 10px;border-radius:30px;
+  letter-spacing:0.05em;
   animation:blink 1.4s ease-in-out infinite;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.65}}
-.banner-sub{font-size:13px;color:rgba(255,255,255,0.8);margin-top:1px;}
+.banner-sub{font-size:12px;color:rgba(255,255,255,0.75);margin-top:2px;}
+/* Right section: level buttons + status line */
+.banner-right{
+  flex:1;padding-left:20px;
+  display:flex;flex-direction:column;justify-content:center;gap:7px;
+}
+.banner-level-row{display:flex;gap:8px;}
+.blevel-btn{
+  flex:1;padding:5px 8px;border-radius:8px;
+  border:1.5px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.07);
+  color:rgba(255,255,255,0.6);
+  cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;
+  text-align:center;transition:all 0.15s;line-height:1.4;
+}
+.blevel-btn span{display:block;font-size:11px;font-weight:400;opacity:0.85;}
+.blevel-btn:hover{background:rgba(255,255,255,0.14);}
+.blevel-btn.l1.active{background:#C47A00;border-color:#C47A00;color:#fff;}
+.blevel-btn.l2.active{background:var(--orange);border-color:var(--orange);color:#fff;}
+.blevel-btn.l3.active{background:var(--red-mid);border-color:var(--red-mid);color:#fff;}
+.banner-status-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.banner-status-text{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;flex:1;}
+.banner-status-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.bstag{
+  font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;
+  background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
+  border:1px solid rgba(255,255,255,0.25);white-space:nowrap;
+}
+.banner-update{font-size:11px;color:rgba(255,255,255,0.45);white-space:nowrap;flex-shrink:0;}
 
 /* ═══════ PAGE BODY ═══════ */
 .page{padding:0 32px 80px;}
@@ -444,49 +478,46 @@ body{
 
 <!-- ═══ BANNER ═══ -->
 <div class="banner">
-  <div class="banner-shield">⚠</div>
-  <div class="banner-text">
-    <div class="banner-row1">
-      <span class="banner-title">核子事故警報</span>
-      <span class="level-pill" id="bannerPill">第二級警戒</span>
+  <!-- Left: Radiation icon + title -->
+  <div class="banner-left">
+    <div class="banner-shield">
+      <!-- ☢ Radiation trefoil SVG -->
+      <svg class="radiation-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="19" cy="19" r="3.2" fill="rgba(255,255,255,0.9)"/>
+        <!-- Blade 1: top -->
+        <path d="M19 15.8 C19 15.8 14.5 7.5 13 5.2 C15 4.2 17 3.8 19 3.8 C21 3.8 23 4.2 25 5.2 C23.5 7.5 19 15.8 19 15.8Z" fill="rgba(255,255,255,0.9)"/>
+        <!-- Blade 2: bottom-left -->
+        <path d="M16.2 20.6 C16.2 20.6 7.8 25 5.5 26.3 C4.2 24.5 3.6 22.5 3.6 20.4 C3.6 18 4.4 15.8 5.8 14 C8 15.5 16.2 20.6 16.2 20.6Z" fill="rgba(255,255,255,0.9)"/>
+        <!-- Blade 3: bottom-right -->
+        <path d="M21.8 20.6 C21.8 20.6 30.2 15.2 32.5 13.9 C33.8 15.7 34.4 17.9 34.4 20.2 C34.4 22.5 33.7 24.6 32.4 26.4 C30.1 24.9 21.8 20.6 21.8 20.6Z" fill="rgba(255,255,255,0.9)"/>
+        <circle cx="19" cy="19" r="17.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/>
+      </svg>
     </div>
-    <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
+    <div class="banner-text-wrap">
+      <div class="banner-row1">
+        <span class="banner-title">核子事故警報</span>
+        <span class="level-pill" id="bannerPill">第二級警戒</span>
+      </div>
+      <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
+    </div>
+  </div>
+
+  <!-- Right: Level buttons + Status -->
+  <div class="banner-right">
+    <div class="banner-level-row">
+      <button class="blevel-btn l1" onclick="setLevel(1,this)">第一級<span>緊急戒備</span></button>
+      <button class="blevel-btn l2 active" onclick="setLevel(2,this)">第二級<span>廠區緊急</span></button>
+      <button class="blevel-btn l3" onclick="setLevel(3,this)">第三級<span>全面緊急</span></button>
+    </div>
+    <div class="banner-status-row">
+      <div class="banner-status-text" id="bannerStatusText"></div>
+      <div class="banner-status-tags" id="bannerStatusTags"></div>
+      <div class="banner-update">更新 <span id="clockEl">--</span></div>
+    </div>
   </div>
 </div>
 
 <div class="page">
-
-<!-- ═══ LEVEL ═══ -->
-<div class="sec">
-  <span class="sec-left">⚡ 目前警戒等級</span>
-  <span class="sec-time">更新時間：<span id="clockEl">--</span></span>
-</div>
-<div class="level-row">
-  <button class="level-btn l1" onclick="setLevel(1,this)">
-    <span class="lv-icon">⚡</span>
-    <span class="lv-name">第一級</span>
-    <span class="lv-sub">緊急戒備</span>
-  </button>
-  <button class="level-btn l2 active" onclick="setLevel(2,this)">
-    <span class="lv-icon">🔶</span>
-    <span class="lv-name">第二級</span>
-    <span class="lv-sub">廠區緊急</span>
-  </button>
-  <button class="level-btn l3" onclick="setLevel(3,this)">
-    <span class="lv-icon">🔴</span>
-    <span class="lv-name">第三級</span>
-    <span class="lv-sub">全面緊急</span>
-  </button>
-</div>
-
-<!-- STATUS CARD -->
-<div style="margin-top:12px;">
-  <div class="status-card l2" id="statusCard">
-    <div class="status-title" id="statusTitle">🔶 廠區緊急事故</div>
-    <div class="status-desc" id="statusDesc"></div>
-    <div class="status-tags" id="statusTags"></div>
-  </div>
-</div>
 
 <!-- ═══ NEWS FEED ═══ -->
 <div class="sec" style="margin-top:20px;">
@@ -662,27 +693,28 @@ function showGpsError(msg){
 
 const LEVEL_INFO={
   1:{name:'緊急戒備',css:'l1',pill:'第一級警戒',
+     shortDesc:'設施安全狀況劣化，尚不須執行民眾防護行動。景區已關閉、遊客勸離，居民保持警覺。',
      desc:'核子反應器設施安全狀況顯著劣化，尚不須執行民眾防護行動。景區關閉、遊客勸離。居民保持警覺，不需疏散。',
      tags:['景區已關閉','碘片清點中','關注廣播']},
   2:{name:'廠區緊急',css:'l2',pill:'第二級警戒',
+     shortDesc:'設施安全功能重大失效，需執行民眾防護行動。弱勢族群優先疏散；3公里內準備撤離；3–8公里室內掩蔽。',
      desc:'核子反應器設施安全功能重大失效，需執行民眾防護行動。弱勢族群優先疏散；住家距電廠3公里以內民眾準備撤離；3–8公里室內掩蔽。',
      tags:['弱勢族群優先撤離','3公里以內疏散','3–8公里室內掩蔽']},
   3:{name:'全面緊急',css:'l3',pill:'第三級警戒',
+     shortDesc:'爐心嚴重惡化，必須執行民眾防護行動。3–8公里下風向民眾疏散；防護站除污啟動。',
      desc:'核子反應器設施爐心嚴重惡化或熔損，必須執行民眾防護行動。3–8公里下風向民眾疏散；防護站除污啟動；8公里以外視風向準備疏散。',
      tags:['3–8公里下風向疏散','除污站啟動','全面戒備']}
 };
 
 function setLevel(l,el){
   currentLevel=l;
-  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
+  // update banner level buttons
+  document.querySelectorAll('.blevel-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.blevel-btn')[l-1].classList.add('active');
   const li=LEVEL_INFO[l];
-  const sc=document.getElementById('statusCard');
-  sc.className='status-card '+li.css;
-  document.getElementById('statusTitle').textContent=['','⚡','🔶','🔴'][l]+' '+li.name+'事故';
-  document.getElementById('statusDesc').textContent=li.desc;
-  document.getElementById('statusTags').innerHTML=li.tags.map(t=>`<span class="stag">${t}</span>`).join('');
   document.getElementById('bannerPill').textContent=li.pill;
+  document.getElementById('bannerStatusText').textContent=li.shortDesc;
+  document.getElementById('bannerStatusTags').innerHTML=li.tags.map(t=>`<span class="bstag">${t}</span>`).join('');
   renderContent();
 }
 
@@ -1037,7 +1069,7 @@ function updateClock(){
 }
 updateClock();setInterval(updateClock,30000);
 renderNews();
-setLevel(2,document.querySelector('.level-btn.l2'));
+setLevel(2, null);
 </script>
 </body>
 </html>
