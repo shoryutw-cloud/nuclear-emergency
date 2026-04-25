@@ -513,6 +513,25 @@ body{
 /* ═══════ BANNER fixed min-height ═══════ */
 .banner-right{min-height:58px;}
 .banner-status-text{min-height:2.6em;}
+
+/* ═══════ GPS INLINE ═══════ */
+.sec-gps{
+  font-size:13px;font-weight:500;letter-spacing:0;
+  color:var(--text-muted);text-transform:none;
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
+}
+.gps-inline-dot{
+  width:8px;height:8px;border-radius:50%;background:#aaa;flex-shrink:0;
+  animation:gpsblink 1.2s ease-in-out infinite;
+}
+@keyframes gpsblink{0%,100%{opacity:1}50%{opacity:0.3}}
+.gps-inline-dot.ok{background:var(--green);animation:none;}
+.gps-inline-dot.err{background:var(--red-mid);animation:none;}
+.gips-zone{font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.gips-zone.z3{background:var(--red-lt);color:var(--red-dark);}
+.gips-zone.z8{background:var(--orange-lt);color:var(--orange);}
+.gips-zone.z16{background:var(--amber-lt);color:var(--amber);}
+.gips-zone.zout{background:var(--green-lt);color:var(--green);}
 </style>
 </head>
 <body>
@@ -620,48 +639,38 @@ body{
 </div>
 
 <!-- ═══ GPS + PERSONA ═══ -->
-<div class="sec">📍 我的位置與情況</div>
-<div class="two-col">
+<div class="sec">
+  <span class="sec-left">📍 我的位置與情況</span>
+  <span id="gpsInline" class="sec-gps">
+    <span class="gps-inline-dot"></span>偵測位置中…
+  </span>
+</div>
 
-  <div class="gps-panel">
-    <div class="gps-header">
-      <span class="gps-icon">📡</span>
-      <div>
-        <div class="gps-label">偵測我距核電廠多遠</div>
-        <div class="gps-sub">授權定位後，自動計算與核一廠、核二廠的距離</div>
+<div class="persona-panel" style="margin-bottom:14px;">
+  <div class="persona-label">我的情況是…</div>
+  <div class="persona-row">
+    <button class="persona-btn" onclick="setPersona('single',this)">
+      <span class="persona-icon">🧑</span>
+      <div class="persona-text">
+        <span class="persona-name">單身 / 單獨居住</span>
+        <span class="persona-sub">一個人住，自行應變</span>
       </div>
-    </div>
-    <button class="gps-btn" id="gpsBtn" onclick="requestGPS()">📍 授權 GPS 定位</button>
-    <div id="gpsResult" class="hidden"></div>
+    </button>
+    <button class="persona-btn active" onclick="setPersona('family',this)">
+      <span class="persona-icon">👨‍👩‍👧</span>
+      <div class="persona-text">
+        <span class="persona-name">家有就學中的小孩</span>
+        <span class="persona-sub">孩子目前在學校</span>
+      </div>
+    </button>
+    <button class="persona-btn" onclick="setPersona('disabled',this)">
+      <span class="persona-icon">♿</span>
+      <div class="persona-text">
+        <span class="persona-name">家有行動不便者</span>
+        <span class="persona-sub">需要額外協助疏散</span>
+      </div>
+    </button>
   </div>
-
-  <div class="persona-panel">
-    <div class="persona-label">我的情況是…</div>
-    <div class="persona-row">
-      <button class="persona-btn" onclick="setPersona('single',this)">
-        <span class="persona-icon">🧑</span>
-        <div class="persona-text">
-          <span class="persona-name">單身 / 單獨居住</span>
-          <span class="persona-sub">一個人住，自行應變</span>
-        </div>
-      </button>
-      <button class="persona-btn active" onclick="setPersona('family',this)">
-        <span class="persona-icon">👨‍👩‍👧</span>
-        <div class="persona-text">
-          <span class="persona-name">家有就學中的小孩</span>
-          <span class="persona-sub">孩子目前在學校</span>
-        </div>
-      </button>
-      <button class="persona-btn" onclick="setPersona('disabled',this)">
-        <span class="persona-icon">♿</span>
-        <div class="persona-text">
-          <span class="persona-name">家有行動不便者</span>
-          <span class="persona-sub">需要額外協助疏散</span>
-        </div>
-      </button>
-    </div>
-  </div>
-
 </div>
 
 <!-- ═══ CONTENT ═══ -->
@@ -704,35 +713,27 @@ function haversine(la1,lo1,la2,lo2){
 }
 
 function requestGPS(){
-  const btn=document.getElementById('gpsBtn');
-  btn.disabled=true;btn.textContent='📡 定位中…';
-  if(!navigator.geolocation){showGpsError('瀏覽器不支援 GPS，請手動確認所在區域');return;}
+  if(!navigator.geolocation){showGpsError('瀏覽器不支援定位');return;}
   navigator.geolocation.getCurrentPosition(
     p=>gotGPS(p.coords.latitude,p.coords.longitude),
-    e=>{showGpsError('無法取得位置（'+e.message+'），請確認已開啟位置權限');btn.disabled=false;btn.textContent='📍 再試一次';},
+    ()=>showGpsError('位置權限未開啟'),
     {timeout:12000,maximumAge:60000}
   );
 }
 function gotGPS(lat,lng){
   const dists=PLANTS.map(p=>({name:p.name,km:haversine(lat,lng,p.lat,p.lng)})).sort((a,b)=>a.km-b.km);
   const n=dists[0],km=n.km;
-  let zone,label,cls,advice;
-  if(km<=3){zone=3;label='3公里以內（緊急防護區）';cls='zone-3';advice='廠區緊急時須立即撤離，全面緊急時強制疏散';}
-  else if(km<=8){zone=8;label='3–8公里（廠區緊急應變區）';cls='zone-8';advice='廠區緊急時進行室內掩蔽；全面緊急下風向須疏散';}
-  else if(km<=16){zone=16;label='8–16公里（預防計畫區）';cls='zone-16';advice='全面緊急時視風向準備疏散';}
-  else{zone=99;label='16公里以外（一般注意區）';cls='zone-out';advice='持續關注官方訊息，暫無疏散要求';}
-  const el=document.getElementById('gpsResult');
-  el.className='gps-result';
-  el.innerHTML=`
-    <div class="gps-result-title">📍 距 ${n.name} 約 <strong>${km.toFixed(1)} 公里</strong></div>
-    <span class="gps-zone-badge ${cls}">${label}</span>
-    <div class="gps-result-body">${advice}</div>
-    <div style="font-size:13px;color:#888;margin-top:6px;">另一電廠 ${dists[1].name}：約 ${dists[1].km.toFixed(1)} 公里</div>`;
-  document.getElementById('gpsBtn').style.display='none';
+  let zc,zl;
+  if(km<=3)     {zc='z3'; zl='3公里以內・緊急防護區';}
+  else if(km<=8) {zc='z8'; zl='3–8公里・廠區應變區';}
+  else if(km<=16){zc='z16';zl='8–16公里・預防計畫區';}
+  else           {zc='zout';zl='16公里以外・一般注意區';}
+  const el=document.getElementById('gpsInline');
+  el.innerHTML=`<span class="gps-inline-dot ok"></span>距 <strong>${n.name}</strong> 約 <strong>${km.toFixed(1)} 公里</strong>&ensp;<span class="gips-zone ${zc}">${zl}</span>`;
 }
 function showGpsError(msg){
-  const el=document.getElementById('gpsResult');
-  el.className='gps-err';el.textContent='⚠ '+msg;el.classList.remove('hidden');
+  const el=document.getElementById('gpsInline');
+  el.innerHTML=`<span class="gps-inline-dot err"></span><span style="color:var(--red-mid)">${msg}</span>`;
 }
 
 const LEVEL_INFO={
@@ -1122,6 +1123,7 @@ function updateClock(){
 updateClock();setInterval(updateClock,30000);
 renderNews();
 setLevel(2, null);
+requestGPS();
 </script>
 </body>
 </html>
