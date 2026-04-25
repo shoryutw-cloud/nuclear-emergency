@@ -3,29 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新北市核子事故民眾防護指引</title>
+<title>核子事故專區</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
    NUSC 色系：深藍 + 橘警示 + 白底政府風
 ═══════════════════════════════════════════════ */
 :root{
-  --blue-dark:  #5C4000;
-  --blue-mid:   #7A5800;
-  --blue-light: #FFF8DC;
-  --orange:     #E07B19;
-  --orange-lt:  #FDF3E7;
-  --red-dark:   #8B1A1A;
-  --red-mid:    #B22222;
-  --red-lt:     #FBF0F0;
-  --amber:      #B8920A;
-  --amber-lt:   #FFF9EC;
-  --green:      #2E6B35;
-  --green-lt:   #EDF7EE;
-  --gray-bg:    #FFFBEF;
-  --gray-border:#E8D98A;
-  --text-main:  #2A1E00;
-  --text-muted: #6B5700;
+  --blue-dark:  #0D2137;
+  --blue-mid:   #1260A8;
+  --blue-light: #E8F4FD;
+  --orange:     #E06B10;
+  --orange-lt:  #FEF3E8;
+  --red-dark:   #7B1010;
+  --red-mid:    #C0392B;
+  --red-lt:     #FDF0EF;
+  --amber:      #D4820A;
+  --amber-lt:   #FEF8EC;
+  --green:      #1A7A40;
+  --green-lt:   #EBF8F0;
+  --gray-bg:    #F0F4F8;
+  --gray-border:#CBD5E8;
+  --text-main:  #0F1E30;
+  --text-muted: #4A6077;
   --white:      #FFFFFF;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -40,7 +40,7 @@ body{
 
 /* ═══════ BANNER ═══════ */
 .banner{
-  background:linear-gradient(120deg,#3D2B00 0%,#5C4000 55%,#7A5800 100%);
+  background:linear-gradient(120deg,#060F1A 0%,#0D2137 40%,#133558 100%);
   padding:10px 28px;
   display:flex;align-items:stretch;gap:0;
   position:sticky;top:0;z-index:100;
@@ -80,7 +80,7 @@ body{
 }
 .blevel-btn span{display:block;font-size:11px;font-weight:400;opacity:0.85;}
 .blevel-btn:hover{background:rgba(255,255,255,0.14);}
-.blevel-btn.l1.active{background:#B8920A;border-color:#B8920A;color:#fff;}
+.blevel-btn.l1.active{background:#D4820A;border-color:#D4820A;color:#fff;}
 .blevel-btn.l2.active{background:var(--orange);border-color:var(--orange);color:#fff;}
 .blevel-btn.l3.active{background:var(--red-mid);border-color:var(--red-mid);color:#fff;}
 .banner-status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
@@ -413,11 +413,11 @@ body{
 .route-path span{color:var(--blue-dark);font-weight:700;}
 .nav-btn{
   display:flex;align-items:center;justify-content:center;gap:8px;
-  background:#7A5800;color:#fff;border:none;border-radius:10px;
+  background:var(--blue-mid);color:#fff;border:none;border-radius:10px;
   padding:12px;font-size:15px;font-weight:700;cursor:pointer;
   font-family:inherit;text-decoration:none;transition:background 0.15s;
 }
-.nav-btn:hover{background:#3D2B00;}
+.nav-btn:hover{background:var(--blue-dark);}
 .flow-hint{
   background:var(--green-lt);border:1.5px solid #9DCCA0;
   border-radius:12px;padding:14px 18px;font-size:15px;color:#1E4D22;
@@ -437,12 +437,12 @@ body{
 .sc-addr{font-size:13px;color:var(--text-muted);margin-bottom:10px;line-height:1.5;}
 .sc-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
-  background:#7A5800;color:#fff;border:none;border-radius:8px;
+  background:var(--blue-mid);color:#fff;border:none;border-radius:8px;
   padding:9px;font-size:14px;font-weight:700;cursor:pointer;
   font-family:inherit;text-decoration:none;
   transition:background 0.15s;width:100%;
 }
-.sc-btn:hover{background:#3D2B00;}
+.sc-btn:hover{background:var(--blue-dark);}
 
 /* ═══════ KI CARD ═══════ */
 .ki-card{
@@ -538,7 +538,7 @@ body{
   border-bottom:3px solid transparent;cursor:pointer;
   transition:all 0.15s;margin-bottom:-2px;
 }
-.ntab.active{color:#7A5800;border-bottom-color:#7A5800;}
+.ntab.active{color:var(--blue-mid);border-bottom-color:var(--blue-mid);}
 .ntab:hover:not(.active){color:var(--text-main);}
 .news-tab-panel{
   background:var(--white);border:1px solid var(--gray-border);
@@ -597,13 +597,13 @@ body{
 .cdot.active{background:var(--blue-mid);}
 
 /* ═══════ TECH STYLE EXTRAS ═══════ */
-body{background:linear-gradient(160deg,#FFFBEF 0%,#FFF5CC 100%);}
+body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 /* Banner accent glow line */
 .banner::after{
   content:'';display:block;
   position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,transparent,#F5C518 30%,#E07B19 70%,transparent);
+  background:linear-gradient(90deg,transparent,#00B4D8 20%,#1260A8 50%,#E06B10 80%,transparent);
   animation:scan 3s ease-in-out infinite;
 }
 @keyframes scan{0%,100%{opacity:0.5}50%{opacity:1}}
@@ -623,9 +623,9 @@ body{background:linear-gradient(160deg,#FFFBEF 0%,#FFF5CC 100%);}
 
 /* Persona buttons glow on active */
 .persona-btn-h.active{
-  box-shadow:0 0 0 3px #F5C51844;
-  border-color:#B8920A !important;
-  background:linear-gradient(135deg,#FFF8DC,#FFFBEF) !important;
+  box-shadow:0 0 0 3px #1260A820;
+  border-color:var(--blue-mid) !important;
+  background:linear-gradient(135deg,var(--blue-light),#F0F4F8) !important;
   color:var(--blue-dark) !important;
 }
 
@@ -635,14 +635,14 @@ body{background:linear-gradient(160deg,#FFFBEF 0%,#FFF5CC 100%);}
 }
 .lc:hover,.shelter-card:hover,.route-card:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 24px rgba(180,140,0,0.15);
+  box-shadow:0 8px 24px rgba(18,96,168,0.15);
 }
 
 /* News items: hover highlight */
-.news-item:hover{background:linear-gradient(90deg,#FFF8DC,#FFFBEF);}
+.news-item:hover{background:var(--blue-light);}
 
 /* Press items: same */
-.press-item:hover{background:linear-gradient(90deg,#FFF8DC,#FFFBEF) !important;}
+.press-item:hover{background:var(--blue-light) !important;}
 
 /* Level btn: active glow */
 .blevel-btn.active{
@@ -686,10 +686,6 @@ body{background:linear-gradient(160deg,#FFFBEF 0%,#FFF5CC 100%);}
 <div class="page">
 
 <!-- ═══ NEWS TABS ═══ -->
-<div style="padding:18px 0 4px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;">
-  <div class="news-main-title">最新資訊</div>
-  <span class="sec-time" id="newsTime">最後更新 14:35</span>
-</div>
 <div style="padding:4px 0 14px;font-size:22px;font-weight:900;color:#B22222;letter-spacing:0.02em;">輻射外釋情形：<span id="radiationStatus">無任何外釋</span></div>
 <div class="news-tabs">
   <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
@@ -1003,6 +999,7 @@ function single(){
       <li><span class="step-num">4</span>遠離海灘、公園等戶外場所（景區已關閉）</li>
     </ul>
   </div>
+  <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">食衣住行</div>
   ${lsGrid([
     ['🍱','食','正常飲食，備齊3日份不需烹調的食品（餅乾、罐頭）',''],
@@ -1028,8 +1025,7 @@ function single(){
     ['👕','衣','換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩',''],
     ['🏠','住','關閉所有門窗，用濕毛巾封縫隙，關閉冷氣及換氣扇',''],
     ['🚗','行','3公里以內：收到命令後疏散。3–8公里：就地掩蔽等指示',''],
-  ])}
-  <div class="sec">疏散路線</div>${evacRoutes()}`;
+  ])}`;
 
   return `
   <div class="action-block red">
@@ -1070,14 +1066,14 @@ function family(){
     </ul>
   </div>
   <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}
+  <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">食衣住行</div>
   ${lsGrid([
     ['🍱','食','備好孩子副食品、奶粉或乾糧，3日份封裝食物','禁止食用外購或戶外食物'],
     ['👕','衣','幫孩子穿長袖、帽子，帶兒童適用口罩及備用衣物',''],
     ['🏠','住','3–8公里：密封家中，孩子留在室內最大房間',''],
     ['🚗','行','接孩子後出發。無車者到集結點等候免費接駁巴士',''],
-  ])}
-  <div class="sec">疏散路線</div>${evacRoutes()}`;
+  ])}`;
 
   return `
   <div class="action-block red">
@@ -1276,48 +1272,47 @@ requestGPS();
 </script>
 
 <!-- ═══ NSC FOOTER ═══ -->
-<div style="background:#3D2B00;color:#e8d080;padding:32px 32px 20px;margin-top:40px;">
+<div style="background:#060F1A;color:#A0BDD8;padding:32px 32px 20px;margin-top:40px;">
   <div style="max-width:900px;margin:0 auto;">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:20px;">
       <div>
-        <div style="font-size:18px;font-weight:900;color:#F5C518;margin-bottom:6px;">核能安全委員會</div>
-        <div style="font-size:13px;line-height:1.9;color:#c8b060;">
+        <div style="font-size:18px;font-weight:900;color:#00B4D8;margin-bottom:6px;">核能安全委員會</div>
+        <div style="font-size:13px;line-height:1.9;color:#7AA4C4;">
           地址：100027 臺北市中正區信義路一段2號10樓<br>
           電話：（02）8522-7890<br>
           傳真：（02）8522-7891<br>
-          <strong style="color:#F5C518;">核安輻安通報專線：0800-088-928</strong>
+          <strong style="color:#00B4D8;">核安輻安通報專線：0800-088-928</strong>
         </div>
       </div>
       <div>
-        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">快速連結</div>
+        <div style="font-size:13px;font-weight:700;color:#00B4D8;margin-bottom:8px;">快速連結</div>
         <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
-          <a href="https://www.nusc.gov.tw/" target="_blank" style="color:#c8b060;text-decoration:none;">核能安全委員會官網</a>
-          <a href="https://www.nusc.gov.tw/gammadetect/npp2.html" target="_blank" style="color:#c8b060;text-decoration:none;">核二廠即時輻射監測</a>
-          <a href="https://www.nusc.gov.tw/news/newszone.html" target="_blank" style="color:#c8b060;text-decoration:none;">新聞專區</a>
-          <a href="https://www.nusc.gov.tw/clickcount/wm-4286.html" target="_blank" style="color:#c8b060;text-decoration:none;">即時新聞澄清專區</a>
-          <a href="https://erss.nusc.gov.tw/law/" target="_blank" style="color:#c8b060;text-decoration:none;">原子能法規</a>
+          <a href="https://www.nusc.gov.tw/" target="_blank" style="color:#7AA4C4;text-decoration:none;">核能安全委員會官網</a>
+          <a href="https://www.nusc.gov.tw/gammadetect/npp2.html" target="_blank" style="color:#7AA4C4;text-decoration:none;">核二廠即時輻射監測</a>
+          <a href="https://www.nusc.gov.tw/news/newszone.html" target="_blank" style="color:#7AA4C4;text-decoration:none;">新聞專區</a>
+          <a href="https://www.nusc.gov.tw/clickcount/wm-4286.html" target="_blank" style="color:#7AA4C4;text-decoration:none;">即時新聞澄清專區</a>
+          <a href="https://erss.nusc.gov.tw/law/" target="_blank" style="color:#7AA4C4;text-decoration:none;">原子能法規</a>
         </div>
       </div>
       <div>
-        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">社群媒體</div>
+        <div style="font-size:13px;font-weight:700;color:#00B4D8;margin-bottom:8px;">社群媒體</div>
         <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
-          <a href="https://www.facebook.com/radiationsafety" target="_blank" style="color:#c8b060;text-decoration:none;">Facebook 輻務小站</a>
-          <a href="https://www.youtube.com/@NSCROC" target="_blank" style="color:#c8b060;text-decoration:none;">YouTube 官方頻道</a>
-          <a href="https://play.google.com/store/apps/details?id=com.hyxen.atomicenergy&hl=zh_TW" target="_blank" style="color:#c8b060;text-decoration:none;">核安e點通 App</a>
+          <a href="https://www.facebook.com/radiationsafety" target="_blank" style="color:#7AA4C4;text-decoration:none;">Facebook 輻務小站</a>
+          <a href="https://www.youtube.com/@NSCROC" target="_blank" style="color:#7AA4C4;text-decoration:none;">YouTube 官方頻道</a>
+          <a href="https://play.google.com/store/apps/details?id=com.hyxen.atomicenergy&hl=zh_TW" target="_blank" style="color:#7AA4C4;text-decoration:none;">核安e點通 App</a>
         </div>
       </div>
       <div>
-        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">便民服務</div>
+        <div style="font-size:13px;font-weight:700;color:#00B4D8;margin-bottom:8px;">便民服務</div>
         <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
-          <a href="https://www.nusc.gov.tw/u/v/6l" target="_blank" style="color:#c8b060;text-decoration:none;">民眾關切問答資訊</a>
-          <a href="https://www.nusc.gov.tw/u/c/6i" target="_blank" style="color:#c8b060;text-decoration:none;">輻防作業查詢服務</a>
-          <a href="https://www.nusc.gov.tw/chiefmailbox" target="_blank" style="color:#c8b060;text-decoration:none;">首長信箱</a>
-          <a href="https://www.nusc.gov.tw/clickcount/wm-268.html" target="_blank" style="color:#c8b060;text-decoration:none;">網站導覽</a>
+          <a href="https://www.nusc.gov.tw/u/v/6l" target="_blank" style="color:#7AA4C4;text-decoration:none;">民眾關切問答資訊</a>
+          <a href="https://www.nusc.gov.tw/u/c/6i" target="_blank" style="color:#7AA4C4;text-decoration:none;">輻防作業查詢服務</a>
+          <a href="https://www.nusc.gov.tw/chiefmailbox" target="_blank" style="color:#7AA4C4;text-decoration:none;">首長信箱</a>
+          <a href="https://www.nusc.gov.tw/clickcount/wm-268.html" target="_blank" style="color:#7AA4C4;text-decoration:none;">網站導覽</a>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid #5C4000;padding-top:14px;font-size:12px;color:#8a7040;text-align:center;line-height:1.7;">
-      本頁資料來源：新北市核子事故區域民眾防護應變計畫（110年版）｜核能安全委員會<br>
+    <div style="border-top:1px solid #1B3A5C;padding-top:14px;font-size:12px;color:#7AA4C4;text-align:center;line-height:1.7;">
       隱私權保護政策 ｜ 資訊安全政策 ｜ 政府網站資料開放宣告 ｜ 最佳瀏覽解析度 1024×768 以上
     </div>
   </div>
