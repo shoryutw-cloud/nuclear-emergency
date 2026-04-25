@@ -596,6 +596,22 @@ body{
 .cdot{width:8px;height:8px;border-radius:50%;background:var(--gray-border);cursor:pointer;transition:background 0.15s;}
 .cdot.active{background:var(--blue-mid);}
 
+
+/* ═══ MARQUEE ═══ */
+.marquee-track{
+  display:flex;white-space:nowrap;
+  animation:marquee 14s linear infinite;
+}
+.marquee-text{
+  font-size:20px;font-weight:900;color:#B22222;
+  padding:7px 60px 7px 20px;
+  display:inline-block;
+}
+@keyframes marquee{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
 /* ═══════ TECH STYLE EXTRAS ═══════ */
 body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
@@ -651,6 +667,17 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .blevel-btn.l3.active{
   box-shadow:0 0 16px rgba(178,34,34,0.5) !important;
 }
+
+/* GPS permission button */
+.gps-perm-btn{
+  background:var(--blue-mid);color:#fff;
+  border:none;border-radius:20px;
+  padding:5px 14px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:inherit;
+  transition:all 0.15s;white-space:nowrap;
+}
+.gps-perm-btn:hover{background:var(--blue-dark);transform:scale(1.04);}
+.gps-perm-btn:disabled{background:#aaa;cursor:not-allowed;transform:none;}
 </style>
 </head>
 <body>
@@ -686,7 +713,17 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <div class="page">
 
 <!-- ═══ NEWS TABS ═══ -->
-<div style="padding:4px 0 14px;font-size:22px;font-weight:900;color:#B22222;letter-spacing:0.02em;">輻射外釋情形：<span id="radiationStatus">無任何外釋</span></div>
+<div style="padding:4px 0 14px;overflow:hidden;border-radius:8px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);">
+  <div style="display:flex;align-items:center;gap:0;">
+    <div style="background:#C0392B;color:#fff;font-size:14px;font-weight:900;padding:8px 16px;white-space:nowrap;flex-shrink:0;letter-spacing:0.08em;">輻射外釋情形</div>
+    <div style="flex:1;overflow:hidden;">
+      <div class="marquee-track">
+        <span class="marquee-text" id="radiationStatus">無任何外釋</span>
+        <span class="marquee-text">無任何外釋</span>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="news-tabs">
   <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
   <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
@@ -716,7 +753,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <div class="sec">
   <span class="sec-left">我的位置與情況</span>
   <span id="gpsInline" class="sec-gps">
-    <span class="gps-inline-dot"></span>偵測位置中…
+    <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
   </span>
 </div>
 
@@ -787,27 +824,46 @@ function haversine(la1,lo1,la2,lo2){
 }
 
 function requestGPS(){
-  if(!navigator.geolocation){showGpsError('瀏覽器不支援定位');return;}
+  const btn=document.getElementById('gpsPermBtn');
+  if(!navigator.geolocation){
+    showGpsError('此瀏覽器不支援定位功能');return;
+  }
+  if(btn){btn.disabled=true;btn.textContent='📡 定位中…';}
   navigator.geolocation.getCurrentPosition(
     p=>gotGPS(p.coords.latitude,p.coords.longitude),
-    ()=>showGpsError('位置權限未開啟'),
-    {timeout:12000,maximumAge:60000}
+    e=>{
+      let msg='位置授權被拒絕';
+      if(e.code===1) msg='⚠ 請在瀏覽器允許位置存取後重試';
+      if(e.code===2) msg='⚠ 無法取得位置，請確認裝置 GPS 已開啟';
+      if(e.code===3) msg='⚠ 定位逾時，請重試';
+      showGpsError(msg, true);
+    },
+    {timeout:14000, maximumAge:0, enableHighAccuracy:false}
   );
 }
 function gotGPS(lat,lng){
   const dists=PLANTS.map(p=>({name:p.name,km:haversine(lat,lng,p.lat,p.lng)})).sort((a,b)=>a.km-b.km);
   const n=dists[0],km=n.km;
-  let zc,zl;
-  if(km<=3)     {zc='z3'; zl='3公里以內・緊急防護區';}
-  else if(km<=8) {zc='z8'; zl='3–8公里・廠區應變區';}
-  else if(km<=16){zc='z16';zl='8–16公里・預防計畫區';}
-  else           {zc='zout';zl='16公里以外・一般注意區';}
+  let zc,zl,advice;
+  if(km<=3)      {zc='z3'; zl='3公里以內・緊急防護區';  advice='⚠ 須立即撤離';}
+  else if(km<=8)  {zc='z8'; zl='3–8公里・廠區應變區';   advice='進行室內掩蔽';}
+  else if(km<=16) {zc='z16';zl='8–16公里・預防計畫區';  advice='視指示準備';}
+  else            {zc='zout';zl='16公里以外・一般注意區';advice='持續關注';}
   const el=document.getElementById('gpsInline');
-  el.innerHTML=`<span class="gps-inline-dot ok"></span>距 <strong>${n.name}</strong> 約 <strong>${km.toFixed(1)} 公里</strong>&ensp;<span class="gips-zone ${zc}">${zl}</span>`;
+  el.innerHTML=`
+    <span class="gps-inline-dot ok"></span>
+    距 <strong>${n.name}</strong> 約 <strong>${km.toFixed(1)} 公里</strong>
+    &ensp;<span class="gips-zone ${zc}">${zl}</span>
+    &ensp;<span style="font-size:12px;color:var(--text-muted);">${advice}</span>`;
 }
-function showGpsError(msg){
+function showGpsError(msg, showRetry=false){
   const el=document.getElementById('gpsInline');
-  el.innerHTML=`<span class="gps-inline-dot err"></span><span style="color:var(--red-mid)">${msg}</span>`;
+  el.innerHTML=`<span class="gps-inline-dot err"></span><span style="color:var(--red-mid);font-size:13px;">${msg}</span>`
+    +(showRetry?` &ensp;<button onclick="resetGPS()" style="background:none;border:1px solid var(--red-mid);color:var(--red-mid);border-radius:12px;padding:2px 10px;font-size:12px;cursor:pointer;font-family:inherit;">重試</button>`:'');
+}
+function resetGPS(){
+  const el=document.getElementById('gpsInline');
+  el.innerHTML=`<button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>`;
 }
 
 const LEVEL_INFO={
@@ -1192,6 +1248,20 @@ function switchTab(tab,el){
   renderTabContent();
 }
 
+
+function toggleSchool(){
+  const wrap=document.getElementById('schoolTableWrap');
+  const icon=document.getElementById('schoolToggleIcon');
+  if(!wrap)return;
+  if(wrap.style.display==='none'){
+    wrap.style.display='';
+    icon.textContent='▲';
+  } else {
+    wrap.style.display='none';
+    icon.textContent='▼';
+  }
+}
+
 function toggleMore(){
   showAll=!showAll;
   renderTabContent();
@@ -1268,7 +1338,6 @@ updateClock();setInterval(updateClock,30000);
 renderTabContent();
 renderCarousel();
 setLevel(2, null);
-requestGPS();
 </script>
 
 <!-- ═══ NSC FOOTER ═══ -->
