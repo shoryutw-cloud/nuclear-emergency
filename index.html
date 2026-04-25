@@ -532,29 +532,82 @@ body{
 .gips-zone.z8{background:var(--orange-lt);color:var(--orange);}
 .gips-zone.z16{background:var(--amber-lt);color:var(--amber);}
 .gips-zone.zout{background:var(--green-lt);color:var(--green);}
+
+/* ═══════ NEWS TABS ═══════ */
+.news-top{display:flex;align-items:baseline;justify-content:space-between;padding:22px 0 12px;}
+.news-main-title{font-size:24px;font-weight:900;color:var(--blue-dark);}
+.news-tabs{display:flex;border-bottom:2px solid var(--gray-border);}
+.ntab{
+  padding:10px 22px;font-family:inherit;font-size:16px;font-weight:700;
+  color:var(--text-muted);background:none;border:none;
+  border-bottom:3px solid transparent;cursor:pointer;
+  transition:all 0.15s;margin-bottom:-2px;
+}
+.ntab.active{color:var(--blue-mid);border-bottom-color:var(--blue-mid);}
+.ntab:hover:not(.active){color:var(--text-main);}
+.news-tab-panel{
+  background:var(--white);border:1px solid var(--gray-border);
+  border-top:none;border-radius:0 0 14px 14px;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+.news-more{padding:10px 20px;border-top:1px solid var(--gray-border);text-align:right;}
+.news-more-btn{
+  background:none;border:none;color:var(--blue-mid);
+  font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.news-more-btn:hover{text-decoration:underline;}
+.press-grid{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:600px){.press-grid{grid-template-columns:1fr;}}
+.press-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;border-bottom:1px solid var(--gray-border);
+  border-right:1px solid var(--gray-border);cursor:pointer;transition:background 0.12s;
+}
+.press-item:nth-child(even){border-right:none;}
+.press-item:hover{background:var(--gray-bg);}
+.press-date{flex-shrink:0;text-align:center;min-width:48px;}
+.press-date-top{font-size:11px;color:var(--text-muted);}
+.press-date-day{font-size:22px;font-weight:900;color:var(--blue-dark);line-height:1.1;}
+.press-div{width:1px;background:var(--gray-border);align-self:stretch;flex-shrink:0;}
+.press-title{font-size:14px;color:var(--text-main);line-height:1.6;}
+
+/* ═══════ CAROUSEL ═══════ */
+.carousel-section{margin-top:24px;}
+.carousel-section-title{font-size:20px;font-weight:900;color:var(--blue-dark);margin-bottom:12px;}
+.carousel-wrap{border-radius:12px;overflow:hidden;}
+.carousel-track{display:flex;height:240px;}
+.cslide{
+  flex:0 0 calc(33.33% + 22px);position:relative;overflow:hidden;
+  margin-right:-22px;
+  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 100%,0 100%);cursor:pointer;
+}
+.cslide.last{clip-path:none;flex:0 0 33.33%;margin-right:0;}
+.cslide img{width:115%;height:100%;object-fit:cover;object-position:center;display:block;}
+.cslide-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.72));
+  padding:30px 14px 12px;
+}
+.cslide-title{font-size:15px;font-weight:700;color:#fff;}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 0 4px;}
+.carousel-arrow{
+  width:32px;height:32px;border-radius:50%;
+  border:1.5px solid var(--gray-border);background:var(--white);
+  cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+  color:var(--blue-dark);transition:all 0.15s;
+}
+.carousel-arrow:hover{background:var(--blue-light);border-color:var(--blue-mid);}
+.carousel-dots{display:flex;gap:6px;align-items:center;}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--gray-border);cursor:pointer;transition:background 0.15s;}
+.cdot.active{background:var(--blue-mid);}
 </style>
 </head>
 <body>
 
 <!-- ═══ BANNER ═══ -->
 <div class="banner">
-  <!-- Left: Radiation icon + title -->
+  <!-- Left: title only, no logo -->
   <div class="banner-left">
-    <div class="banner-shield">
-      <!-- ☢ 標準輻射符號：黃圓底、紫色三葉草、一腳朝下兩腳朝上 -->
-      <svg width="42" height="42" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="48" fill="#F5C518"/>
-        <g fill="#CC00CC">
-          <circle cx="50" cy="50" r="8"/>
-          <!-- 底部葉片 (60°→120°) -->
-          <path d="M56,60.4 A12,12,0,0,1,44,60.4 L28,88.1 A44,44,0,0,0,72,88.1 Z"/>
-          <!-- 左上葉片 (180°→240°) -->
-          <path d="M38,50 A12,12,0,0,1,44,39.6 L28,11.9 A44,44,0,0,0,6,50 Z"/>
-          <!-- 右上葉片 (300°→360°) -->
-          <path d="M56,39.6 A12,12,0,0,1,62,50 L94,50 A44,44,0,0,0,72,11.9 Z"/>
-        </g>
-      </svg>
-    </div>
     <div class="banner-text-wrap">
       <div class="banner-row1">
         <span class="banner-title">核子事故警報</span>
@@ -582,16 +635,39 @@ body{
 
 <div class="page">
 
-<!-- ═══ NEWS FEED ═══ -->
-<div class="sec" style="margin-top:20px;">
-  <span class="sec-left">📢 最新資訊</span>
+<!-- ═══ NEWS TABS ═══ -->
+<div class="news-top">
+  <div class="news-main-title">最新資訊</div>
   <span class="sec-time" id="newsTime">最後更新 14:35</span>
 </div>
-<div class="news-feed" id="newsFeed"></div>
+<div class="news-tabs">
+  <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
+  <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
+  <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
+</div>
+<div class="news-tab-panel">
+  <div id="tabContent"></div>
+  <div class="news-more">
+    <button class="news-more-btn" id="moreBtn" onclick="toggleMore()">更多 +</button>
+  </div>
+</div>
+
+<!-- ═══ INFOGRAPHIC CAROUSEL ═══ -->
+<div class="carousel-section">
+  <div class="carousel-section-title">防護知識圖卡</div>
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-arrow" onclick="prevSlide()">&#8249;</button>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <button class="carousel-arrow" onclick="nextSlide()">&#8250;</button>
+  </div>
+</div>
 
 <!-- ═══ INFO CARDS ═══ -->
 <div class="sec" style="margin-top:20px;">
-  <span class="sec-left">📌 重要資訊</span>
+  <span class="sec-left">重要資訊</span>
 </div>
 <div class="info-cards">
   <a class="info-card" href="#mainContent" onclick="setPersona('single',document.querySelector('.persona-btn'));scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
@@ -640,7 +716,7 @@ body{
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
-  <span class="sec-left">📍 我的位置與情況</span>
+  <span class="sec-left">我的位置與情況</span>
   <span id="gpsInline" class="sec-gps">
     <span class="gps-inline-dot"></span>偵測位置中…
   </span>
@@ -674,7 +750,7 @@ body{
 </div>
 
 <!-- ═══ CONTENT ═══ -->
-<div class="sec" id="contentSec">📋 行動指引</div>
+<div class="sec" id="contentSec">行動指引</div>
 <div id="mainContent"></div>
 
 </div><!-- /page -->
@@ -1090,30 +1166,102 @@ function disabled_(){
   <div class="sec">🏟 避難收容所</div>${shelterCards()}`;
 }
 
-/* ── News feed (後台可修改) ── */
-const NEWS=[
-  {time:'14:35',type:'alert',  tag:'緊急',text:'核能二廠廠區緊急事故宣布，EPZ 內民眾請保持警覺並關注後續指示'},
-  {time:'14:30',type:'warning',tag:'停課',text:'新北市政府宣布金山、萬里、三芝、石門區各級學校即起停課，家長可前往學校接孩子'},
-  {time:'14:22',type:'info',   tag:'接送',text:'弱勢族群接送作業正式啟動，復康巴士 394 輛已待命，撥打 1999 登記需求'},
-  {time:'14:15',type:'info',   tag:'輻射',text:'核安委員會確認 EPZ 內環境輻射劑量目前仍在正常範圍，持續監測中'},
-  {time:'14:00',type:'warning',tag:'事故',text:'核能二廠發生設備異常，已啟動廠區緊急應變程序，台電公司正積極搶修'},
-];
+/* ── Tab data ── */
+const TABS_DATA={
+  news: NEWS,
+  press:[
+    {time:'2026/04/25',type:'info',tag:'新聞稿',text:'核能安全委員會就核能二廠廠區緊急事故發布聲明，說明目前廠區狀況及後續處置措施'},
+    {time:'2026/04/25',type:'info',tag:'新聞稿',text:'核二廠廠區緊急事故應變措施說明記者會摘要'},
+    {time:'2026/04/24',type:'info',tag:'新聞稿',text:'核二廠設備狀況定期檢查結果說明'},
+    {time:'2026/04/23',type:'info',tag:'新聞稿',text:'核能安全委員會發布年度輻射環境監測報告'},
+    {time:'2026/04/20',type:'info',tag:'新聞稿',text:'核安委員會強化核電廠安全檢查措施說明'},
+  ],
+  clarify:[
+    {time:'2026/04/25',type:'warning',tag:'澄清',text:'澄清社群媒體流傳「核電廠已爆炸」等不實訊息，請民眾以官方資訊為準'},
+    {time:'2026/04/25',type:'warning',tag:'澄清',text:'澄清「輻射已擴散至台北市區」為錯誤資訊，目前 EPZ 外輻射值均在正常範圍'},
+    {time:'2026/04/24',type:'warning',tag:'澄清',text:'說明碘片「預防性服用」相關謠言，提醒民眾切勿自行購買服用'},
+    {time:'2026/04/23',type:'warning',tag:'澄清',text:'澄清網傳「核二廠長期洩漏輻射」為誤導資訊'},
+    {time:'2026/04/20',type:'warning',tag:'澄清',text:'澄清「台灣核電廠監管不足」相關不實報導'},
+  ]
+};
 
-function renderNews(){
-  const feed=document.getElementById('newsFeed');
-  if(!feed)return;
-  feed.innerHTML=NEWS.map(n=>`
-  <div class="news-item">
-    <div class="news-dot-col">
-      <div class="news-dot ${n.type}"></div>
-      <div class="news-time">${n.time}</div>
-    </div>
-    <div class="news-body">
-      <span class="news-tag ${n.type}">${n.tag}</span>
-      <div class="news-text">${n.text}</div>
-    </div>
-  </div>`).join('');
+let currentTab='news', showAll=false;
+
+function switchTab(tab,el){
+  currentTab=tab; showAll=false;
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTabContent();
 }
+
+function toggleMore(){
+  showAll=!showAll;
+  renderTabContent();
+}
+
+function renderTabContent(){
+  const data=TABS_DATA[currentTab];
+  const limit=showAll?data.length:3;
+  const visible=data.slice(0,limit);
+  const moreBtn=document.getElementById('moreBtn');
+  if(currentTab==='news'){
+    document.getElementById('tabContent').innerHTML=visible.map(n=>`
+    <div class="news-item">
+      <div class="news-dot-col">
+        <div class="news-dot ${n.type}"></div>
+        <div class="news-time">${n.time}</div>
+      </div>
+      <div class="news-body">
+        <span class="news-tag ${n.type}">${n.tag}</span>
+        <div class="news-text">${n.text}</div>
+      </div>
+    </div>`).join('');
+  } else {
+    document.getElementById('tabContent').innerHTML=`<div class="press-grid">${
+      visible.map(n=>{
+        const[y,m,d]=n.time.split('/');
+        return `<div class="press-item">
+          <div class="press-date">
+            <div class="press-date-top">${y} - ${m}</div>
+            <div class="press-date-day">${d}</div>
+          </div>
+          <div class="press-div"></div>
+          <div class="press-title">${n.text}</div>
+        </div>`;
+      }).join('')
+    }</div>`;
+  }
+  moreBtn.textContent=showAll?'收合 −':'更多 +';
+  moreBtn.style.display=data.length<=3?'none':'block';
+}
+
+/* ── Carousel ── */
+const SLIDES=[
+  {src:'img-alert.png',   title:'警報發放',     desc:'核電廠事故時的預警通知方式'},
+  {src:'img-shelter.png', title:'執行室內掩蔽', desc:'留在室內的防護措施'},
+  {src:'img-evacuation.png',title:'疏散撤離指引',desc:'疏散時需要做哪些準備'},
+  {src:'img-iodine.png',  title:'碘片服用指引', desc:'政府通知後才可服用'},
+];
+let slidePos=0;
+const VISIBLE=3;
+
+function renderCarousel(){
+  const track=document.getElementById('carouselTrack');
+  const dotsEl=document.getElementById('carouselDots');
+  const visible=[];
+  for(let i=0;i<VISIBLE;i++) visible.push(SLIDES[(slidePos+i)%SLIDES.length]);
+  track.innerHTML=visible.map((s,i)=>`
+  <div class="cslide ${i===VISIBLE-1?'last':''}">
+    <img src="${s.src}" alt="${s.title}" loading="lazy">
+    <div class="cslide-caption"><div class="cslide-title">${s.title}</div></div>
+  </div>`).join('');
+  dotsEl.innerHTML=SLIDES.map((_,i)=>
+    `<span class="cdot ${i===slidePos?'active':''}" onclick="goTo(${i})"></span>`
+  ).join('');
+}
+function prevSlide(){slidePos=(slidePos-1+SLIDES.length)%SLIDES.length;renderCarousel();}
+function nextSlide(){slidePos=(slidePos+1)%SLIDES.length;renderCarousel();}
+function goTo(i){slidePos=i;renderCarousel();}
 
 function updateClock(){
   const n=new Date();
@@ -1121,7 +1269,8 @@ function updateClock(){
   document.getElementById('clockEl').textContent=s;
 }
 updateClock();setInterval(updateClock,30000);
-renderNews();
+renderTabContent();
+renderCarousel();
 setLevel(2, null);
 requestGPS();
 </script>
