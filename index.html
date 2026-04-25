@@ -41,30 +41,29 @@ body{
 /* ═══════ BANNER ═══════ */
 .banner{
   background:linear-gradient(120deg,var(--blue-dark) 0%,#162E52 55%,#1C3F6E 100%);
-  padding:16px 32px;
-  display:flex;align-items:center;gap:18px;
+  padding:10px 32px;
+  display:flex;align-items:center;gap:14px;
   position:sticky;top:0;z-index:100;
   box-shadow:0 3px 16px rgba(0,0,0,0.3);
 }
 .banner-shield{
-  width:52px;height:52px;border-radius:50%;
+  width:40px;height:40px;border-radius:50%;
   background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.35);
   display:flex;align-items:center;justify-content:center;
-  font-size:24px;flex-shrink:0;
+  font-size:20px;flex-shrink:0;
 }
 .banner-text{flex:1;}
-.banner-row1{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.banner-title{font-size:24px;font-weight:900;color:#fff;letter-spacing:0.02em;}
+.banner-row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.banner-title{font-size:22px;font-weight:900;color:#fff;letter-spacing:0.02em;}
 .level-pill{
   background:var(--orange);color:#fff;
-  font-size:14px;font-weight:700;
-  padding:4px 14px;border-radius:30px;
+  font-size:13px;font-weight:700;
+  padding:3px 12px;border-radius:30px;
   letter-spacing:0.06em;
   animation:blink 1.4s ease-in-out infinite;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.65}}
-.banner-sub{font-size:14px;color:rgba(255,255,255,0.8);margin-top:3px;}
-.banner-time{font-size:13px;color:rgba(255,255,255,0.6);text-align:right;flex-shrink:0;}
+.banner-sub{font-size:13px;color:rgba(255,255,255,0.8);margin-top:1px;}
 
 /* ═══════ PAGE BODY ═══════ */
 .page{padding:0 32px 80px;}
@@ -73,25 +72,32 @@ body{
 .sec{
   font-size:13px;font-weight:700;letter-spacing:0.1em;
   color:var(--blue-mid);text-transform:uppercase;
-  padding:24px 0 10px;
+  padding:20px 0 8px;
   border-bottom:2px solid var(--blue-mid);
-  margin-bottom:16px;
-  display:flex;align-items:center;gap:8px;
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.sec-left{display:flex;align-items:center;gap:8px;}
+.sec-time{
+  font-size:12px;font-weight:400;letter-spacing:0;
+  color:var(--text-muted);text-transform:none;
+  background:var(--gray-bg);padding:3px 10px;
+  border-radius:20px;border:1px solid var(--gray-border);
 }
 
 /* ═══════ LEVEL SELECTOR ═══════ */
-.level-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.level-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
 .level-btn{
   background:var(--white);
   border:2.5px solid var(--gray-border);
-  border-radius:16px;padding:20px 12px;
+  border-radius:14px;padding:12px 12px;
   cursor:pointer;font-family:inherit;text-align:center;
   transition:all 0.15s;
   box-shadow:0 2px 6px rgba(0,0,0,0.07);
 }
-.level-btn .lv-icon{font-size:28px;display:block;margin-bottom:8px;}
-.level-btn .lv-name{font-size:20px;font-weight:900;display:block;}
-.level-btn .lv-sub{font-size:13px;display:block;margin-top:4px;opacity:0.75;}
+.level-btn .lv-icon{font-size:22px;display:block;margin-bottom:4px;}
+.level-btn .lv-name{font-size:19px;font-weight:900;display:block;}
+.level-btn .lv-sub{font-size:12px;display:block;margin-top:2px;opacity:0.75;}
 .level-btn.l1:not(.active){color:var(--amber);border-color:#FAC77588;}
 .level-btn.l2:not(.active){color:var(--orange);border-color:#E07B1988;}
 .level-btn.l3:not(.active){color:var(--red-mid);border-color:#B2222288;}
@@ -101,7 +107,7 @@ body{
 
 /* ═══════ STATUS CARD ═══════ */
 .status-card{
-  background:var(--white);border-radius:16px;padding:20px 24px;
+  background:var(--white);border-radius:14px;padding:14px 18px;
   border-left:6px solid var(--orange);
   box-shadow:0 2px 10px rgba(0,0,0,0.07);
   transition:border-color 0.2s;
@@ -109,15 +115,69 @@ body{
 .status-card.l1{border-color:var(--amber);}
 .status-card.l2{border-color:var(--orange);}
 .status-card.l3{border-color:var(--red-mid);}
-.status-title{font-size:22px;font-weight:900;margin-bottom:8px;}
-.status-desc{font-size:16px;color:var(--text-muted);line-height:1.75;}
-.status-tags{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;}
-.stag{
-  font-size:14px;font-weight:700;padding:5px 14px;border-radius:30px;
-}
+.status-title{font-size:19px;font-weight:900;margin-bottom:6px;}
+.status-desc{font-size:15px;color:var(--text-muted);line-height:1.7;}
+.status-tags{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap;}
+.stag{font-size:13px;font-weight:700;padding:4px 12px;border-radius:30px;}
 .l1 .stag{background:var(--amber-lt);color:var(--amber);border:1.5px solid var(--amber);}
 .l2 .stag{background:var(--orange-lt);color:var(--orange);border:1.5px solid var(--orange);}
 .l3 .stag{background:var(--red-lt);color:var(--red-mid);border:1.5px solid var(--red-mid);}
+
+/* ═══════ NEWS FEED ═══════ */
+.news-feed{
+  background:var(--white);border-radius:16px;
+  border:1.5px solid var(--gray-border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  overflow:hidden;margin-bottom:0;
+}
+.news-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:13px 20px;border-bottom:1px solid var(--gray-border);
+}
+.news-item:last-child{border-bottom:none;}
+.news-dot-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0;padding-top:4px;}
+.news-dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+}
+.news-dot.alert{background:var(--red-mid);}
+.news-dot.warning{background:var(--orange);}
+.news-dot.info{background:var(--blue-mid);}
+.news-time{font-size:12px;color:var(--text-muted);font-weight:700;margin-top:4px;white-space:nowrap;}
+.news-body{flex:1;}
+.news-text{font-size:15px;color:var(--text-main);line-height:1.6;}
+.news-tag{
+  display:inline-block;font-size:11px;font-weight:700;
+  padding:2px 8px;border-radius:20px;margin-bottom:4px;
+}
+.news-tag.alert{background:var(--red-lt);color:var(--red-dark);}
+.news-tag.warning{background:var(--orange-lt);color:var(--orange);}
+.news-tag.info{background:var(--blue-light);color:var(--blue-dark);}
+
+/* ═══════ INFO CARDS ═══════ */
+.info-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:0;}
+@media(max-width:800px){.info-cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.info-cards{grid-template-columns:1fr;}}
+.info-card{
+  background:var(--white);border:1.5px solid var(--gray-border);
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  transition:box-shadow 0.15s,transform 0.15s;
+  text-decoration:none;display:block;
+}
+.info-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.12);transform:translateY(-2px);}
+.info-card-img{
+  height:80px;display:flex;align-items:center;justify-content:center;
+  font-size:36px;
+}
+.info-card-img.blue{background:var(--blue-light);}
+.info-card-img.orange{background:var(--orange-lt);}
+.info-card-img.red{background:var(--red-lt);}
+.info-card-img.green{background:var(--green-lt);}
+.info-card-img.amber{background:var(--amber-lt);}
+.info-card-img.gray{background:var(--gray-bg);}
+.info-card-body{padding:12px 14px;}
+.info-card-title{font-size:15px;font-weight:700;color:var(--text-main);margin-bottom:4px;}
+.info-card-desc{font-size:13px;color:var(--text-muted);line-height:1.55;}
 
 /* ═══════ 2-COL GRID for GPS + PERSONA ═══════ */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -392,13 +452,15 @@ body{
     </div>
     <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
   </div>
-  <div class="banner-time" id="clockEl"></div>
 </div>
 
 <div class="page">
 
 <!-- ═══ LEVEL ═══ -->
-<div class="sec">⚡ 目前警戒等級</div>
+<div class="sec">
+  <span class="sec-left">⚡ 目前警戒等級</span>
+  <span class="sec-time">更新時間：<span id="clockEl">--</span></span>
+</div>
 <div class="level-row">
   <button class="level-btn l1" onclick="setLevel(1,this)">
     <span class="lv-icon">⚡</span>
@@ -418,12 +480,68 @@ body{
 </div>
 
 <!-- STATUS CARD -->
-<div style="margin-top:16px;">
+<div style="margin-top:12px;">
   <div class="status-card l2" id="statusCard">
     <div class="status-title" id="statusTitle">🔶 廠區緊急事故</div>
     <div class="status-desc" id="statusDesc"></div>
     <div class="status-tags" id="statusTags"></div>
   </div>
+</div>
+
+<!-- ═══ NEWS FEED ═══ -->
+<div class="sec" style="margin-top:20px;">
+  <span class="sec-left">📢 最新資訊</span>
+  <span class="sec-time" id="newsTime">最後更新 14:35</span>
+</div>
+<div class="news-feed" id="newsFeed"></div>
+
+<!-- ═══ INFO CARDS ═══ -->
+<div class="sec" style="margin-top:20px;">
+  <span class="sec-left">📌 重要資訊</span>
+</div>
+<div class="info-cards">
+  <a class="info-card" href="#mainContent" onclick="setPersona('single',document.querySelector('.persona-btn'));scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
+    <div class="info-card-img orange">🏃</div>
+    <div class="info-card-body">
+      <div class="info-card-title">疏散撤離指引</div>
+      <div class="info-card-desc">依警戒等級與住家位置，了解您應採取的行動</div>
+    </div>
+  </a>
+  <a class="info-card" href="https://www.google.com/maps/search/避難收容所+新北市" target="_blank">
+    <div class="info-card-img blue">🏟</div>
+    <div class="info-card-body">
+      <div class="info-card-title">避難收容所位置</div>
+      <div class="info-card-desc">板橋、三重、新莊、樹林、泰山各體育館開放收容</div>
+    </div>
+  </a>
+  <a class="info-card" href="https://www.google.com/maps/search/衛生所+金山+石門+萬里+三芝" target="_blank">
+    <div class="info-card-img amber">💊</div>
+    <div class="info-card-body">
+      <div class="info-card-title">碘化鉀領取地點</div>
+      <div class="info-card-desc">各區衛生所發放，需等候官方通知才可服用</div>
+    </div>
+  </a>
+  <a class="info-card" href="#mainContent" onclick="setPersona('family',document.querySelectorAll('.persona-btn')[1]);scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
+    <div class="info-card-img green">🏫</div>
+    <div class="info-card-body">
+      <div class="info-card-title">學校停課與接孩子</div>
+      <div class="info-card-desc">EPZ 區域學校安置對照表及接孩子程序說明</div>
+    </div>
+  </a>
+  <a class="info-card" href="#mainContent" onclick="setPersona('disabled',document.querySelectorAll('.persona-btn')[2]);scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
+    <div class="info-card-img blue">♿</div>
+    <div class="info-card-body">
+      <div class="info-card-title">行動不便者協助</div>
+      <div class="info-card-desc">復康巴士394輛待命，撥打1999登記接送需求</div>
+    </div>
+  </a>
+  <a class="info-card" href="https://www.nusc.gov.tw/" target="_blank">
+    <div class="info-card-img gray">📡</div>
+    <div class="info-card-body">
+      <div class="info-card-title">核安委員會官網</div>
+      <div class="info-card-desc">即時輻射監測數據、官方新聞稿與緊急通知</div>
+    </div>
+  </a>
 </div>
 
 <!-- ═══ GPS + PERSONA ═══ -->
@@ -887,11 +1005,38 @@ function disabled_(){
   <div class="sec">🏟 避難收容所</div>${shelterCards()}`;
 }
 
+/* ── News feed (後台可修改) ── */
+const NEWS=[
+  {time:'14:35',type:'alert',  tag:'緊急',text:'核能二廠廠區緊急事故宣布，EPZ 內民眾請保持警覺並關注後續指示'},
+  {time:'14:30',type:'warning',tag:'停課',text:'新北市政府宣布金山、萬里、三芝、石門區各級學校即起停課，家長可前往學校接孩子'},
+  {time:'14:22',type:'info',   tag:'接送',text:'弱勢族群接送作業正式啟動，復康巴士 394 輛已待命，撥打 1999 登記需求'},
+  {time:'14:15',type:'info',   tag:'輻射',text:'核安委員會確認 EPZ 內環境輻射劑量目前仍在正常範圍，持續監測中'},
+  {time:'14:00',type:'warning',tag:'事故',text:'核能二廠發生設備異常，已啟動廠區緊急應變程序，台電公司正積極搶修'},
+];
+
+function renderNews(){
+  const feed=document.getElementById('newsFeed');
+  if(!feed)return;
+  feed.innerHTML=NEWS.map(n=>`
+  <div class="news-item">
+    <div class="news-dot-col">
+      <div class="news-dot ${n.type}"></div>
+      <div class="news-time">${n.time}</div>
+    </div>
+    <div class="news-body">
+      <span class="news-tag ${n.type}">${n.tag}</span>
+      <div class="news-text">${n.text}</div>
+    </div>
+  </div>`).join('');
+}
+
 function updateClock(){
   const n=new Date();
-  document.getElementById('clockEl').textContent=n.toLocaleString('zh-TW',{hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const s=n.toLocaleString('zh-TW',{hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('clockEl').textContent=s;
 }
 updateClock();setInterval(updateClock,30000);
+renderNews();
 setLevel(2,document.querySelector('.level-btn.l2'));
 </script>
 </body>
