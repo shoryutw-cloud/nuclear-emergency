@@ -46,18 +46,12 @@ body{
   position:sticky;top:0;z-index:100;
   box-shadow:0 3px 16px rgba(0,0,0,0.3);
 }
-/* Left section: radiation icon + title */
 .banner-left{
   display:flex;align-items:center;gap:12px;
   flex-shrink:0;padding-right:22px;
   border-right:1px solid rgba(255,255,255,0.18);
 }
-.banner-shield{
-  width:38px;height:38px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-}
-/* Radiation trefoil SVG */
-.radiation-icon{width:38px;height:38px;}
+.banner-shield{width:42px;height:42px;flex-shrink:0;}
 .banner-text-wrap{}
 .banner-row1{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .banner-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:0.02em;}
@@ -70,10 +64,10 @@ body{
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.65}}
 .banner-sub{font-size:12px;color:rgba(255,255,255,0.75);margin-top:2px;}
-/* Right section: level buttons + status line */
 .banner-right{
   flex:1;padding-left:20px;
   display:flex;flex-direction:column;justify-content:center;gap:7px;
+  min-height:58px;
 }
 .banner-level-row{display:flex;gap:8px;}
 .blevel-btn{
@@ -89,15 +83,15 @@ body{
 .blevel-btn.l1.active{background:#C47A00;border-color:#C47A00;color:#fff;}
 .blevel-btn.l2.active{background:var(--orange);border-color:var(--orange);color:#fff;}
 .blevel-btn.l3.active{background:var(--red-mid);border-color:var(--red-mid);color:#fff;}
-.banner-status-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
-.banner-status-text{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;flex:1;}
-.banner-status-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.banner-status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.banner-status-text{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5;flex:1;min-height:2.6em;}
+.banner-status-tags{display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;}
 .bstag{
   font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;
   background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);
   border:1px solid rgba(255,255,255,0.25);white-space:nowrap;
 }
-.banner-update{font-size:11px;color:rgba(255,255,255,0.45);white-space:nowrap;flex-shrink:0;}
+.banner-update{font-size:11px;color:rgba(255,255,255,0.45);white-space:nowrap;flex-shrink:0;padding-top:2px;}
 
 /* ═══════ PAGE BODY ═══════ */
 .page{padding:0 32px 80px;}
@@ -117,6 +111,51 @@ body{
   color:var(--text-muted);text-transform:none;
   background:var(--gray-bg);padding:3px 10px;
   border-radius:20px;border:1px solid var(--gray-border);
+}
+
+/* ═══════ MOBILE RWD ═══════ */
+@media(max-width:768px){
+  /* Banner: stack vertically */
+  .banner{flex-direction:column;padding:10px 16px;gap:0;}
+  .banner-left{
+    border-right:none;border-bottom:1px solid rgba(255,255,255,0.15);
+    padding-right:0;padding-bottom:10px;margin-bottom:10px;
+  }
+  .banner-right{padding-left:0;gap:8px;}
+  .blevel-btn{font-size:12px;padding:6px 4px;}
+  .blevel-btn span{font-size:10px;}
+  .banner-status-tags{display:none;}
+  .banner-status-text{font-size:12px;min-height:auto;}
+  .banner-update{font-size:11px;}
+  /* Page padding */
+  .page{padding:0 14px 60px;}
+  /* Grids */
+  .two-col{grid-template-columns:1fr !important;}
+  .lifestyle-grid{grid-template-columns:1fr 1fr !important;}
+  .info-cards{grid-template-columns:1fr 1fr !important;}
+  .shelter-grid{grid-template-columns:1fr 1fr !important;}
+  .route-grid{grid-template-columns:1fr !important;}
+  .hotlines{grid-template-columns:1fr 1fr !important;}
+  /* Section labels */
+  .sec{padding:14px 0 6px;font-size:12px;}
+  /* Action blocks */
+  .action-block{padding:14px 16px;}
+  .block-steps li{font-size:14px;}
+  /* School table scroll */
+  .school-block{padding:14px 12px;}
+  .school-notice{font-size:12px;}
+  /* Status tags on info cards */
+  .info-card-img{height:60px;font-size:28px;}
+  .info-card-title{font-size:13px;}
+  .info-card-desc{font-size:11px;}
+}
+@media(max-width:480px){
+  .banner-title{font-size:17px;}
+  .level-pill{font-size:11px;}
+  .lifestyle-grid{grid-template-columns:1fr !important;}
+  .info-cards{grid-template-columns:1fr !important;}
+  .shelter-grid{grid-template-columns:1fr !important;}
+  .hotlines{grid-template-columns:1fr 1fr !important;}
 }
 
 /* ═══════ LEVEL SELECTOR ═══════ */
@@ -471,7 +510,9 @@ body{
 .hotline-label{font-size:13px;color:var(--text-muted);margin-top:4px;line-height:1.4;}
 .footer-credit{text-align:center;font-size:13px;color:var(--text-muted);padding:10px 0 30px;}
 
-.hidden{display:none;}
+/* ═══════ BANNER fixed min-height ═══════ */
+.banner-right{min-height:58px;}
+.banner-status-text{min-height:2.6em;}
 </style>
 </head>
 <body>
@@ -481,22 +522,25 @@ body{
   <!-- Left: Radiation icon + title -->
   <div class="banner-left">
     <div class="banner-shield">
-      <!-- ☢ Radiation trefoil SVG -->
-      <svg class="radiation-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="19" cy="19" r="3.2" fill="rgba(255,255,255,0.9)"/>
-        <!-- Blade 1: top -->
-        <path d="M19 15.8 C19 15.8 14.5 7.5 13 5.2 C15 4.2 17 3.8 19 3.8 C21 3.8 23 4.2 25 5.2 C23.5 7.5 19 15.8 19 15.8Z" fill="rgba(255,255,255,0.9)"/>
-        <!-- Blade 2: bottom-left -->
-        <path d="M16.2 20.6 C16.2 20.6 7.8 25 5.5 26.3 C4.2 24.5 3.6 22.5 3.6 20.4 C3.6 18 4.4 15.8 5.8 14 C8 15.5 16.2 20.6 16.2 20.6Z" fill="rgba(255,255,255,0.9)"/>
-        <!-- Blade 3: bottom-right -->
-        <path d="M21.8 20.6 C21.8 20.6 30.2 15.2 32.5 13.9 C33.8 15.7 34.4 17.9 34.4 20.2 C34.4 22.5 33.7 24.6 32.4 26.4 C30.1 24.9 21.8 20.6 21.8 20.6Z" fill="rgba(255,255,255,0.9)"/>
-        <circle cx="19" cy="19" r="17.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" fill="none"/>
+      <!-- ☢ 標準輻射符號：黃圓底、紫色三葉草、一腳朝下兩腳朝上 -->
+      <svg width="42" height="42" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="#F5C518"/>
+        <g fill="#CC00CC">
+          <circle cx="50" cy="50" r="8"/>
+          <!-- 底部葉片 (60°→120°) -->
+          <path d="M56,60.4 A12,12,0,0,1,44,60.4 L28,88.1 A44,44,0,0,0,72,88.1 Z"/>
+          <!-- 左上葉片 (180°→240°) -->
+          <path d="M38,50 A12,12,0,0,1,44,39.6 L28,11.9 A44,44,0,0,0,6,50 Z"/>
+          <!-- 右上葉片 (300°→360°) -->
+          <path d="M56,39.6 A12,12,0,0,1,62,50 L94,50 A44,44,0,0,0,72,11.9 Z"/>
+        </g>
       </svg>
     </div>
     <div class="banner-text-wrap">
       <div class="banner-row1">
         <span class="banner-title">核子事故警報</span>
         <span class="level-pill" id="bannerPill">第二級警戒</span>
+        <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;">核能二廠</span>
       </div>
       <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
     </div>
@@ -725,25 +769,19 @@ function setPersona(p,el){
   renderContent();
 }
 
-/* ── School data ── */
+/* ── School data（核能二廠事故適用）── */
 const SCHOOLS=[
-  {epz:'金山三和國小',area:'核一',placement:'三重三重國小',addr:'三重區三和路三段1號',min:53},
-  {epz:'金山中角國小',area:'核一/二',placement:'三重五華國小',addr:'三重區集賢路89號',min:50},
-  {epz:'金山金山國小',area:'核一/二',placement:'三重正義國小',addr:'三重區信義西街31號',min:53},
-  {epz:'金山金山高中',area:'核一/二',placement:'三重新北高中',addr:'三重區三信路1號',min:52},
-  {epz:'石門乾華國小',area:'核一',placement:'八里大崁國小',addr:'八里區忠八街2號',min:42},
-  {epz:'石門石門國小',area:'核一',placement:'八里八里國小',addr:'八里區中山路二段338號',min:45},
-  {epz:'石門石門國中',area:'核一',placement:'八里八里國中',addr:'八里區荖阡坑路15號',min:47},
-  {epz:'三芝橫山國小',area:'核一',placement:'八里長坑國小',addr:'八里區中華路三段236號',min:53},
-  {epz:'石門老梅國小',area:'核一',placement:'八里大崁國小',addr:'八里區忠八街2號',min:42},
-  {epz:'金山金美國小',area:'核二',placement:'三重厚德國小',addr:'三重區忠孝路一段70號',min:56},
-  {epz:'萬里野柳國小',area:'核二',placement:'三重光榮國小',addr:'三重區介壽路32號',min:28},
-  {epz:'萬里萬里國小',area:'核二',placement:'三重重陽國小',addr:'三重區中正北路113號',min:28},
-  {epz:'萬里萬里國中',area:'核二',placement:'三重明志國中',addr:'三重區中正北路107號',min:29},
-  {epz:'萬里大鵬國小',area:'核二',placement:'三重興穀國小',addr:'三重區五谷王北街46號',min:63},
-  {epz:'萬里崁腳國小',area:'核二',placement:'三重碧華國小',addr:'三重區五華街160號',min:28},
-  {epz:'萬里大坪國小',area:'核二',placement:'三重永福國小',addr:'三重區永福街66號',min:27},
-  {epz:'私立中華商業海事',area:'核二',placement:'三重三重商工',addr:'三重區中正北路163號',min:29},
+  {epz:'金山中角國小',area:'核一/二重疊',placement:'三重五華國小',addr:'三重區集賢路89號',min:50},
+  {epz:'金山金山國小',area:'核一/二重疊',placement:'三重正義國小',addr:'三重區信義西街31號',min:53},
+  {epz:'金山金山高中',area:'核一/二重疊',placement:'三重新北高中',addr:'三重區三信路1號',min:52},
+  {epz:'金山金美國小',area:'核二廠區',placement:'三重厚德國小',addr:'三重區忠孝路一段70號',min:56},
+  {epz:'萬里野柳國小',area:'核二廠區',placement:'三重光榮國小',addr:'三重區介壽路32號',min:28},
+  {epz:'萬里萬里國小',area:'核二廠區',placement:'三重重陽國小',addr:'三重區中正北路113號',min:28},
+  {epz:'萬里萬里國中',area:'核二廠區',placement:'三重明志國中',addr:'三重區中正北路107號',min:29},
+  {epz:'萬里大鵬國小',area:'核二廠區',placement:'三重興穀國小',addr:'三重區五谷王北街46號',min:63},
+  {epz:'萬里崁腳國小',area:'核二廠區',placement:'三重碧華國小',addr:'三重區五華街160號',min:28},
+  {epz:'萬里大坪國小',area:'核二廠區',placement:'三重永福國小',addr:'三重區永福街66號',min:27},
+  {epz:'私立中華商業海事',area:'核二廠區',placement:'三重三重商工',addr:'三重區中正北路163號',min:29},
 ];
 
 function statusBadge(n){
@@ -774,22 +812,36 @@ function schoolTable(){
 
 function evacRoutes(){
   const routes=[
-    {dir:'核一廠 → 西行',station:'三芝淺水灣停車場',dist:'12.3公里',path:'<span>台2線</span> → <span>淡金公路</span> → 三芝淺水灣',dest:'25.2622,121.4995'},
-    {dir:'核一廠 → 東行',station:'萬里翡翠灣俱樂部',dist:'14.8公里',path:'<span>台2線</span> → 往萬里方向 → 翡翠灣俱樂部',dest:'25.1411,121.7238'},
-    {dir:'核二廠 → 西行',station:'石門洞停車場',dist:'13公里',path:'<span>淡金公路</span> → 石門 → 石門洞停車場',dest:'25.2901,121.5679'},
-    {dir:'核二廠 → 東行',station:'基隆市消防局防災廣場',dist:'8.6公里',path:'<span>台2線</span> → 基金一路 → 基金二路 → 基隆防災廣場',dest:'25.1313,121.7405'},
+    {label:'路線 D',dest:'基隆、瑞芳、板橋（火車接駁）',
+     path:'<span>台2線（往基隆）</span> → <span>基隆火車站</span> → 各火車站（往瑞芳、板橋）',
+     nav:'25.1313,121.7405'},
+    {label:'路線 E',dest:'汐止、新莊、三重、五股',
+     path:'<span>台2線（往基隆）</span> → <span>台62線</span> → 國道1、3號 → 往汐止、<span>新莊、三重及五股</span>',
+     nav:'25.0578,121.4869'},
+    {label:'路線 F',dest:'瑞芳區',
+     path:'<span>台2線（往基隆）</span> → <span>台62線</span> → <span>瑞芳區</span>',
+     nav:'25.1078,121.7977'},
+    {label:'路線 G',dest:'平溪區',
+     path:'<span>台2線（往基隆）</span> → 台62線 → 台2丁 → <span>縣道106線</span> → <span>平溪區</span>',
+     nav:'24.9947,121.7375'},
   ];
-  return `<div class="route-grid">${routes.map(r=>`
+  return `
+  <div style="background:var(--blue-light);border:1.5px solid #85B7EB;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:14px;color:var(--blue-dark);line-height:1.7;">
+    ⚠ <strong>核能二廠事故適用路線。</strong>沿 <strong>台2線往基隆方向</strong> 疏散，先抵達防護站完成輻射除污，再依路線分流至各目的地。<br>
+    📍 <strong>防護站：基隆市消防局防災廣場</strong>（距核二廠約8.6公里）｜備援：國道3號七堵南下地磅站
+  </div>
+  <div class="route-grid">${routes.map(r=>`
   <div class="route-card">
     <div class="route-title-row">
-      <div class="route-title">${r.dir}</div>
-      <span class="route-badge">防護站</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:var(--blue-dark);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;flex-shrink:0;">${r.label}</span>
+        <div class="route-title">${r.dest}</div>
+      </div>
     </div>
-    <div style="font-size:15px;font-weight:700;color:var(--blue-dark);">📍 ${r.station}</div>
-    <div class="route-path">${r.path}（${r.dist}）</div>
-    <a class="nav-btn" href="https://www.google.com/maps/dir/?api=1&destination=${r.dest}&travelmode=driving" target="_blank">🗺 開啟 Google 地圖導航</a>
+    <div class="route-path" style="margin-top:8px;">${r.path}</div>
+    <a class="nav-btn" style="margin-top:auto;" href="https://www.google.com/maps/dir/?api=1&destination=${r.nav}&travelmode=driving" target="_blank">🗺 開啟 Google 地圖導航</a>
   </div>`).join('')}</div>
-  <div class="flow-hint">✅ <strong>疏散流程：</strong>前往所在里<strong>集結點</strong> → <strong>防護站</strong>（輻射偵測 + 除污） → 登記報到 → 前往<strong>避難收容所</strong><br>
+  <div class="flow-hint">✅ <strong>疏散流程：</strong>所在里<strong>集結點</strong> → 沿台2線往基隆 → <strong>防護站</strong>（輻射偵測＋除污） → 登記報到 → 依路線D/E/F/G前往<strong>避難收容所</strong><br>
   無車者：在集結點等候免費接駁公車</div>`;
 }
 
