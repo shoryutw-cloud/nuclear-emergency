@@ -10,22 +10,22 @@
    NUSC 色系：深藍 + 橘警示 + 白底政府風
 ═══════════════════════════════════════════════ */
 :root{
-  --blue-dark:  #1C3F6E;
-  --blue-mid:   #2B5494;
-  --blue-light: #EBF1F9;
+  --blue-dark:  #5C4000;
+  --blue-mid:   #7A5800;
+  --blue-light: #FFF8DC;
   --orange:     #E07B19;
   --orange-lt:  #FDF3E7;
   --red-dark:   #8B1A1A;
   --red-mid:    #B22222;
   --red-lt:     #FBF0F0;
-  --amber:      #C47A00;
+  --amber:      #B8920A;
   --amber-lt:   #FFF9EC;
   --green:      #2E6B35;
   --green-lt:   #EDF7EE;
-  --gray-bg:    #F2F4F7;
-  --gray-border:#D4DAE4;
-  --text-main:  #1a1a2e;
-  --text-muted: #555F72;
+  --gray-bg:    #FFFBEF;
+  --gray-border:#E8D98A;
+  --text-main:  #2A1E00;
+  --text-muted: #6B5700;
   --white:      #FFFFFF;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -40,7 +40,7 @@ body{
 
 /* ═══════ BANNER ═══════ */
 .banner{
-  background:linear-gradient(120deg,var(--blue-dark) 0%,#162E52 55%,#1C3F6E 100%);
+  background:linear-gradient(120deg,#3D2B00 0%,#5C4000 55%,#7A5800 100%);
   padding:10px 28px;
   display:flex;align-items:stretch;gap:0;
   position:sticky;top:0;z-index:100;
@@ -80,7 +80,7 @@ body{
 }
 .blevel-btn span{display:block;font-size:11px;font-weight:400;opacity:0.85;}
 .blevel-btn:hover{background:rgba(255,255,255,0.14);}
-.blevel-btn.l1.active{background:#C47A00;border-color:#C47A00;color:#fff;}
+.blevel-btn.l1.active{background:#B8920A;border-color:#B8920A;color:#fff;}
 .blevel-btn.l2.active{background:var(--orange);border-color:var(--orange);color:#fff;}
 .blevel-btn.l3.active{background:var(--red-mid);border-color:var(--red-mid);color:#fff;}
 .banner-status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
@@ -294,26 +294,21 @@ body{
 
 /* ═══════ PERSONA ═══════ */
 .persona-panel{
-  background:var(--white);border-radius:16px;padding:20px 24px;
+  background:var(--white);border-radius:16px;padding:16px 20px;
   border:2px solid var(--gray-border);
   box-shadow:0 2px 10px rgba(0,0,0,0.07);
 }
-.persona-label{font-size:16px;font-weight:700;color:var(--blue-dark);margin-bottom:14px;}
-.persona-row{display:flex;flex-direction:column;gap:10px;}
-.persona-btn{
-  background:var(--gray-bg);border:2px solid var(--gray-border);
-  border-radius:12px;padding:14px 16px;cursor:pointer;
-  text-align:left;font-family:inherit;
-  display:flex;align-items:center;gap:14px;
-  transition:all 0.15s;
+.persona-label{font-size:16px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}
+.persona-row-h{display:flex;gap:8px;}
+.persona-btn-h{
+  flex:1;background:var(--gray-bg);border:2px solid var(--gray-border);
+  border-radius:10px;padding:10px 8px;cursor:pointer;
+  text-align:center;font-family:inherit;font-size:14px;font-weight:700;
+  color:var(--text-muted);transition:all 0.15s;
 }
-.persona-btn:hover{border-color:var(--blue-mid);}
-.persona-btn.active{
-  background:var(--blue-light);border-color:var(--blue-mid);
-}
-.persona-icon{font-size:26px;flex-shrink:0;}
-.persona-text .persona-name{font-size:16px;font-weight:700;display:block;color:var(--text-main);}
-.persona-text .persona-sub{font-size:13px;color:var(--text-muted);display:block;margin-top:2px;}
+.persona-btn-h:hover{border-color:var(--blue-mid);}
+.persona-btn-h.active{background:var(--blue-light);border-color:var(--blue-mid);color:var(--blue-dark);}
+@media(max-width:480px){.persona-btn-h{font-size:12px;padding:9px 4px;}}
 
 /* ═══════ ACTION BLOCKS ═══════ */
 .action-block{border-radius:16px;padding:22px 24px;margin-bottom:16px;}
@@ -418,11 +413,11 @@ body{
 .route-path span{color:var(--blue-dark);font-weight:700;}
 .nav-btn{
   display:flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--blue-mid);color:#fff;border:none;border-radius:10px;
+  background:#7A5800;color:#fff;border:none;border-radius:10px;
   padding:12px;font-size:15px;font-weight:700;cursor:pointer;
   font-family:inherit;text-decoration:none;transition:background 0.15s;
 }
-.nav-btn:hover{background:var(--blue-dark);}
+.nav-btn:hover{background:#3D2B00;}
 .flow-hint{
   background:var(--green-lt);border:1.5px solid #9DCCA0;
   border-radius:12px;padding:14px 18px;font-size:15px;color:#1E4D22;
@@ -442,12 +437,12 @@ body{
 .sc-addr{font-size:13px;color:var(--text-muted);margin-bottom:10px;line-height:1.5;}
 .sc-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
-  background:var(--blue-mid);color:#fff;border:none;border-radius:8px;
+  background:#7A5800;color:#fff;border:none;border-radius:8px;
   padding:9px;font-size:14px;font-weight:700;cursor:pointer;
   font-family:inherit;text-decoration:none;
   transition:background 0.15s;width:100%;
 }
-.sc-btn:hover{background:var(--blue-dark);}
+.sc-btn:hover{background:#3D2B00;}
 
 /* ═══════ KI CARD ═══════ */
 .ki-card{
@@ -543,7 +538,7 @@ body{
   border-bottom:3px solid transparent;cursor:pointer;
   transition:all 0.15s;margin-bottom:-2px;
 }
-.ntab.active{color:var(--blue-mid);border-bottom-color:var(--blue-mid);}
+.ntab.active{color:#7A5800;border-bottom-color:#7A5800;}
 .ntab:hover:not(.active){color:var(--text-main);}
 .news-tab-panel{
   background:var(--white);border:1px solid var(--gray-border);
@@ -636,10 +631,11 @@ body{
 <div class="page">
 
 <!-- ═══ NEWS TABS ═══ -->
-<div class="news-top">
+<div style="padding:18px 0 4px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;">
   <div class="news-main-title">最新資訊</div>
   <span class="sec-time" id="newsTime">最後更新 14:35</span>
 </div>
+<div style="padding:4px 0 14px;font-size:22px;font-weight:900;color:#B22222;letter-spacing:0.02em;">輻射外釋情形：<span id="radiationStatus">無任何外釋</span></div>
 <div class="news-tabs">
   <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
   <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
@@ -654,7 +650,6 @@ body{
 
 <!-- ═══ INFOGRAPHIC CAROUSEL ═══ -->
 <div class="carousel-section">
-  <div class="carousel-section-title">防護知識圖卡</div>
   <div class="carousel-wrap">
     <div class="carousel-track" id="carouselTrack"></div>
   </div>
@@ -750,7 +745,7 @@ body{
 </div>
 
 <!-- ═══ CONTENT ═══ -->
-<div class="sec" id="contentSec">行動指引</div>
+<div class="sec">行動指引</div>
 <div id="mainContent"></div>
 
 </div><!-- /page -->
@@ -841,7 +836,7 @@ function setLevel(l,el){
 
 function setPersona(p,el){
   currentPersona=p;
-  document.querySelectorAll('.persona-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.persona-btn-h').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   renderContent();
 }
@@ -870,7 +865,7 @@ function statusBadge(n){
 
 function schoolTable(){
   return `<div class="school-block">
-    <div class="school-block-header">🏫 EPZ 區域學校 → 安置學校對照表</div>
+    <div class="school-block-header">🏫 緊急應變計畫區 (EPZ) 範圍內學校停課狀態</div>
     <div class="school-notice">停課宣布機關：${SUSPENSION_AUTHORITY} ／ 宣布時間：${SUSPENSION_TIME}<br>
     ※ 安置學校提供復課使用，<strong>不提供食宿</strong>。學生須與家長前往避難收容所安置。</div>
     <table class="school-table">
@@ -940,7 +935,7 @@ function shelterCards(){
 
 function kiCard(){
   if(currentLevel===1)return '';
-  return `<div class="sec">💊 碘化鉀（KI）服用指引</div>
+  return `<div class="sec">💊 碘片服用指引</div>
   <div class="ki-card">
     <div class="ki-title">💊 碘化鉀（KI）</div>
     <div class="ki-body"><strong>必須等政府通知才服用。</strong>服用時機：收到疏散命令後，<strong>出發前30分鐘</strong>服用效果最佳。</div>
@@ -955,9 +950,9 @@ function kiCard(){
 }
 
 function dontCard(){
-  return `<div class="sec">❌ 事故期間禁止事項</div>
+  return `<div class="sec">❌ 注意事項</div>
   <div class="dont-card">
-    <div class="dont-title">❌ 絕對禁止</div>
+    <div class="dont-title">注意事項</div>
     <div class="dont-items">
       ${['不要在戶外逗留、奔跑或揚起塵土',
          '不要飲用地下水或食用戶外蔬菜水果',
@@ -970,20 +965,11 @@ function dontCard(){
   </div>`;
 }
 
-function hotlinesSection(){
-  return `<div class="sec">☎ 緊急聯絡電話</div>
-  <div class="hotlines">
-    <a href="tel:119" class="hotline"><div class="hotline-num">119</div><div class="hotline-label">消防 / 救護</div></a>
-    <a href="tel:110" class="hotline"><div class="hotline-num">110</div><div class="hotline-label">警察局</div></a>
-    <a href="tel:1999" class="hotline"><div class="hotline-num">1999</div><div class="hotline-label">新北市政府熱線</div></a>
-    <a href="tel:0800069599" class="hotline"><div class="hotline-num" style="font-size:18px">0800-069-599</div><div class="hotline-label">核安諮詢專線（免費）</div></a>
-  </div>
-  <div class="footer-credit">資料來源：新北市核子事故區域民眾防護應變計畫（110年版）｜核能安全委員會</div>`;
-}
+
 
 function lsGrid(items){
   return `<div class="lifestyle-grid">${items.map(([icon,label,body,warn])=>`<div class="lc">
-    <div class="lc-header"><span class="lc-icon">${icon}</span><span class="lc-label">${label}</span></div>
+    <div class="lc-header"><span class="lc-label">${label}</span></div>
     <div class="lc-body">${body}</div>
     ${warn?`<div class="lc-warn">⚠ ${warn}</div>`:''}
   </div>`).join('')}</div>`;
@@ -995,7 +981,7 @@ function renderContent(){
   if(currentPersona==='single') h=single();
   else if(currentPersona==='family') h=family();
   else h=disabled_();
-  h+=kiCard()+dontCard()+hotlinesSection();
+  h+=kiCard()+dontCard();
   document.getElementById('mainContent').innerHTML=h;
 }
 
@@ -1010,7 +996,7 @@ function single(){
       <li><span class="step-num">4</span>遠離海灘、公園等戶外場所（景區已關閉）</li>
     </ul>
   </div>
-  <div class="sec">🍽 食衣住行建議</div>
+  <div class="sec">食衣住行</div>
   ${lsGrid([
     ['🍱','食','正常飲食，備齊3日份不需烹調的食品（餅乾、罐頭）',''],
     ['👕','衣','備好長袖衣物與口罩，若需外出穿著覆蓋皮膚的衣物',''],
@@ -1029,14 +1015,14 @@ function single(){
       <li><span class="step-num">5</span>持續收聽廣播，等待官方疏散命令</li>
     </ul>
   </div>
-  <div class="sec">🍽 食衣住行建議</div>
+  <div class="sec">食衣住行</div>
   ${lsGrid([
     ['🍱','食','只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水','禁止食用戶外蔬菜水果'],
     ['👕','衣','換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩',''],
     ['🏠','住','關閉所有門窗，用濕毛巾封縫隙，關閉冷氣及換氣扇',''],
     ['🚗','行','3公里以內：收到命令後疏散。3–8公里：就地掩蔽等指示',''],
   ])}
-  <div class="sec">🗺 疏散路線（住家距電廠3公里以內適用）</div>${evacRoutes()}`;
+  <div class="sec">疏散路線</div>${evacRoutes()}`;
 
   return `
   <div class="action-block red">
@@ -1049,7 +1035,7 @@ function single(){
       <li><span class="step-num">5</span>前往所在里的集結點，等候引導前往防護站</li>
     </ul>
   </div>
-  <div class="sec">🗺 疏散路線與防護站</div>${evacRoutes()}
+  <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">🏟 避難收容所</div>${shelterCards()}`;
 }
 
@@ -1077,14 +1063,14 @@ function family(){
     </ul>
   </div>
   <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}
-  <div class="sec">🍽 一家人的食衣住行</div>
+  <div class="sec">食衣住行</div>
   ${lsGrid([
     ['🍱','食','備好孩子副食品、奶粉或乾糧，3日份封裝食物','禁止食用外購或戶外食物'],
     ['👕','衣','幫孩子穿長袖、帽子，帶兒童適用口罩及備用衣物',''],
     ['🏠','住','3–8公里：密封家中，孩子留在室內最大房間',''],
     ['🚗','行','接孩子後出發。無車者到集結點等候免費接駁巴士',''],
   ])}
-  <div class="sec">🗺 疏散路線導航</div>${evacRoutes()}`;
+  <div class="sec">疏散路線</div>${evacRoutes()}`;
 
   return `
   <div class="action-block red">
@@ -1098,7 +1084,7 @@ function family(){
     </ul>
   </div>
   <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}
-  <div class="sec">🗺 疏散路線</div>${evacRoutes()}
+  <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">🏟 避難收容所（設有家庭區、哺乳室、兒童照護區）</div>${shelterCards()}`;
 }
 
@@ -1213,19 +1199,7 @@ function renderTabContent(){
   const limit=showAll?data.length:3;
   const visible=data.slice(0,limit);
   const moreBtn=document.getElementById('moreBtn');
-  if(currentTab==='news'){
-    document.getElementById('tabContent').innerHTML=visible.map(n=>`
-    <div class="news-item">
-      <div class="news-dot-col">
-        <div class="news-dot ${n.type}"></div>
-        <div class="news-time">${n.time}</div>
-      </div>
-      <div class="news-body">
-        <span class="news-tag ${n.type}">${n.tag}</span>
-        <div class="news-text">${n.text}</div>
-      </div>
-    </div>`).join('');
-  } else {
+  if(false){} else {
     document.getElementById('tabContent').innerHTML=`<div class="press-grid">${
       visible.map(n=>{
         const[y,m,d]=n.time.split('/');
@@ -1290,5 +1264,53 @@ renderCarousel();
 setLevel(2, null);
 requestGPS();
 </script>
+
+<!-- ═══ NSC FOOTER ═══ -->
+<div style="background:#3D2B00;color:#e8d080;padding:32px 32px 20px;margin-top:40px;">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:20px;">
+      <div>
+        <div style="font-size:18px;font-weight:900;color:#F5C518;margin-bottom:6px;">核能安全委員會</div>
+        <div style="font-size:13px;line-height:1.9;color:#c8b060;">
+          地址：100027 臺北市中正區信義路一段2號10樓<br>
+          電話：（02）8522-7890<br>
+          傳真：（02）8522-7891<br>
+          <strong style="color:#F5C518;">核安輻安通報專線：0800-088-928</strong>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">快速連結</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
+          <a href="https://www.nusc.gov.tw/" target="_blank" style="color:#c8b060;text-decoration:none;">核能安全委員會官網</a>
+          <a href="https://www.nusc.gov.tw/gammadetect/npp2.html" target="_blank" style="color:#c8b060;text-decoration:none;">核二廠即時輻射監測</a>
+          <a href="https://www.nusc.gov.tw/news/newszone.html" target="_blank" style="color:#c8b060;text-decoration:none;">新聞專區</a>
+          <a href="https://www.nusc.gov.tw/clickcount/wm-4286.html" target="_blank" style="color:#c8b060;text-decoration:none;">即時新聞澄清專區</a>
+          <a href="https://erss.nusc.gov.tw/law/" target="_blank" style="color:#c8b060;text-decoration:none;">原子能法規</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">社群媒體</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
+          <a href="https://www.facebook.com/radiationsafety" target="_blank" style="color:#c8b060;text-decoration:none;">Facebook 輻務小站</a>
+          <a href="https://www.youtube.com/@NSCROC" target="_blank" style="color:#c8b060;text-decoration:none;">YouTube 官方頻道</a>
+          <a href="https://play.google.com/store/apps/details?id=com.hyxen.atomicenergy&hl=zh_TW" target="_blank" style="color:#c8b060;text-decoration:none;">核安e點通 App</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#F5C518;margin-bottom:8px;">便民服務</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;">
+          <a href="https://www.nusc.gov.tw/u/v/6l" target="_blank" style="color:#c8b060;text-decoration:none;">民眾關切問答資訊</a>
+          <a href="https://www.nusc.gov.tw/u/c/6i" target="_blank" style="color:#c8b060;text-decoration:none;">輻防作業查詢服務</a>
+          <a href="https://www.nusc.gov.tw/chiefmailbox" target="_blank" style="color:#c8b060;text-decoration:none;">首長信箱</a>
+          <a href="https://www.nusc.gov.tw/clickcount/wm-268.html" target="_blank" style="color:#c8b060;text-decoration:none;">網站導覽</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #5C4000;padding-top:14px;font-size:12px;color:#8a7040;text-align:center;line-height:1.7;">
+      本頁資料來源：新北市核子事故區域民眾防護應變計畫（110年版）｜核能安全委員會<br>
+      隱私權保護政策 ｜ 資訊安全政策 ｜ 政府網站資料開放宣告 ｜ 最佳瀏覽解析度 1024×768 以上
+    </div>
+  </div>
+</div>
 </body>
 </html>
