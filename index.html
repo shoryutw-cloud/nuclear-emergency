@@ -1493,55 +1493,6 @@ function toggleSchool() {
 
 
 function evacRoutes() {
-  var carRoute =
-    '<div class="evac-mode-card evac-car">' +
-      '<div class="evac-mode-title">🚗 有自用車（直接往防護站）</div>' +
-      '<div class="evac-mode-steps">' +
-        '<div class="evac-step"><span class="evac-step-num">1</span><span>直接開車沿 <strong>台2線往基隆方向</strong> 行駛</span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">2</span><span>抵達 <strong>防護站</strong>（車輛除污 → 個人輻射偵測）</span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站內<strong>登記編管報到</strong></span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">4</span><span>自行前往政府安排的<strong>避難收容所</strong>，或自行依親收容</span></div>' +
-      '</div>' +
-    '</div>';
-
-  var noCarRoute =
-    '<div class="evac-mode-card evac-nocar">' +
-      '<div class="evac-mode-title">🚶 無自用車（先到集結點）</div>' +
-      '<div class="evac-mode-steps">' +
-        '<div class="evac-step"><span class="evac-step-num">1</span><span>步行前往所在里的<strong>集結點</strong>（里長會引導）</span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">2</span><span>搭乘<strong>第1套接駁公車</strong>（免費）前往防護站</span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站完成<strong>輻射偵測＋除污＋登記編管</strong></span></div>' +
-        '<div class="evac-step-arrow">↓</div>' +
-        '<div class="evac-step"><span class="evac-step-num">4</span><span>搭乘<strong>第2套接駁公車</strong>，由公所人員引導至<strong>避難收容所</strong></span></div>' +
-      '</div>' +
-    '</div>';
-
-  var routeNote =
-    '<div style="background:var(--blue-light);border:1.5px solid #85B7EB;border-radius:12px;padding:12px 16px;margin-bottom:12px;font-size:14px;color:var(--blue-dark);line-height:1.7;">' +
-    '⚠ <strong>核能二廠事故適用路線。</strong>兩種方式最終都必須通過<strong>防護站</strong>完成輻射偵測與除污。<br>' +
-    '📍 <strong>防護站：基隆市消防局防災廣場</strong>（距核二廠約8.6公里）｜備援：國道3號七堵南下地磅站' +
-    '</div>';
-
-  var cards = ROUTES.map(function(r) {
-    return '<div class="route-card">' +
-      '<div class="route-title-row">' +
-      '<div style="display:flex;align-items:center;gap:8px;">' +
-      '<span style="background:var(--blue-dark);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;flex-shrink:0;">' + r.label + '</span>' +
-      '<div class="route-title">' + r.dest + '</div>' +
-      '</div></div>' +
-      '<div class="route-path" style="margin-top:8px;">' + r.path + '</div>' +
-      '<a class="nav-btn" style="margin-top:auto;" href="https://www.google.com/maps/dir/?api=1&destination=' + r.nav + '&travelmode=driving" target="_blank">🗺 導航至防護站</a>' +
-      '</div>';
-  }).join('');
-
-  return routeNote + renderAssemblyPicker() +
-    '<div class="evac-mode-grid">' + carRoute + noCarRoute + '</div>' +
-    '<div class="sefunction evacRoutes() {
   // Protection stations info block (large, prominent)
   var stationInfo =
     '<div style="background:#FFF0F0;border:2px solid var(--red-mid);border-radius:12px;padding:16px;margin-bottom:14px;">' +
@@ -1566,8 +1517,8 @@ function evacRoutes() {
   // Car/no-car toggle (shown first)
   var modeToggle =
     '<div style="display:flex;gap:10px;margin-bottom:14px;">' +
-    '<button id="btnCar" onclick="selectEvacMode('car')" class="evac-toggle-btn active" style="flex:1;">🚗 有自用車</button>' +
-    '<button id="btnNoCar" onclick="selectEvacMode('nocar')" class="evac-toggle-btn" style="flex:1;">🚶 無自用車</button>' +
+    '<button id="btnCar" data-mode="car" onclick="selectEvacMode(this.dataset.mode)" class="evac-toggle-btn active" style="flex:1;">🚗 有自用車</button>' +
+    '<button id="btnNoCar" data-mode="nocar" onclick="selectEvacMode(this.dataset.mode)" class="evac-toggle-btn" style="flex:1;">🚶 無自用車</button>' +
     '</div>';
 
   // Car mode content
@@ -1646,7 +1597,6 @@ function selectEvacMode(mode) {
   document.getElementById('evacModeNoCar').style.display = isCar ? 'none' : '';
 }
 
-═══ */
 function renderContent() {
   let h = '';
   if (currentPersona === 'single')        h = renderSingle();
@@ -1808,6 +1758,132 @@ function renderDisabled() {
     '</div></div>' +
     officeTel +
     '<div class="sec">🏟 避難收容所</div>' + shelterCards();
+}
+
+
+function shelterCards() {
+  var cards = SHELTERS.map(function(x) {
+    return '<div class="shelter-card">' +
+      '<div class="sc-name">' + x.n + '</div>' +
+      '<div class="sc-addr">新北市' + x.a + '</div>' +
+      '<a class="sc-btn" href="https://www.google.com/maps/dir/?api=1&destination=' + x.c + '&travelmode=driving" target="_blank">🗺 開啟導航</a>' +
+      '</div>';
+  }).join('');
+  return '<div class="shelter-grid">' + cards + '</div>';
+}
+
+function updateVillageSel() {
+  var district = document.getElementById('districtSel') && document.getElementById('districtSel').value;
+  var vilSel = document.getElementById('villageSel');
+  if (!vilSel) return;
+  vilSel.innerHTML = '<option value="">選擇里別</option>';
+  var resultEl = document.getElementById('assemblyResult');
+  if (resultEl) resultEl.innerHTML = '';
+  if (!district || !ASSEMBLY_POINTS[district]) return;
+  Object.keys(ASSEMBLY_POINTS[district]).forEach(function(v) {
+    var opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    vilSel.appendChild(opt);
+  });
+}
+
+function showAssemblyPoints() {
+  var distEl = document.getElementById('districtSel');
+  var vilEl = document.getElementById('villageSel');
+  var el = document.getElementById('assemblyResult');
+  if (!distEl || !vilEl || !el) return;
+  var district = distEl.value, village = vilEl.value;
+  if (!district || !village) { el.innerHTML = ''; return; }
+  var points = ASSEMBLY_POINTS[district] && ASSEMBLY_POINTS[district][village];
+  if (!points) { el.innerHTML = ''; return; }
+  el.innerHTML = '<div class="assembly-result-title">' + district + ' ' + village + ' 集結點</div>' +
+    '<ul class="assembly-list">' +
+    points.map(function(p) {
+      var url = 'https://www.google.com/maps/search/' + encodeURIComponent(district + ' ' + p);
+      return '<li><span class="assembly-dot"></span>' + p + ' <a class="nav-link" href="' + url + '" target="_blank">🗺</a></li>';
+    }).join('') +
+    '</ul>' +
+    '<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">在集結點等候第1套接駁公車前往防護站，完成輻射偵測後再搭第2套接駁車至收容所</div>';
+}
+
+function autoSelectByGPS(lat, lng) {
+  if (typeof VILLAGE_COORDS === 'undefined') return;
+  var minDist = Infinity, bestKey = null;
+  Object.keys(VILLAGE_COORDS).forEach(function(key) {
+    var c = VILLAGE_COORDS[key];
+    var d = haversine(lat, lng, c[0], c[1]);
+    if (d < minDist) { minDist = d; bestKey = key; }
+  });
+  if (!bestKey || minDist > 5) return;
+  var parts = bestKey.match(/^(.+[區])(.+[里])$/);
+  if (!parts) return;
+  var district = parts[1], village = parts[2];
+  var distSel = document.getElementById('districtSel');
+  if (!distSel) return;
+  distSel.value = district;
+  updateVillageSel();
+  var vilSel = document.getElementById('villageSel');
+  if (vilSel) { vilSel.value = village; showAssemblyPoints(); }
+}
+
+
+function lsGrid(items) {
+  var cards = items.map(function(item) {
+    var label = item[0], body = item[1], warn = item[2];
+    return '<div class="lc">' +
+      '<div class="lc-header"><span class="lc-label">' + label + '</span></div>' +
+      '<div class="lc-body">' + body + '</div>' +
+      (warn ? '<div class="lc-warn">⚠ ' + warn + '</div>' : '') +
+      '</div>';
+  }).join('');
+  return '<div class="lifestyle-grid">' + cards + '</div>';
+}
+
+function kiCard() {
+  if (currentLevel === 1) return '';
+  return '<div class="sec">碘片服用指引</div>' +
+    '<div class="ki-card">' +
+    '<div class="ki-title">💊 碘片（KI）</div>' +
+    '<div class="ki-body"><strong>必須等政府通知才服用。</strong>服用時機：收到疏散命令後，<strong>出發前30分鐘</strong>服用效果最佳。</div>' +
+    '<table class="ki-table">' +
+    '<tr><td>成人（18歲以上）及孕婦</td><td><strong>130mg（1片）</strong></td></tr>' +
+    '<tr><td>3–12歲兒童</td><td><strong>65mg（½片）</strong></td></tr>' +
+    '<tr><td>1個月–3歲</td><td><strong>32mg（¼片）</strong></td></tr>' +
+    '<tr><td>新生兒（1個月以下）</td><td><strong>16mg（⅛片）</strong></td></tr>' +
+    '<tr><td colspan="2" style="font-size:12px;color:var(--amber);padding-top:6px;">40歲以上可無須服用</td></tr>' +
+    '</table>' +
+    '<div class="ki-warn">⚠ 甲狀腺疾病者請遵醫囑 ／ 碘過敏者請就醫</div>' +
+    '</div>';
+}
+
+function dontCard() {
+  var items = [
+    '不要在戶外逗留、奔跑或揚起塵土',
+    '不要飲用地下水或食用戶外蔬菜水果',
+    '不要搶占緊急車道，讓救災車輛通行',
+    '不要輕信社群媒體謠言，只信官方廣播',
+    '不要擅自判斷服用碘片（KI）',
+    '不要擅自離開，等待官方指示再行動',
+  ];
+  return '<div class="sec">注意事項</div>' +
+    '<div class="dont-card">' +
+    '<div class="dont-title">❌ 事故期間禁止事項</div>' +
+    '<div class="dont-items">' +
+    items.map(function(t) {
+      return '<div class="dont-item"><div class="x-badge">✕</div>' + t + '</div>';
+    }).join('') +
+    '</div></div>';
+}
+
+function schoolSection() {
+  return '<div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;">' +
+    '緊急應變計畫區 (EPZ) 範圍內學校停課狀態 <span id="schoolToggleIcon">▲</span>' +
+    '</div>' +
+    '<div id="schoolTableWrap">' + schoolTable() + '</div>';
+}
+
+function renderAssemblyPicker() {
+  return assemblyPickerHTML ? assemblyPickerHTML() : '';
 }
 
 /* ═══════════════════════════════════════════════
