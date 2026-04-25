@@ -842,6 +842,24 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   flex-shrink:0;margin-top:2px;
 }
 .tdetail-item.star .tdetail-num{background:var(--orange);}
+
+/* ═══ EVAC MODE CARDS ═══ */
+.evac-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:600px){.evac-mode-grid{grid-template-columns:1fr;}}
+.evac-mode-card{border-radius:14px;padding:16px;border:2px solid;}
+.evac-car{background:#EBF8F0;border-color:#1A7A40;}
+.evac-nocar{background:var(--blue-light);border-color:var(--blue-mid);}
+.evac-mode-title{font-size:16px;font-weight:900;margin-bottom:12px;}
+.evac-car .evac-mode-title{color:#1A7A40;}
+.evac-nocar .evac-mode-title{color:var(--blue-dark);}
+.evac-mode-steps{display:flex;flex-direction:column;gap:0;}
+.evac-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.6;padding:4px 0;}
+.evac-car .evac-step{color:#0D4D25;}
+.evac-nocar .evac-step{color:var(--blue-dark);}
+.evac-step-num{min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px;}
+.evac-car .evac-step-num{background:#1A7A40;}
+.evac-nocar .evac-step-num{background:var(--blue-mid);}
+.evac-step-arrow{text-align:center;font-size:16px;color:#aaa;line-height:1.2;padding:0 0 0 11px;}
 </style>
 </head>
 <body>
@@ -1386,7 +1404,41 @@ function toggleSchool() {
    EVACUATION ROUTES
    ═══════════════════════════════════════════════ */
 function evacRoutes() {
-  let cards = ROUTES.map(function(r) {
+  var carRoute =
+    '<div class="evac-mode-card evac-car">' +
+      '<div class="evac-mode-title">🚗 有自用車</div>' +
+      '<div class="evac-mode-steps">' +
+        '<div class="evac-step"><span class="evac-step-num">1</span><span>直接開車沿 <strong>台2線往基隆方向</strong> 行駛</span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">2</span><span>抵達 <strong>防護站</strong>（車輛除污 → 個人輻射偵測）</span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站內<strong>登記編管報到</strong></span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">4</span><span>自行前往政府安排的<strong>避難收容所</strong>，或自行依親收容</span></div>' +
+      '</div>' +
+    '</div>';
+
+  var noCarRoute =
+    '<div class="evac-mode-card evac-nocar">' +
+      '<div class="evac-mode-title">🚶 無自用車</div>' +
+      '<div class="evac-mode-steps">' +
+        '<div class="evac-step"><span class="evac-step-num">1</span><span>步行前往所在里的<strong>集結點</strong>（里長會引導）</span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">2</span><span>搭乘<strong>第1套接駁公車</strong>（免費）前往防護站</span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站完成<strong>輻射偵測＋除污＋登記編管</strong></span></div>' +
+        '<div class="evac-step-arrow">↓</div>' +
+        '<div class="evac-step"><span class="evac-step-num">4</span><span>搭乘<strong>第2套接駁公車</strong>，由公所人員引導至<strong>避難收容所</strong></span></div>' +
+      '</div>' +
+    '</div>';
+
+  var routeNote =
+    '<div style="background:var(--blue-light);border:1.5px solid #85B7EB;border-radius:12px;padding:12px 16px;margin-bottom:12px;font-size:14px;color:var(--blue-dark);line-height:1.7;">' +
+    '⚠ <strong>核能二廠事故適用路線。</strong>兩種方式最終都必須通過<strong>防護站</strong>完成輻射偵測與除污。<br>' +
+    '📍 <strong>防護站：基隆市消防局防災廣場</strong>（距核二廠約8.6公里）｜備援：國道3號七堵南下地磅站' +
+    '</div>';
+
+  var cards = ROUTES.map(function(r) {
     return '<div class="route-card">' +
       '<div class="route-title-row">' +
       '<div style="display:flex;align-items:center;gap:8px;">' +
@@ -1394,17 +1446,14 @@ function evacRoutes() {
       '<div class="route-title">' + r.dest + '</div>' +
       '</div></div>' +
       '<div class="route-path" style="margin-top:8px;">' + r.path + '</div>' +
-      '<a class="nav-btn" style="margin-top:auto;" href="https://www.google.com/maps/dir/?api=1&destination=' + r.nav + '&travelmode=driving" target="_blank">🗺 開啟 Google 地圖導航</a>' +
+      '<a class="nav-btn" style="margin-top:auto;" href="https://www.google.com/maps/dir/?api=1&destination=' + r.nav + '&travelmode=driving" target="_blank">🗺 導航至防護站</a>' +
       '</div>';
   }).join('');
 
-  return '<div style="background:var(--blue-light);border:1.5px solid #85B7EB;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:14px;color:var(--blue-dark);line-height:1.7;">' +
-    '⚠ <strong>核能二廠事故適用路線。</strong>沿 <strong>台2線往基隆方向</strong> 疏散，先抵達防護站完成輻射除污，再依路線分流。<br>' +
-    '📍 <strong>防護站：基隆市消防局防災廣場</strong>（距核二廠約8.6公里）｜備援：國道3號七堵南下地磅站' +
-    '</div>' +
-    '<div class="route-grid">' + cards + '</div>' +
-    '<div class="flow-hint">✅ <strong>疏散流程：</strong>所在里<strong>集結點</strong> → 沿台2線往基隆 → <strong>防護站</strong>（輻射偵測＋除污） → 登記報到 → 依路線前往<strong>避難收容所</strong><br>' +
-    '無車者：在集結點等候免費接駁公車｜有車者通過防護站後自行前往收容所</div>';
+  return routeNote +
+    '<div class="evac-mode-grid">' + carRoute + noCarRoute + '</div>' +
+    '<div class="sec" style="font-size:15px;margin-top:16px;">疏散方向（台2線往基隆方向）</div>' +
+    '<div class="route-grid">' + cards + '</div>';
 }
 
 /* ═══════════════════════════════════════════════
