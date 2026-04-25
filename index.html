@@ -636,6 +636,7 @@ body{
 .tl-note-spacer{}
 .tl-note-bar{border-left:2px solid #C0392B;border-right:2px solid #C0392B;border-top:2px solid #C0392B;border-radius:4px 4px 0 0;padding:6px 10px 0;margin-top:-2px;}
 .tl-note-text{font-size:13px;color:#C0392B;font-weight:600;text-align:center;padding-bottom:6px;}
+.tl-note-bracket{display:none;}
 /* Detail panel */
 .timeline-detail{
   margin-top:14px;padding:14px 16px;
@@ -994,26 +995,6 @@ const STAGES=[
    stars:[], note:'輻射外釋：立即服從官方疏散指示，不得延誤'},
 ];
 
-function selectStage(idx){
-  const s=STAGES[idx];
-  const detail=document.getElementById('timelineDetail');
-  const content=document.getElementById('timelineContent');
-  // toggle off if same
-  if(detail.dataset.idx==idx && detail.style.display!=='none'){
-    detail.style.display='none'; detail.removeAttribute('data-idx'); return;
-  }
-  detail.dataset.idx=idx;
-  detail.style.borderColor=s.color;
-  const itemsHtml=s.items.map((t,i)=>`<li><span class="td-num" style="background:${s.color}">${i+1}</span>${t}</li>`).join('');
-  const starsHtml=s.stars.map(t=>`<li><span class="td-num star">✦</span>${t}</li>`).join('');
-  content.innerHTML=`
-    <div style="font-size:16px;font-weight:900;color:${s.color};margin-bottom:10px;">${s.label}</div>
-    <ul class="td-items">${itemsHtml}${starsHtml}</ul>
-    ${s.note?`<div class="td-note">${s.note}</div>`:''}`;
-  detail.style.display='block';
-}
-selectStage(2);
-</script>
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
@@ -1025,28 +1006,10 @@ selectStage(2);
 
 <div class="persona-panel" style="margin-bottom:14px;">
   <div class="persona-label">我的情況是…</div>
-  <div class="persona-row">
-    <button class="persona-btn" onclick="setPersona('single',this)">
-      <span class="persona-icon">🧑</span>
-      <div class="persona-text">
-        <span class="persona-name">單身 / 單獨居住</span>
-        <span class="persona-sub">一個人住，自行應變</span>
-      </div>
-    </button>
-    <button class="persona-btn active" onclick="setPersona('family',this)">
-      <span class="persona-icon">👨‍👩‍👧</span>
-      <div class="persona-text">
-        <span class="persona-name">家有就學中的小孩</span>
-        <span class="persona-sub">孩子目前在學校</span>
-      </div>
-    </button>
-    <button class="persona-btn" onclick="setPersona('disabled',this)">
-      <span class="persona-icon">♿</span>
-      <div class="persona-text">
-        <span class="persona-name">家有行動不便者</span>
-        <span class="persona-sub">需要額外協助疏散</span>
-      </div>
-    </button>
+  <div class="persona-row-h">
+    <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
+    <button class="persona-btn-h active" onclick="setPersona('family',this)">家有就學中的小孩</button>
+    <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
   </div>
 </div>
 
@@ -1375,7 +1338,7 @@ function family(){
       <li><span class="step-num">4</span>確認學校已備案指定接送人名單</li>
     </ul>
   </div>
-  <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}`;
+  <div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;font-size:15px;">緊急應變計畫區 (EPZ) 範圍內學校停課狀態 <span id="schoolToggleIcon">▲</span></div><div id="schoolTableWrap">${schoolTable()}</div>`;
 
   if(currentLevel===2)return `
   <div class="action-block orange">
@@ -1387,7 +1350,7 @@ function family(){
       <li><span class="step-num">4</span>在防護站報到時，全家一起登記，確保不分散</li>
     </ul>
   </div>
-  <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}
+  <div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;font-size:15px;">緊急應變計畫區 (EPZ) 範圍內學校停課狀態 <span id="schoolToggleIcon">▲</span></div><div id="schoolTableWrap">${schoolTable()}</div>
   <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">食衣住行</div>
   ${lsGrid([
@@ -1408,7 +1371,7 @@ function family(){
       <li><span class="step-num">5</span>防護站完成輻射檢測除污後，全家前往避難收容所<strong>一起登記入住</strong></li>
     </ul>
   </div>
-  <div class="sec">🏫 孩子學校停課狀態</div>${schoolTable()}
+  <div class="sec school-sec-toggle" onclick="toggleSchool()" style="cursor:pointer;font-size:15px;">緊急應變計畫區 (EPZ) 範圍內學校停課狀態 <span id="schoolToggleIcon">▲</span></div><div id="schoolTableWrap">${schoolTable()}</div>
   <div class="sec">疏散路線</div>${evacRoutes()}
   <div class="sec">🏟 避難收容所（設有家庭區、哺乳室、兒童照護區）</div>${shelterCards()}`;
 }
