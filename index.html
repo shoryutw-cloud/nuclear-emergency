@@ -63,7 +63,7 @@ body{
   animation:blink 1.4s ease-in-out infinite;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.65}}
-.banner-sub{font-size:12px;color:rgba(255,255,255,0.75);margin-top:2px;}
+.banner-sub{display:none;}
 .banner-right{
   flex:1;padding-left:20px;
   display:flex;flex-direction:column;justify-content:center;gap:7px;
@@ -98,11 +98,11 @@ body{
 
 /* ═══════ SECTION LABEL ═══════ */
 .sec{
-  font-size:13px;font-weight:700;letter-spacing:0.1em;
-  color:var(--blue-mid);text-transform:uppercase;
-  padding:20px 0 8px;
-  border-bottom:2px solid var(--blue-mid);
-  margin-bottom:14px;
+  font-size:18px;font-weight:900;letter-spacing:0.04em;
+  color:var(--blue-dark);text-transform:none;
+  padding:22px 0 10px;
+  border-bottom:3px solid var(--blue-mid);
+  margin-bottom:16px;
   display:flex;align-items:center;justify-content:space-between;gap:8px;
 }
 .sec-left{display:flex;align-items:center;gap:8px;}
@@ -595,6 +595,62 @@ body{
 .carousel-dots{display:flex;gap:6px;align-items:center;}
 .cdot{width:8px;height:8px;border-radius:50%;background:var(--gray-border);cursor:pointer;transition:background 0.15s;}
 .cdot.active{background:var(--blue-mid);}
+
+/* ═══════ TECH STYLE EXTRAS ═══════ */
+body{background:linear-gradient(160deg,#FFFBEF 0%,#FFF5CC 100%);}
+
+/* Banner accent glow line */
+.banner::after{
+  content:'';display:block;
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,#F5C518 30%,#E07B19 70%,transparent);
+  animation:scan 3s ease-in-out infinite;
+}
+@keyframes scan{0%,100%{opacity:0.5}50%{opacity:1}}
+.banner{position:relative;}
+
+/* Section titles: left accent bar */
+.sec{
+  border-left:5px solid var(--orange);
+  padding-left:14px !important;
+  border-bottom:1px solid var(--gray-border) !important;
+  border-left-color:var(--orange);
+}
+.sec-left{color:var(--blue-dark);}
+
+/* Action blocks: glassmorphism touch */
+.action-block{backdrop-filter:blur(4px);}
+
+/* Persona buttons glow on active */
+.persona-btn-h.active{
+  box-shadow:0 0 0 3px #F5C51844;
+  border-color:#B8920A !important;
+  background:linear-gradient(135deg,#FFF8DC,#FFFBEF) !important;
+  color:var(--blue-dark) !important;
+}
+
+/* Cards hover lift */
+.lc,.shelter-card,.route-card,.school-block{
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.lc:hover,.shelter-card:hover,.route-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(180,140,0,0.15);
+}
+
+/* News items: hover highlight */
+.news-item:hover{background:linear-gradient(90deg,#FFF8DC,#FFFBEF);}
+
+/* Press items: same */
+.press-item:hover{background:linear-gradient(90deg,#FFF8DC,#FFFBEF) !important;}
+
+/* Level btn: active glow */
+.blevel-btn.active{
+  box-shadow:0 0 16px rgba(224,123,25,0.5) !important;
+}
+.blevel-btn.l3.active{
+  box-shadow:0 0 16px rgba(178,34,34,0.5) !important;
+}
 </style>
 </head>
 <body>
@@ -605,11 +661,10 @@ body{
   <div class="banner-left">
     <div class="banner-text-wrap">
       <div class="banner-row1">
-        <span class="banner-title">核子事故專區</span>
+        <span class="banner-title" style="font-size:26px;letter-spacing:0.04em;">核子事故專區</span>
         <span class="level-pill" id="bannerPill">第二級警戒</span>
         <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;">核能二廠</span>
       </div>
-      <div class="banner-sub">請保持冷靜 · 依指示行動 · 持續收聽官方廣播</div>
     </div>
   </div>
 
@@ -660,54 +715,6 @@ body{
   </div>
 </div>
 
-<!-- ═══ INFO CARDS ═══ -->
-<div class="sec" style="margin-top:20px;">
-  <span class="sec-left">重要資訊</span>
-</div>
-<div class="info-cards">
-  <a class="info-card" href="#mainContent" onclick="setPersona('single',document.querySelector('.persona-btn'));scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
-    <div class="info-card-img orange">🏃</div>
-    <div class="info-card-body">
-      <div class="info-card-title">疏散撤離指引</div>
-      <div class="info-card-desc">依警戒等級與住家位置，了解您應採取的行動</div>
-    </div>
-  </a>
-  <a class="info-card" href="https://www.google.com/maps/search/避難收容所+新北市" target="_blank">
-    <div class="info-card-img blue">🏟</div>
-    <div class="info-card-body">
-      <div class="info-card-title">避難收容所位置</div>
-      <div class="info-card-desc">板橋、三重、新莊、樹林、泰山各體育館開放收容</div>
-    </div>
-  </a>
-  <a class="info-card" href="https://www.google.com/maps/search/衛生所+金山+石門+萬里+三芝" target="_blank">
-    <div class="info-card-img amber">💊</div>
-    <div class="info-card-body">
-      <div class="info-card-title">碘化鉀領取地點</div>
-      <div class="info-card-desc">各區衛生所發放，需等候官方通知才可服用</div>
-    </div>
-  </a>
-  <a class="info-card" href="#mainContent" onclick="setPersona('family',document.querySelectorAll('.persona-btn')[1]);scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
-    <div class="info-card-img green">🏫</div>
-    <div class="info-card-body">
-      <div class="info-card-title">學校停課與接孩子</div>
-      <div class="info-card-desc">EPZ 區域學校安置對照表及接孩子程序說明</div>
-    </div>
-  </a>
-  <a class="info-card" href="#mainContent" onclick="setPersona('disabled',document.querySelectorAll('.persona-btn')[2]);scrollTo({top:document.getElementById('mainContent').offsetTop,behavior:'smooth'});return false;">
-    <div class="info-card-img blue">♿</div>
-    <div class="info-card-body">
-      <div class="info-card-title">行動不便者協助</div>
-      <div class="info-card-desc">復康巴士394輛待命，撥打1999登記接送需求</div>
-    </div>
-  </a>
-  <a class="info-card" href="https://www.nusc.gov.tw/" target="_blank">
-    <div class="info-card-img gray">📡</div>
-    <div class="info-card-body">
-      <div class="info-card-title">核安委員會官網</div>
-      <div class="info-card-desc">即時輻射監測數據、官方新聞稿與緊急通知</div>
-    </div>
-  </a>
-</div>
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
@@ -1202,11 +1209,14 @@ function renderTabContent(){
   if(false){} else {
     document.getElementById('tabContent').innerHTML=`<div class="press-grid">${
       visible.map(n=>{
-        const[y,m,d]=n.time.split('/');
+        const parts=n.time.split('/');
+        const isDate=parts.length===3;
+        const top=isDate?`${parts[0]}-${parts[1]}`:'今日';
+        const day=isDate?parts[2]:n.time;
         return `<div class="press-item">
           <div class="press-date">
-            <div class="press-date-top">${y} - ${m}</div>
-            <div class="press-date-day">${d}</div>
+            <div class="press-date-top">${top}</div>
+            <div class="press-date-day">${day}</div>
           </div>
           <div class="press-div"></div>
           <div class="press-title">${n.text}</div>
