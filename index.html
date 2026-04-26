@@ -1178,6 +1178,60 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   </div>
 </div>
 
+
+<!-- ═══ RESPONSE TIMELINE ═══ -->
+<div class="timeline-section">
+  <div class="sec">⏱ 核子事故應變階段</div>
+  <div class="timeline-wrap" id="responseTimeline">
+    <div style="background:linear-gradient(120deg,var(--blue-dark),#1B3A5C);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
+      <div style="font-size:16px;font-weight:900;color:#fff;">依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px;">點擊各階段查看詳細應變措施 ・ 目前處於第二級廠區緊急（T2）</div>
+    </div>
+    <div class="tl-grid">
+      <div class="tl-line"></div>
+      <div class="tnode" onclick="selectStage(0)">
+        <div class="tnode-dot" style="background:#64748B;border-color:#64748B;">T0</div>
+        <div class="tnode-label">事故發生</div>
+        <div class="tnode-sub">起點</div>
+      </div>
+      <div class="tnode" onclick="selectStage(1)">
+        <div class="tnode-dot" style="background:#D4820A;border-color:#D4820A;">T1</div>
+        <div class="tnode-label">緊急戒備</div>
+        <div class="tnode-sub">一級警戒</div>
+      </div>
+      <div class="tnode active" onclick="selectStage(2)" id="tnode-T2">
+        <div class="tnode-dot" style="background:#E06B10;border-color:#E06B10;box-shadow:0 0 0 4px rgba(224,107,16,0.25);">T2</div>
+        <div class="tnode-label" style="color:#E06B10;font-weight:900;">廠區緊急</div>
+        <div class="tnode-sub">二級警戒 ▲</div>
+      </div>
+      <div class="tnode" onclick="selectStage(3)">
+        <div class="tnode-dot" style="background:#C0392B;border-color:#C0392B;opacity:0.55;font-size:11px;">T2'</div>
+        <div class="tnode-label">警報發布</div>
+        <div class="tnode-sub">警報階段</div>
+      </div>
+      <div class="tnode" onclick="selectStage(4)">
+        <div class="tnode-dot" style="background:#8B1010;border-color:#8B1010;opacity:0.55;">T3</div>
+        <div class="tnode-label">全面緊急</div>
+        <div class="tnode-sub">三級警戒</div>
+      </div>
+      <div class="tnode" onclick="selectStage(5)">
+        <div class="tnode-dot" style="background:#4A0000;border-color:#4A0000;opacity:0.55;">T4</div>
+        <div class="tnode-label">輻射外釋</div>
+        <div class="tnode-sub">最高警戒</div>
+      </div>
+    </div>
+    <div class="tl-note-row">
+      <div class="tl-note-spacer"></div>
+      <div class="tl-note-bar">
+        <div class="tl-note-text">視狀況宣布 EPZ 民眾（含設籍）<strong>停止上班上課</strong></div>
+      </div>
+    </div>
+    <div class="timeline-detail" id="timelineDetail" style="display:none;">
+      <div id="timelineContent"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
   <span class="sec-left">我的位置與家人情況</span>
@@ -1773,15 +1827,15 @@ function selectEvacMode(mode) {
 
 function renderContent() {
   var evac_sec = '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>';
+  var h = '';
   if (currentPersona === null) {
-    var h = '<div style="text-align:center;padding:28px 20px;font-size:16px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);margin-bottom:16px;">請先選擇上面您的情況，以出現對應之行動指引</div>';
+    h = '<div style="text-align:center;padding:28px 20px;font-size:16px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);margin-bottom:16px;">請先選擇上面您的情況，以出現對應之行動指引</div>';
     h += evac_sec + evacRoutes();
     h += kiCard();
     h += dontCard();
     e('mainContent').innerHTML = h;
     return;
   }
-  let h = '';
   if (currentPersona === 'single')      h = renderSingle();
   else if (currentPersona === 'family') h = renderFamily();
   else                                   h = renderDisabled();
