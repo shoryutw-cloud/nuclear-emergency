@@ -1723,6 +1723,7 @@ function renderContent() {
     h += kiCard();
     h += dontCard();
     e('mainContent').innerHTML = h;
+    setTimeout(initEvacMap, 200);
     return;
   }
   if (currentPersona === 'single')      h = renderSingle();
@@ -2016,78 +2017,94 @@ function renderAssemblyPicker() {
 
 function initEvacMap() {
   var mapEl = document.getElementById('evacMap');
-  if (!mapEl || mapEl._leaflet_id) return;
-  var map = L.map('evacMap').setView([25.17, 121.57], 11);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'© OpenStreetMap contributors', maxZoom:17
-  }).addTo(map);
+  if (!mapEl) return;
+  if (mapEl._leaflet_id) {
+    // already initialized, just invalidate size
+    try { window._evacMapInstance && window._evacMapInstance.invalidateSize(); } catch(e){}
+    return;
+  }
+  if (typeof L === 'undefined') {
+    // Leaflet not loaded yet, retry
+    setTimeout(initEvacMap, 300);
+    return;
+  }
+  try {
+    var map = L.map(mapEl).setView([25.17, 121.57], 11);
+    window._evacMapInstance = map;
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom:17
+    }).addTo(map);
 
-  /* Nuclear plants markers */
-  var plantIcon = function(label) {
-    return L.divIcon({
-      html:'<div style="background:#B22222;color:#fff;font-size:11px;font-weight:700;padding:3px 7px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.3);">☢ '+label+'</div>',
-      className:'', iconAnchor:[30,12]
-    });
-  };
-  L.marker([25.299,121.588],{icon:plantIcon('核一廠')}).addTo(map);
-  L.marker([25.218,121.659],{icon:plantIcon('核二廠')}).addTo(map);
+    var blue = '#1260A8', purple = '#7B1FA2';
 
-  /* Label helper */
-  var routeLabel = function(latlng, text, color) {
-    L.marker(latlng, {icon: L.divIcon({
-      html:'<div style="background:'+color+';color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.3);">'+text+'</div>',
-      className:'', iconAnchor:[30,10]
-    })}).addTo(map);
-  };
+    /* Plant markers */
+    function plantMarker(latlng, label) {
+      L.marker(latlng, {icon:L.divIcon({
+        html:'<div style="background:#8B0000;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.35);">☢ '+label+'</div>',
+        className:'', iconAnchor:[30,10]
+      })}).addTo(map);
+    }
+    plantMarker([25.299,121.588],'核一廠');
+    plantMarker([25.218,121.659],'核二廠');
 
-  var blue = '#1260A8', purple = '#7B1FA2';
+    /* Route label */
+    function routeLabel(latlng, text, color) {
+      L.marker(latlng, {icon:L.divIcon({
+        html:'<div style="background:'+color+';color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.3);">'+text+'</div>',
+        className:'', iconAnchor:[0,8]
+      })}).addTo(map);
+    }
 
-  /* Route A: 核一廠→台2線→台2乙→淡水捷運 */
-  L.polyline([[25.299,121.588],[25.256,121.502],[25.195,121.468],[25.170,121.440]],
-    {color:blue,weight:5,opacity:0.85}).addTo(map);
-  routeLabel([25.215,121.462],'A 淡水捷運',blue);
+    /* Route A */
+    L.polyline([[25.299,121.588],[25.256,121.502],[25.195,121.468],[25.170,121.440]],
+      {color:blue,weight:5,opacity:0.9}).addTo(map);
+    routeLabel([25.230,121.480],'A 往淡水捷運',blue);
 
-  /* Route B: 核一廠→淡水→關渡大橋→八里林口 */
-  L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.106,121.443],[25.155,121.388]],
-    {color:blue,weight:5,opacity:0.85,dashArray:'10,5'}).addTo(map);
-  routeLabel([25.140,121.415],'B 八里林口',blue);
+    /* Route B */
+    L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.106,121.443],[25.155,121.388]],
+      {color:blue,weight:4,opacity:0.85,dashArray:'10,6'}).addTo(map);
+    routeLabel([25.130,121.413],'B 往八里林口',blue);
 
-  /* Route C: 核一廠→台2乙→台64→五股三重新莊 */
-  L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.100,121.460],[25.055,121.465],[25.063,121.487]],
-    {color:blue,weight:5,opacity:0.85,dashArray:'6,4'}).addTo(map);
-  routeLabel([25.085,121.460],'C 五股三重新莊',blue);
+    /* Route C */
+    L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.100,121.450],[25.055,121.460],[25.063,121.487]],
+      {color:blue,weight:4,opacity:0.85,dashArray:'5,5'}).addTo(map);
+    routeLabel([25.080,121.450],'C 往五股三重新莊',blue);
 
-  /* Route D: 核二廠→台2線→基隆火車站 */
-  L.polyline([[25.218,121.659],[25.160,121.700],[25.130,121.740]],
-    {color:purple,weight:5,opacity:0.85}).addTo(map);
-  routeLabel([25.168,121.718],'D 基隆火車站',purple);
+    /* Route D */
+    L.polyline([[25.218,121.659],[25.160,121.700],[25.130,121.740]],
+      {color:purple,weight:5,opacity:0.9}).addTo(map);
+    routeLabel([25.175,121.718],'D 往基隆火車站',purple);
 
-  /* Route E: 核二廠→基隆→台62→汐止三重 */
-  L.polyline([[25.218,121.659],[25.130,121.740],[25.065,121.660],[25.050,121.570],[25.063,121.487]],
-    {color:purple,weight:5,opacity:0.85,dashArray:'10,5'}).addTo(map);
-  routeLabel([25.060,121.610],'E 汐止三重五股',purple);
+    /* Route E */
+    L.polyline([[25.218,121.659],[25.130,121.740],[25.065,121.660],[25.050,121.570],[25.063,121.487]],
+      {color:purple,weight:4,opacity:0.85,dashArray:'10,6'}).addTo(map);
+    routeLabel([25.065,121.608],'E 往汐止三重五股',purple);
 
-  /* Route F: →瑞芳 */
-  L.polyline([[25.218,121.659],[25.130,121.740],[25.100,121.770],[25.108,121.778]],
-    {color:purple,weight:5,opacity:0.85,dashArray:'6,4'}).addTo(map);
-  routeLabel([25.112,121.763],'F 瑞芳',purple);
+    /* Route F */
+    L.polyline([[25.218,121.659],[25.130,121.740],[25.108,121.778]],
+      {color:purple,weight:4,opacity:0.85,dashArray:'5,5'}).addTo(map);
+    routeLabel([25.118,121.758],'F 往瑞芳',purple);
 
-  /* Route G: →平溪 */
-  L.polyline([[25.218,121.659],[25.130,121.740],[25.100,121.770],[25.060,121.760],[24.997,121.738]],
-    {color:purple,weight:5,opacity:0.85,dashArray:'4,3'}).addTo(map);
-  routeLabel([25.040,121.748],'G 平溪',purple);
+    /* Route G */
+    L.polyline([[25.218,121.659],[25.130,121.740],[25.100,121.770],[25.060,121.760],[24.997,121.738]],
+      {color:purple,weight:4,opacity:0.85,dashArray:'3,4'}).addTo(map);
+    routeLabel([25.045,121.752],'G 往平溪',purple);
 
-  /* Legend */
-  var legend = L.control({position:'bottomright'});
-  legend.onAdd = function() {
-    var div = L.DomUtil.create('div');
-    div.style.cssText = 'background:rgba(255,255,255,0.92);padding:10px 14px;border-radius:10px;font-size:12px;font-family:sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.15);line-height:1.9;';
-    div.innerHTML = '<div style="font-weight:700;margin-bottom:4px;">路線圖例</div>'+
-      '<div><span style="display:inline-block;width:28px;height:4px;background:#1260A8;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線A/B/C（核一廠）</div>'+
-      '<div><span style="display:inline-block;width:28px;height:4px;background:#7B1FA2;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線D/E/F/G（核二廠）</div>';
-    return div;
-  };
-  legend.addTo(map);
+    /* Legend */
+    var legend = L.control({position:'bottomright'});
+    legend.onAdd = function() {
+      var d = L.DomUtil.create('div');
+      d.style.cssText='background:rgba(255,255,255,0.95);padding:10px 14px;border-radius:10px;font-size:12px;font-family:"Noto Sans TC",sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.18);line-height:2;';
+      d.innerHTML='<strong>路線圖例</strong><br>'+
+        '<span style="display:inline-block;width:24px;height:4px;background:#1260A8;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線A/B/C（核一廠）<br>'+
+        '<span style="display:inline-block;width:24px;height:4px;background:#7B1FA2;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線D/E/F/G（核二廠）';
+      return d;
+    };
+    legend.addTo(map);
+  } catch(err) {
+    console.error('Map init error:', err);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -2111,6 +2128,127 @@ setLevel(2);
 selectStage(2);
 
 </script>
+</head>
+<body>
+
+<!-- ═══ BANNER ═══ -->
+<div class="banner">
+  <!-- Left: title only, no logo -->
+  <div class="banner-left">
+    <div class="banner-text-wrap">
+      <div class="banner-row1">
+        <span class="banner-title" style="font-size:26px;">核子事故資訊專區<span style="font-size:14px;font-weight:500;opacity:0.7;margin-left:8px;">(測試區)</span></span>
+        <span class="level-pill" id="bannerPill">第二級警戒</span>
+        <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;">核能二廠</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Level buttons + Status -->
+  <div class="banner-right">
+    <div class="banner-level-row">
+      <button class="blevel-btn l1" onclick="setLevel(1,this)">第一級-緊急戒備事故</button>
+      <button class="blevel-btn l2 active" onclick="setLevel(2,this)">第二級-廠區緊急事故</button>
+      <button class="blevel-btn l3" onclick="setLevel(3,this)">第三級-全面緊急事故</button>
+    </div>
+    <div class="banner-status-row">
+      <div class="banner-status-text" id="bannerStatusText"></div>
+      <div class="banner-status-tags" id="bannerStatusTags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOP NAVIGATION ═══ -->
+<nav class="top-nav" id="topNav">
+  <div class="top-nav-inner">
+    <div class="nav-item">
+      <span class="nav-link">應變資訊</span>
+      <div class="nav-sub">
+        <a href="timeline.html" target="_blank">核子事故應變階段</a>
+        <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
+        <a href="#section-station" onclick="smoothTo('section-station')">防護站</a>
+        <a href="#section-shelter" onclick="smoothTo('section-shelter')">避難收容處所</a>
+        <a href="#section-epz" onclick="smoothTo('section-epz')">緊急應變計畫區(EPZ)圖</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">核子事故防護影片</span>
+      <div class="nav-sub">
+        <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
+        <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">相關連結</span>
+      <div class="nav-sub">
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SIDEBAR + CONTENT WRAPPER ═══ -->
+<div class="content-with-sidebar" style="display:block;">
+
+<div class="page">
+
+<!-- ═══ NEWS TABS ═══ -->
+<div style="margin-top:3px;padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
+  <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
+</div>
+<div class="news-tabs">
+  <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
+  <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
+  <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
+</div>
+<div class="news-tab-panel">
+  <div id="tabContent"></div>
+  <div class="news-more">
+    <button class="news-more-btn" id="moreBtn" onclick="toggleMore()">更多 +</button>
+  </div>
+</div>
+
+<!-- ═══ INFOGRAPHIC CAROUSEL ═══ -->
+<div class="carousel-section">
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-arrow" onclick="prevSlide()">&#8249;</button>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <button class="carousel-arrow" onclick="nextSlide()">&#8250;</button>
+  </div>
+</div>
+
+
+
+<!-- ═══ GPS + PERSONA ═══ -->
+<div class="sec">
+  <span class="sec-left">我的位置與家人情況</span>
+  <span id="gpsInline" class="sec-gps">
+    <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
+  </span>
+</div>
+
+<div class="persona-panel" style="margin-bottom:14px;">
+  <div class="persona-label">我的情況是…</div>
+  <div class="persona-row-h">
+    <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
+    <button class="persona-btn-h" onclick="setPersona('family',this)">家中小孩學校於EPZ範圍內</button>
+    <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
+  </div>
+</div>
+
+<div id="section-assembly" style="position:relative;top:-80px;visibility:hidden;height:0;"></div>
+<!-- ═══ CONTENT ═══ -->
+<div class="sec">行動指引</div>
+<div id="mainContent"></div>
+
+</div><!-- /page -->
+
+
 
 </div><!-- /content-with-sidebar -->
 
