@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>核子事故專區</title>
+<title>核子事故資訊專區</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
@@ -920,18 +920,26 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 .top-nav-inner{
-  display:flex;align-items:stretch;padding:0 24px;
-  max-width:100%;
+  display:flex;align-items:stretch;justify-content:center;
+  padding:0 24px;max-width:100%;
 }
 .nav-item{position:relative;}
 .nav-link{
-  display:flex;align-items:center;gap:6px;
-  padding:12px 18px;font-size:15px;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+  padding:13px 28px;font-size:17px;font-weight:700;
   color:var(--blue-dark);cursor:pointer;white-space:nowrap;
   border-bottom:3px solid transparent;transition:all 0.15s;
   user-select:none;
 }
-.nav-link::after{content:'∨';font-size:11px;opacity:0.6;}
+/* MOI-style chevron arrow */
+.nav-link::after{
+  content:'';display:inline-block;
+  width:7px;height:7px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg);
+  margin-top:-4px;opacity:0.7;
+}
 .nav-item:hover .nav-link{color:var(--blue-mid);border-bottom-color:var(--blue-mid);}
 .nav-sub{
   display:none;position:absolute;top:100%;left:0;
@@ -949,7 +957,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .nav-sub a:hover{background:rgba(255,255,255,0.12);color:#fff;}
 
 /* ═══ CONTENT WITH SIDEBAR ═══ */
-.content-with-sidebar{display:flex;align-items:flex-start;}
+.content-with-sidebar{display:block;}
 .left-sidebar{
   width:210px;flex-shrink:0;
   position:sticky;top:0;
@@ -992,7 +1000,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{flex:1;min-width:0;padding:0 28px 80px;}
+.page{padding:0 28px 80px;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -1020,7 +1028,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   <div class="banner-left">
     <div class="banner-text-wrap">
       <div class="banner-row1">
-        <span class="banner-title" style="font-size:26px;">核子事故專區<span style="font-size:14px;font-weight:500;opacity:0.7;margin-left:8px;">(測試區)</span></span>
+        <span class="banner-title" style="font-size:26px;">核子事故資訊專區<span style="font-size:14px;font-weight:500;opacity:0.7;margin-left:8px;">(測試區)</span></span>
         <span class="level-pill" id="bannerPill">第二級警戒</span>
         <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;">核能二廠</span>
       </div>
@@ -1072,48 +1080,12 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 </nav>
 
 <!-- ═══ SIDEBAR + CONTENT WRAPPER ═══ -->
-<div class="content-with-sidebar">
-
-<aside class="left-sidebar" id="leftSidebar">
-  <div class="left-nav-title">目錄</div>
-  <ul class="left-nav-list">
-    <li class="left-nav-parent">
-      <div class="left-nav-header" onclick="toggleLeftNav(this)">
-        應變資訊<span class="left-nav-arrow">∨</span>
-      </div>
-      <ul class="left-nav-children">
-        <li><a href="#" onclick="smoothTo('section-assembly');return false;">集結點</a></li>
-        <li><a href="#" onclick="smoothTo('section-station');return false;">防護站</a></li>
-        <li><a href="#" onclick="smoothTo('section-shelter');return false;">避難收容處所</a></li>
-        <li><a href="#" onclick="smoothTo('section-epz');return false;">緊急應變計畫區(EPZ)圖</a></li>
-      </ul>
-    </li>
-    <li class="left-nav-parent">
-      <div class="left-nav-header" onclick="toggleLeftNav(this)">
-        核子事故防護影片<span class="left-nav-arrow">∨</span>
-      </div>
-      <ul class="left-nav-children">
-        <li><a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a></li>
-        <li><a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a></li>
-      </ul>
-    </li>
-    <li class="left-nav-parent">
-      <div class="left-nav-header" onclick="toggleLeftNav(this)">
-        相關連結<span class="left-nav-arrow">∨</span>
-      </div>
-      <ul class="left-nav-children">
-        <li><a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a></li>
-        <li><a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a></li>
-        <li><a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a></li>
-      </ul>
-    </li>
-  </ul>
-</aside>
+<div class="content-with-sidebar" style="display:block;">
 
 <div class="page">
 
 <!-- ═══ NEWS TABS ═══ -->
-<div style="padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
+<div style="margin-top:3px;padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
   <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
 </div>
 <div class="news-tabs">
@@ -1800,8 +1772,13 @@ function selectEvacMode(mode) {
 }
 
 function renderContent() {
+  var evac_sec = '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>';
   if (currentPersona === null) {
-    e('mainContent').innerHTML = '<div style="text-align:center;padding:32px 20px;font-size:16px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);">請先選擇上面您的情況，以出現對應之行動指引</div>';
+    var h = '<div style="text-align:center;padding:28px 20px;font-size:16px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);margin-bottom:16px;">請先選擇上面您的情況，以出現對應之行動指引</div>';
+    h += evac_sec + evacRoutes();
+    h += kiCard();
+    h += dontCard();
+    e('mainContent').innerHTML = h;
     return;
   }
   let h = '';
