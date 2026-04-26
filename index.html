@@ -395,7 +395,9 @@ body{
 .nav-link:hover{text-decoration:underline;}
 
 /* ═══════ ROUTE CARDS ═══════ */
-.route-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.route-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+@media(max-width:900px){.route-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.route-grid{grid-template-columns:1fr;}}
 @media(max-width:700px){.route-grid{grid-template-columns:1fr;}}
 .route-card{
   background:var(--white);border:1.5px solid var(--gray-border);
@@ -1027,6 +1029,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .nav-link{padding:10px 12px;font-size:13px;}
 }
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -1618,78 +1622,72 @@ function toggleSchool() {
 
 
 function evacRoutes() {
-  // Protection stations info block (large, prominent)
   var stationInfo =
     '<div style="background:#FFF0F0;border:2px solid var(--red-mid);border-radius:12px;padding:16px;margin-bottom:14px;">' +
-    '<div style="font-size:17px;font-weight:900;color:var(--red-dark);margin-bottom:10px;">⚠ 防護站位置（核二廠事故適用）</div>' +
+    '<div style="font-size:17px;font-weight:900;color:var(--red-dark);margin-bottom:10px;">⚠ 防護站位置（須經過方可前往收容所）</div>' +
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
     '<div style="background:#fff;border-radius:8px;padding:12px;border-left:4px solid var(--blue-mid);">' +
-    '<div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">東行方向（往基隆）</div>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">核二廠東行方向</div>' +
     '<div style="font-size:15px;font-weight:900;color:var(--blue-dark);">基隆市消防局防災廣場</div>' +
-    '<div style="font-size:13px;color:var(--text-muted);margin-top:2px;">距核二廠 8.6 公里｜備援：七堵南下地磅站</div>' +
-    '<a style="display:inline-block;margin-top:8px;background:var(--blue-mid);color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;" ' +
-    'href="https://www.google.com/maps/dir/?api=1&destination=25.1313,121.7405&travelmode=driving" target="_blank">🗺 導航</a>' +
+    '<div style="font-size:13px;color:var(--text-muted);margin-top:2px;">距核二廠約8.6公里</div>' +
+    '<a style="display:inline-block;margin-top:8px;background:var(--blue-mid);color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;" href="https://www.google.com/maps/dir/?api=1&destination=25.1313,121.7405&travelmode=driving" target="_blank">🗺 導航</a>' +
     '</div>' +
     '<div style="background:#fff;border-radius:8px;padding:12px;border-left:4px solid var(--green);">' +
-    '<div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">西行方向（往台北）</div>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">核一廠西行方向</div>' +
     '<div style="font-size:15px;font-weight:900;color:var(--blue-dark);">石門洞停車場</div>' +
-    '<div style="font-size:13px;color:var(--text-muted);margin-top:2px;">距核二廠 13 公里｜石門區淡金公路旁</div>' +
-    '<a style="display:inline-block;margin-top:8px;background:var(--green);color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;" ' +
-    'href="https://www.google.com/maps/dir/?api=1&destination=25.2901,121.5679&travelmode=driving" target="_blank">🗺 導航</a>' +
-    '</div>' +
-    '</div></div>';
+    '<div style="font-size:13px;color:var(--text-muted);margin-top:2px;">距核一廠約13公里</div>' +
+    '<a style="display:inline-block;margin-top:8px;background:var(--green);color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;" href="https://www.google.com/maps/dir/?api=1&destination=25.2901,121.5679&travelmode=driving" target="_blank">🗺 導航</a>' +
+    '</div></div></div>';
 
-  // Car/no-car toggle (shown first)
   var modeToggle =
     '<div style="display:flex;gap:10px;margin-bottom:14px;">' +
     '<button id="btnCar" data-mode="car" onclick="selectEvacMode(this.dataset.mode)" class="evac-toggle-btn active" style="flex:1;">有自用車</button>' +
     '<button id="btnNoCar" data-mode="nocar" onclick="selectEvacMode(this.dataset.mode)" class="evac-toggle-btn" style="flex:1;">無自用車</button>' +
     '</div>';
 
-  // Car mode content
   var carContent =
     '<div id="evacModeCar" class="evac-mode-card evac-car">' +
     '<div class="evac-mode-steps">' +
-    '<div class="evac-step"><span class="evac-step-num">1</span><span>直接開車沿 <strong>台2線往基隆方向</strong>（東行）或 <strong>淡金公路往石門方向</strong>（西行）</span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">2</span><span>抵達<strong style="color:var(--red-mid);">防護站</strong>（車輛除污 → 個人輻射偵測）</span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站內<strong>登記編管報到</strong></span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">4</span><span>自行前往政府安排的<strong>避難收容所</strong>，或自行依親收容</span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">1</span><span>直接開車沿指定路線行駛（參考下方路線地圖）</span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">2</span><span>抵達<strong style="color:var(--red-mid);">防護站</strong>（車輛除污 → 個人輻射偵測）</span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站內<strong>登記編管報到</strong></span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">4</span><span>自行前往政府安排的<strong>避難收容所</strong>，或自行依親收容</span></div>' +
     '</div></div>';
 
-  // No-car mode content
   var noCarContent =
     '<div id="evacModeNoCar" class="evac-mode-card evac-nocar" style="display:none;">' +
     '<div class="evac-mode-steps">' +
     '<div class="evac-step"><span class="evac-step-num">1</span><span>步行前往所在里的<strong style="color:var(--red-mid);">集結點</strong>（里長會引導上車）</span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">2</span><span>搭乘<strong>第1套接駁公車</strong>（免費）前往防護站</span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站完成<strong>輻射偵測＋除污＋登記編管</strong></span></div>' +
-        '<div class="evac-step"><span class="evac-step-num">4</span><span>搭乘<strong>第2套接駁公車</strong>，由公所人員引導至<strong>避難收容所</strong></span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">2</span><span>搭乘<strong>第1套接駁公車</strong>（免費）前往防護站</span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">3</span><span>防護站完成<strong>輻射偵測＋除污＋登記編管</strong></span></div>' +
+    '<div class="evac-step"><span class="evac-step-num">4</span><span>搭乘<strong>第2套接駁公車</strong>，由公所人員引導至<strong>避難收容所</strong></span></div>' +
     '</div>' +
-    // Assembly picker inside no-car section
     '<div style="margin-top:14px;padding-top:14px;border-top:1px solid #CBD5E8;">' +
     '<div style="font-size:14px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;">請選擇目前所在行政區查看集結點位置，如有一個以上集結點，請選擇最方便前往的集結點即可</div>' +
     assemblyPickerHTML() +
-    '</div>' +
-    '</div>';
+    '</div></div>';
 
-  // Route cards
+  /* Route cards - 3 col, no nav button */
   var cards = ROUTES.map(function(r) {
-    return '<div class="route-card">' +
-      '<div class="route-title-row">' +
-      '<div style="display:flex;align-items:center;gap:8px;">' +
-      '<span style="background:var(--blue-dark);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;flex-shrink:0;">' + r.label + '</span>' +
-      '<div class="route-title">' + r.dest + '</div>' +
-      '</div></div>' +
-      '<div class="route-path" style="margin-top:8px;">' + r.path + '</div>' +
-      '<a class="nav-btn" style="margin-top:auto;" href="https://www.google.com/maps/dir/?api=1&destination=' + r.nav + '&travelmode=driving" target="_blank">🗺 導航至防護站</a>' +
+    return '<div class="route-card" style="border-left:4px solid ' + r.color + ';padding:12px 14px;">' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+      '<span style="background:' + r.color + ';color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;">' + r.label + '</span>' +
+      '<span style="font-size:11px;color:var(--text-muted);">' + r.plant + '</span>' +
+      '</div>' +
+      '<div style="font-size:14px;font-weight:700;margin-bottom:4px;">' + r.dest + '</div>' +
+      '<div style="font-size:12px;color:var(--text-muted);line-height:1.6;">' + r.path + '</div>' +
       '</div>';
   }).join('');
+
+  /* Leaflet map */
+  var mapDiv = '<div id="evacMap" style="height:400px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gray-border);margin-bottom:14px;"></div>';
 
   return stationInfo +
     modeToggle +
     carContent +
     noCarContent +
-    '<div class="sec" style="margin-top:16px;">疏散方向路線</div>' +
+    '<div class="sec" style="margin-top:16px;">疏散路線地圖</div>' +
+    mapDiv +
     '<div class="route-grid">' + cards + '</div>' +
     '<div class="flow-hint">疏散流程：<strong style="color:var(--red-mid);">集結點</strong>（無車者）或直接 → <strong style="color:var(--red-mid);">防護站</strong>（輻射偵測＋除污）→ 登記報到 → <strong>避難收容所</strong>或依親收容</div>';
 }
@@ -1733,6 +1731,7 @@ function renderContent() {
   h += kiCard();
   h += dontCard();
   e('mainContent').innerHTML = h;
+  setTimeout(initEvacMap, 150);
 }
 
 function renderSingle() {
@@ -2012,6 +2011,83 @@ function schoolSection() {
 
 function renderAssemblyPicker() {
   return assemblyPickerHTML ? assemblyPickerHTML() : '';
+}
+
+
+function initEvacMap() {
+  var mapEl = document.getElementById('evacMap');
+  if (!mapEl || mapEl._leaflet_id) return;
+  var map = L.map('evacMap').setView([25.17, 121.57], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'© OpenStreetMap contributors', maxZoom:17
+  }).addTo(map);
+
+  /* Nuclear plants markers */
+  var plantIcon = function(label) {
+    return L.divIcon({
+      html:'<div style="background:#B22222;color:#fff;font-size:11px;font-weight:700;padding:3px 7px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.3);">☢ '+label+'</div>',
+      className:'', iconAnchor:[30,12]
+    });
+  };
+  L.marker([25.299,121.588],{icon:plantIcon('核一廠')}).addTo(map);
+  L.marker([25.218,121.659],{icon:plantIcon('核二廠')}).addTo(map);
+
+  /* Label helper */
+  var routeLabel = function(latlng, text, color) {
+    L.marker(latlng, {icon: L.divIcon({
+      html:'<div style="background:'+color+';color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.3);">'+text+'</div>',
+      className:'', iconAnchor:[30,10]
+    })}).addTo(map);
+  };
+
+  var blue = '#1260A8', purple = '#7B1FA2';
+
+  /* Route A: 核一廠→台2線→台2乙→淡水捷運 */
+  L.polyline([[25.299,121.588],[25.256,121.502],[25.195,121.468],[25.170,121.440]],
+    {color:blue,weight:5,opacity:0.85}).addTo(map);
+  routeLabel([25.215,121.462],'A 淡水捷運',blue);
+
+  /* Route B: 核一廠→淡水→關渡大橋→八里林口 */
+  L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.106,121.443],[25.155,121.388]],
+    {color:blue,weight:5,opacity:0.85,dashArray:'10,5'}).addTo(map);
+  routeLabel([25.140,121.415],'B 八里林口',blue);
+
+  /* Route C: 核一廠→台2乙→台64→五股三重新莊 */
+  L.polyline([[25.299,121.588],[25.256,121.502],[25.170,121.440],[25.100,121.460],[25.055,121.465],[25.063,121.487]],
+    {color:blue,weight:5,opacity:0.85,dashArray:'6,4'}).addTo(map);
+  routeLabel([25.085,121.460],'C 五股三重新莊',blue);
+
+  /* Route D: 核二廠→台2線→基隆火車站 */
+  L.polyline([[25.218,121.659],[25.160,121.700],[25.130,121.740]],
+    {color:purple,weight:5,opacity:0.85}).addTo(map);
+  routeLabel([25.168,121.718],'D 基隆火車站',purple);
+
+  /* Route E: 核二廠→基隆→台62→汐止三重 */
+  L.polyline([[25.218,121.659],[25.130,121.740],[25.065,121.660],[25.050,121.570],[25.063,121.487]],
+    {color:purple,weight:5,opacity:0.85,dashArray:'10,5'}).addTo(map);
+  routeLabel([25.060,121.610],'E 汐止三重五股',purple);
+
+  /* Route F: →瑞芳 */
+  L.polyline([[25.218,121.659],[25.130,121.740],[25.100,121.770],[25.108,121.778]],
+    {color:purple,weight:5,opacity:0.85,dashArray:'6,4'}).addTo(map);
+  routeLabel([25.112,121.763],'F 瑞芳',purple);
+
+  /* Route G: →平溪 */
+  L.polyline([[25.218,121.659],[25.130,121.740],[25.100,121.770],[25.060,121.760],[24.997,121.738]],
+    {color:purple,weight:5,opacity:0.85,dashArray:'4,3'}).addTo(map);
+  routeLabel([25.040,121.748],'G 平溪',purple);
+
+  /* Legend */
+  var legend = L.control({position:'bottomright'});
+  legend.onAdd = function() {
+    var div = L.DomUtil.create('div');
+    div.style.cssText = 'background:rgba(255,255,255,0.92);padding:10px 14px;border-radius:10px;font-size:12px;font-family:sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.15);line-height:1.9;';
+    div.innerHTML = '<div style="font-weight:700;margin-bottom:4px;">路線圖例</div>'+
+      '<div><span style="display:inline-block;width:28px;height:4px;background:#1260A8;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線A/B/C（核一廠）</div>'+
+      '<div><span style="display:inline-block;width:28px;height:4px;background:#7B1FA2;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>路線D/E/F/G（核二廠）</div>';
+    return div;
+  };
+  legend.addTo(map);
 }
 
 /* ═══════════════════════════════════════════════
