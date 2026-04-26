@@ -7904,14 +7904,14 @@ function showShelterResult() {
   var cards = info.shelters.map(function(name) {
     var addr = SHELTER_ADDRS[name] || name;
     return '<div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:8px;border:1.5px solid var(--gray-border);">' +
-      '<div style="font-size:14px;font-weight:700;color:var(--blue-dark);margin-bottom:3px;">🏟 ' + name + '</div>' +
+      '<div style="font-size:14px;font-weight:700;color:var(--blue-dark);margin-bottom:3px;"> ' + name + '</div>' +
       '<div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">📍 ' + addr + '</div>' +
       '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addr) + '" target="_blank" ' +
       'style="display:inline-block;background:var(--blue-mid);color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;"> 導航</a>' +
       '</div>';
   }).join('');
   el.innerHTML = cards +
-    '<div style="font-size:13px;font-weight:700;color:var(--blue-dark);margin:8px 0 4px;">🚗 防護站 → 收容所路線</div>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--blue-dark);margin:8px 0 4px;"> 防護站 → 收容所路線</div>' +
     '<div style="font-size:12px;color:var(--text-muted);line-height:1.7;background:var(--gray-bg);border-radius:8px;padding:8px 10px;">' + info.route + '</div>';
 }
 
@@ -8651,7 +8651,7 @@ function showAssemblyPoints() {
     '<ul class="assembly-list">' +
     points.map(function(p) {
       var url = 'https://www.google.com/maps/search/' + encodeURIComponent(district + ' ' + p);
-      return '<li><span class="assembly-dot"></span>' + p + ' <a class="nav-link" href="' + url + '" target="_blank">🗺</a></li>';
+      return '<li><span class="assembly-dot"></span>' + p + ' <a class="nav-link" href="' + url + '" target="_blank">導航</a></li>';
     }).join('') +
     '</ul>' +
     '<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">在集結點等候第1套接駁公車前往防護站，完成輻射偵測後再搭第2套接駁車至收容所</div>';
