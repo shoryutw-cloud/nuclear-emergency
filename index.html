@@ -8057,7 +8057,7 @@ function requestGPS() {
 function gotGPS(lat, lng) {
   const dists = PLANTS.map(p => ({ name: p.name, km: haversine(lat, lng, p.lat, p.lng) })).sort((a, b) => a.km - b.km);
   const n = dists[0], km = n.km;
-  let zc, zl, advice;
+  let zc, zl;
   if (km <= 3)       { zc = 'z3';   zl = '3公里以內'; }
   else if (km <= 8)  { zc = 'z8';   zl = '3–8公里'; }
   else if (km <= 16) { zc = 'z16';  zl = '8–16公里'; }
