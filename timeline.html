@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>核子事故應變階段時序</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans TC',sans-serif;background:#F0F4F8;color:#0F1E30;min-height:100vh;}
+.header{
+  background:linear-gradient(120deg,#060F1A 0%,#0D2137 50%,#133558 100%);
+  padding:16px 32px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.3);
+}
+.header-back{
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);
+  color:#fff;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:700;
+  text-decoration:none;transition:background 0.15s;
+}
+.header-back:hover{background:rgba(255,255,255,0.22);}
+.header-title{font-size:20px;font-weight:900;color:#fff;}
+.page{max-width:1000px;margin:0 auto;padding:28px 24px 60px;}
+.intro-card{
+  background:linear-gradient(120deg,#0D2137,#133558);
+  border-radius:14px;padding:18px 22px;margin-bottom:28px;
+}
+.intro-card h2{font-size:17px;font-weight:900;color:#fff;margin-bottom:6px;}
+.intro-card p{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;}
+.note-bar{
+  background:#FFF0F0;border:1.5px solid rgba(192,57,43,0.35);
+  border-radius:10px;padding:10px 16px;margin-bottom:28px;
+  font-size:13px;color:#7B1010;line-height:1.6;
+}
+
+/* ── Timeline ── */
+.timeline{position:relative;padding:10px 0 30px;}
+
+/* horizontal connector line: BELOW the circles */
+.timeline-spine{
+  position:absolute;
+  top:58px;   /* below the 46px circles (circle top=12px, height=46px, bottom=58px) */
+  left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#64748B,#D4820A 20%,#E06B10 38%,#C0392B 55%,#8B1010 75%,#4A0000);
+  z-index:0;
+}
+
+.stages-row{
+  display:flex;justify-content:space-between;
+  position:relative;z-index:1;
+  gap:8px;
+}
+.stage{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  cursor:pointer;
+}
+.stage-dot{
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;color:#fff;
+  border:3px solid transparent;
+  position:relative;z-index:2;
+  margin-top:12px;  /* pushes circle down so line appears BELOW it */
+  transition:transform 0.18s,box-shadow 0.18s;
+  background:#64748B;
+}
+.stage:hover .stage-dot{transform:scale(1.12);}
+.stage.active .stage-dot{transform:scale(1.1);}
+.stage-label{font-size:13px;font-weight:700;margin-top:10px;text-align:center;color:#0F1E30;}
+.stage-sub{font-size:11px;color:#4A6077;text-align:center;margin-top:2px;}
+
+/* Detail panel */
+.detail-panel{
+  margin-top:28px;border-radius:14px;padding:20px 22px;
+  border-left:5px solid #E06B10;background:#fff;
+  box-shadow:0 4px 16px rgba(0,0,0,0.07);
+  display:none;
+}
+.detail-panel.show{display:block;}
+.detail-title{font-size:18px;font-weight:900;margin-bottom:14px;}
+.detail-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.detail-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.65;color:#1a2a3a;}
+.d-num{
+  min-width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px;
+}
+.d-star{background:#C47A00;}
+.d-dstar{background:#8B1010;font-size:10px;}
+.detail-note{
+  margin-top:14px;padding:10px 14px;border-radius:8px;
+  background:rgba(18,96,168,0.07);font-size:12px;color:#4A6077;
+}
+.suspension{
+  display:inline-block;background:#FEF0F0;color:#7B1010;
+  border:1px solid rgba(192,57,43,0.3);border-radius:20px;
+  padding:4px 14px;font-size:13px;font-weight:700;
+  margin:20px auto 0;text-align:center;
+}
+
+@media(max-width:600px){
+  .stages-row{gap:4px;}
+  .stage-dot{width:38px;height:38px;font-size:11px;}
+  .stage-label{font-size:11px;}
+  .stage-sub{display:none;}
+  .page{padding:16px 14px 40px;}
+  .header{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="header-back" href="index.html">← 返回</a>
+  <span class="header-title">⏱ 核子事故應變階段</span>
+</div>
+
+<div class="page">
+  <div class="intro-card">
+    <h2>依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</h2>
+    <p>點擊各階段查看詳細應變措施・目前處於第二級廠區緊急（T2）</p>
+  </div>
+
+  <div class="note-bar">
+    ⚠ 自 T1 起，視狀況宣布 EPZ 民眾（含設籍）<strong>停止上班上課</strong>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-spine"></div>
+    <div class="stages-row" id="stagesRow"></div>
+  </div>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-title" id="detailTitle"></div>
+    <ul class="detail-list" id="detailList"></ul>
+    <div class="detail-note" id="detailNote"></div>
+  </div>
+</div>
+
+<script>
+const STAGES = [
+  {
+    key:'T0', label:'T0 事故發生', sub:'起點', color:'#64748B',
+    items:['核子事故發生，啟動事故通報程序','各單位進入預備狀態'],
+    stars:[], dstar:[], note:'事故起始點，尚未宣布任何警戒等級'
+  },
+  {
+    key:'T1', label:'T1 緊急戒備', sub:'一級警戒', color:'#D4820A',
+    items:['注意核子事故最新消息','災害應變中心二級開設','公告劃設警戒區域',
+           '遊憩景點關閉','遊客勸離','進行交通管制、警戒、秩序維持（非住戶）'],
+    stars:['碘片調查','醫院、安養中心預做預防性疏散及收容準備',
+           '前進指揮所開設準備','避難收容處所整備','防護站開設準備'],
+    dstar:[], note:'＊ 為事故發展期間後續進行之應變作為'
+  },
+  {
+    key:'T2', label:'T2 廠區緊急', sub:'二級警戒', color:'#E06B10',
+    items:['注意核子事故最新消息','災害應變中心一級開設','開設前進指揮所',
+           '開設防護站（啟動登記編管）','避難收容處所開設',
+           '醫院、安養中心進行預防疏散及收容'],
+    stars:['警報發布','進行交通管制、警戒、秩序維持',
+           'EPZ 0–3 公里範圍內一般民眾預防性疏散及收容'],
+    dstar:['EPZ 3–8 公里範圍內民眾進行室內掩蔽','碘片補發放'],
+    note:'＊ 為後續應變作為 ／ ＊＊ 為視情況之更進一步措施'
+  },
+  {
+    key:"T2'", label:"T2' 警報發布", sub:'警報階段', color:'#C0392B',
+    items:['警報正式對外發布，全面通知民眾',
+           '透過CBS細胞廣播、警察廣播電台通知',
+           '民政（村里）廣播系統及巡迴廣播車啟動',
+           '民眾請停留室內等候官方指示'],
+    stars:[], dstar:[], note:"T2' 警報發布通常於 T2 期間視情況宣布"
+  },
+  {
+    key:'T3', label:'T3 全面緊急', sub:'三級警戒', color:'#8B1010',
+    items:['注意核子事故最新消息（包含媒體及依中央災害應變中心指示行動）',
+           '區域警戒及秩序維持'],
+    stars:['EPZ 3–8 公里範圍內下風向民眾預作疏散準備（EPZ 3–8 公里其他區域維持室內掩蔽）',
+           '啟動防護站除污及偵檢作業'],
+    dstar:[], note:'＊ 為事故發展期間後續進行之應變作為'
+  },
+  {
+    key:'T4', label:'T4 輻射外釋', sub:'最高警戒', color:'#4A0000',
+    items:['災害應變指揮中心發布新聞及行政命令',
+           '依指示疏散 EPZ 3–8 公里範圍內下風向民眾',
+           '準備 EPZ 8 公里以外下風向民眾疏散',
+           '依指示疏散 EPZ 8 公里以外之區域'],
+    stars:[], dstar:[], note:'輻射外釋：立即服從官方疏散指示，不得延誤'
+  },
+];
+
+var currentIdx = 2; // default T2
+
+function renderStages() {
+  var row = document.getElementById('stagesRow');
+  row.innerHTML = STAGES.map(function(s, i) {
+    var isActive = i === currentIdx;
+    var dotStyle = 'background:' + s.color + ';border-color:' + s.color + ';' +
+      (isActive ? 'box-shadow:0 0 0 5px ' + s.color + '33;' : 'opacity:' + (i > currentIdx ? '0.55' : '1') + ';');
+    return '<div class="stage' + (isActive ? ' active' : '') + '" onclick="selectStage(' + i + ')">' +
+      '<div class="stage-dot" style="' + dotStyle + '">' + s.key + '</div>' +
+      '<div class="stage-label">' + s.label.replace(/^T[\S]+ /, '') + '</div>' +
+      '<div class="stage-sub">' + s.sub + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function selectStage(idx) {
+  currentIdx = idx;
+  renderStages();
+  var s = STAGES[idx];
+  var panel = document.getElementById('detailPanel');
+  panel.className = 'detail-panel show';
+  panel.style.borderColor = s.color;
+
+  document.getElementById('detailTitle').style.color = s.color;
+  document.getElementById('detailTitle').textContent = s.label;
+
+  var items = s.items.map(function(t, i) {
+    return '<li><span class="d-num" style="background:' + s.color + '">' + (i+1) + '</span>' + t + '</li>';
+  }).join('');
+  var stars = s.stars.map(function(t) {
+    return '<li><span class="d-num d-star">＊</span>' + t + '</li>';
+  }).join('');
+  var dstars = (s.dstar || []).map(function(t) {
+    return '<li><span class="d-num d-dstar">＊＊</span>' + t + '</li>';
+  }).join('');
+  document.getElementById('detailList').innerHTML = items + stars + dstars;
+  document.getElementById('detailNote').textContent = s.note;
+}
+
+renderStages();
+selectStage(2);
+</script>
+</body>
+</html>

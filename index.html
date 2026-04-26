@@ -569,20 +569,28 @@ body{
 /* ═══════ CAROUSEL ═══════ */
 .carousel-section{margin-top:24px;}
 .carousel-section-title{font-size:20px;font-weight:900;color:var(--blue-dark);margin-bottom:12px;}
-.carousel-wrap{border-radius:12px;overflow:hidden;}
-.carousel-track{display:flex;height:240px;gap:16px;padding:0 8px;}
-.cslide{
-  flex:0 0 calc(33.33% + 22px);position:relative;overflow:hidden;
-  margin-right:-22px;
-  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 100%,0 100%);cursor:pointer;
+.carousel-wrap{border-radius:0;overflow:visible;}
+.carousel-track{
+  display:flex;height:280px;
+  gap:10px;
+  overflow:hidden;
+  border-radius:4px;
 }
-.cslide.last{flex:0 0 calc(33.33% - 12px);}
-.cslide img{width:115%;height:100%;object-fit:cover;object-position:center;display:block;}
+.cslide{
+  flex:1;position:relative;overflow:hidden;
+  clip-path:polygon(0 0,calc(100% - 38px) 0,100% 100%,0 100%);
+  cursor:pointer;transition:filter 0.2s;
+}
+.cslide.last{clip-path:none;}
+.cslide:hover{filter:brightness(1.08);}
+.cslide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+
 .cslide-caption{
   position:absolute;bottom:0;left:0;right:0;
   background:linear-gradient(transparent,rgba(0,0,0,0.72));
-  padding:30px 14px 12px;
+  padding:40px 18px 14px;
 }
+.cslide-title{font-size:15px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.6);}
 .cslide-title{font-size:15px;font-weight:700;color:#fff;}
 .carousel-controls{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 0 4px;}
 .carousel-arrow{
@@ -1055,6 +1063,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
     <div class="nav-item">
       <span class="nav-link">應變資訊</span>
       <div class="nav-sub">
+        <a href="timeline.html" target="_blank">核子事故應變階段</a>
         <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
         <a href="#section-station" onclick="smoothTo('section-station')">防護站</a>
         <a href="#section-shelter" onclick="smoothTo('section-shelter')">避難收容處所</a>
@@ -1113,124 +1122,6 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 </div>
 
 
-<!-- ═══ RESPONSE TIMELINE ═══ -->
-<div class="timeline-section">
-  <div class="sec">⏱ 核子事故應變階段</div>
-  <div class="timeline-wrap">
-
-    <!-- Header -->
-    <div style="background:linear-gradient(120deg,var(--blue-dark),#1B3A5C);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
-      <div style="font-size:16px;font-weight:900;color:#fff;">依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px;">點擊各階段查看詳細應變措施 ・ 目前處於第二級廠區緊急（T2）</div>
-    </div>
-
-    <!-- Timeline grid: 6 equal columns -->
-    <div class="tl-grid">
-      <!-- connector line layer -->
-      <div class="tl-line"></div>
-      <!-- nodes -->
-      <div class="tnode" onclick="selectStage(0)">
-        <div class="tnode-dot" style="background:#64748B;border-color:#64748B;">T0</div>
-        <div class="tnode-label">事故發生</div>
-        <div class="tnode-sub">起點</div>
-      </div>
-      <div class="tnode" onclick="selectStage(1)">
-        <div class="tnode-dot" style="background:#D4820A;border-color:#D4820A;">T1</div>
-        <div class="tnode-label">緊急戒備</div>
-        <div class="tnode-sub">一級警戒</div>
-      </div>
-      <div class="tnode active" onclick="selectStage(2)" id="tnode-T2">
-        <div class="tnode-dot" style="background:#E06B10;border-color:#E06B10;box-shadow:0 0 0 4px rgba(224,107,16,0.25);">T2</div>
-        <div class="tnode-label" style="color:#E06B10;font-weight:900;">廠區緊急</div>
-        <div class="tnode-sub">二級警戒 ▲</div>
-      </div>
-      <div class="tnode" onclick="selectStage(3)">
-        <div class="tnode-dot" style="background:#C0392B;border-color:#C0392B;opacity:0.55;font-size:11px;">T2'</div>
-        <div class="tnode-label">警報發布</div>
-        <div class="tnode-sub">警報階段</div>
-      </div>
-      <div class="tnode" onclick="selectStage(4)">
-        <div class="tnode-dot" style="background:#8B1010;border-color:#8B1010;opacity:0.55;">T3</div>
-        <div class="tnode-label">全面緊急</div>
-        <div class="tnode-sub">三級警戒</div>
-      </div>
-      <div class="tnode" onclick="selectStage(5)">
-        <div class="tnode-dot" style="background:#4A0000;border-color:#4A0000;opacity:0.55;">T4</div>
-        <div class="tnode-label">輻射外釋</div>
-        <div class="tnode-sub">最高警戒</div>
-      </div>
-    </div>
-
-    <!-- School suspension note spanning T1-T4 -->
-    <div class="tl-note-row">
-      <div class="tl-note-spacer"></div><!-- T0 spacer -->
-      <div class="tl-note-bar">
-        <div class="tl-note-bracket"></div>
-        <div class="tl-note-text">視狀況宣布 EPZ 民眾（含設籍）<strong>停止上班上課</strong></div>
-      </div>
-    </div>
-
-    <!-- Detail panel -->
-    <div class="timeline-detail" id="timelineDetail" style="display:none;">
-      <div id="timelineContent"></div>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- ═══ RESPONSE TIMELINE ═══ -->
-<div class="timeline-section">
-  <div class="sec">⏱ 核子事故應變階段</div>
-  <div class="timeline-wrap" id="responseTimeline">
-    <div style="background:linear-gradient(120deg,var(--blue-dark),#1B3A5C);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
-      <div style="font-size:16px;font-weight:900;color:#fff;">依核子事故影響程度依序啟動 T1 → T2 → T3 → T4 各項應變措施</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px;">點擊各階段查看詳細應變措施 ・ 目前處於第二級廠區緊急（T2）</div>
-    </div>
-    <div class="tl-grid">
-      <div class="tl-line"></div>
-      <div class="tnode" onclick="selectStage(0)">
-        <div class="tnode-dot" style="background:#64748B;border-color:#64748B;">T0</div>
-        <div class="tnode-label">事故發生</div>
-        <div class="tnode-sub">起點</div>
-      </div>
-      <div class="tnode" onclick="selectStage(1)">
-        <div class="tnode-dot" style="background:#D4820A;border-color:#D4820A;">T1</div>
-        <div class="tnode-label">緊急戒備</div>
-        <div class="tnode-sub">一級警戒</div>
-      </div>
-      <div class="tnode active" onclick="selectStage(2)" id="tnode-T2">
-        <div class="tnode-dot" style="background:#E06B10;border-color:#E06B10;box-shadow:0 0 0 4px rgba(224,107,16,0.25);">T2</div>
-        <div class="tnode-label" style="color:#E06B10;font-weight:900;">廠區緊急</div>
-        <div class="tnode-sub">二級警戒 ▲</div>
-      </div>
-      <div class="tnode" onclick="selectStage(3)">
-        <div class="tnode-dot" style="background:#C0392B;border-color:#C0392B;opacity:0.55;font-size:11px;">T2'</div>
-        <div class="tnode-label">警報發布</div>
-        <div class="tnode-sub">警報階段</div>
-      </div>
-      <div class="tnode" onclick="selectStage(4)">
-        <div class="tnode-dot" style="background:#8B1010;border-color:#8B1010;opacity:0.55;">T3</div>
-        <div class="tnode-label">全面緊急</div>
-        <div class="tnode-sub">三級警戒</div>
-      </div>
-      <div class="tnode" onclick="selectStage(5)">
-        <div class="tnode-dot" style="background:#4A0000;border-color:#4A0000;opacity:0.55;">T4</div>
-        <div class="tnode-label">輻射外釋</div>
-        <div class="tnode-sub">最高警戒</div>
-      </div>
-    </div>
-    <div class="tl-note-row">
-      <div class="tl-note-spacer"></div>
-      <div class="tl-note-bar">
-        <div class="tl-note-text">視狀況宣布 EPZ 民眾（含設籍）<strong>停止上班上課</strong></div>
-      </div>
-    </div>
-    <div class="timeline-detail" id="timelineDetail" style="display:none;">
-      <div id="timelineContent"></div>
-    </div>
-  </div>
-</div>
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
