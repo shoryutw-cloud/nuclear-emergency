@@ -571,20 +571,11 @@ body{
 /* ═══════ CAROUSEL ═══════ */
 .carousel-section{margin-top:24px;}
 .carousel-section-title{font-size:20px;font-weight:900;color:var(--blue-dark);margin-bottom:12px;}
-.carousel-wrap{border-radius:0;overflow:visible;}
-.carousel-track{
-  display:flex;height:280px;
-  gap:10px;
-  overflow:hidden;
-  border-radius:4px;
-}
-.cslide{
-  flex:1;position:relative;overflow:hidden;
-  clip-path:polygon(0 0,calc(100% - 38px) 0,100% 100%,0 100%);
-  cursor:pointer;transition:filter 0.2s;
-}
-.cslide.last{clip-path:none;}
-.cslide:hover{filter:brightness(1.08);}
+.carousel-wrap{border-radius:12px;overflow:hidden;}
+.carousel-track{display:flex;height:260px;gap:0;transition:transform 0.5s ease;}
+
+
+
 .cslide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
 
 .cslide-caption{
@@ -1028,6 +1019,13 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .top-nav-inner{overflow-x:auto;}
   .nav-link{padding:10px 12px;font-size:13px;}
 }
+
+.cslide{
+  flex:0 0 33.333%;position:relative;overflow:hidden;
+  border-right:3px solid #fff;box-sizing:border-box;
+}
+.cslide:last-child{border-right:none;}
+.cslide img{width:100%;height:100%;object-fit:cover;display:block;}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1507,32 +1505,56 @@ function renderTabContent() {
 /* ═══════════════════════════════════════════════
    CAROUSEL
    ═══════════════════════════════════════════════ */
+var _carouselTimer = null;
+
 function renderCarousel() {
-  const track = e('carouselTrack');
-  const dotsEl = e('carouselDots');
+  var track = e('carouselTrack');
+  var dotsEl = e('carouselDots');
   if (!track || !dotsEl) return;
 
-  const VISIBLE = 3;
-  let slides = '';
-  for (let i = 0; i < VISIBLE; i++) {
-    const s = SLIDES[(slidePos + i) % SLIDES.length];
-    const isLast = i === VISIBLE - 1;
-    const imgSrc = (typeof IMG_B64 !== 'undefined' && IMG_B64[s.src]) ? IMG_B64[s.src] : s.src;
-    slides += '<div class="cslide' + (isLast ? ' last' : '') + '">' +
+  var slides = '';
+  for (var i = 0; i < SLIDES.length; i++) {
+    var s = SLIDES[i];
+    var imgSrc = (typeof IMG_B64 !== 'undefined' && IMG_B64[s.src]) ? IMG_B64[s.src] : s.src;
+    slides += '<div class="cslide">' +
       '<img src="' + imgSrc + '" alt="' + s.title + '" loading="lazy">' +
       '<div class="cslide-caption"><div class="cslide-title">' + s.title + '</div></div>' +
       '</div>';
   }
   track.innerHTML = slides;
+  updateCarouselView();
 
   dotsEl.innerHTML = SLIDES.map(function(_, i) {
     return '<span class="cdot' + (i === slidePos ? ' active' : '') + '" onclick="goTo(' + i + ')"></span>';
   }).join('');
+
+  // Auto-play
+  if (_carouselTimer) clearInterval(_carouselTimer);
+  _carouselTimer = setInterval(function() {
+    slidePos = (slidePos + 1) % SLIDES.length;
+    updateCarouselView();
+    var dotsEl2 = e('carouselDots');
+    if (dotsEl2) {
+      dotsEl2.querySelectorAll('.cdot').forEach(function(d,i){d.classList.toggle('active',i===slidePos);});
+    }
+  }, 4000);
 }
 
-function prevSlide() { slidePos = (slidePos - 1 + SLIDES.length) % SLIDES.length; renderCarousel(); }
-function nextSlide() { slidePos = (slidePos + 1) % SLIDES.length; renderCarousel(); }
-function goTo(i) { slidePos = i; renderCarousel(); }
+function updateCarouselView() {
+  var track = e('carouselTrack');
+  if (!track) return;
+  // Show 3 slides starting from slidePos, wrapping
+  var slides = track.querySelectorAll('.cslide');
+  slides.forEach(function(s,i){s.style.display='none';});
+  for (var i = 0; i < 3; i++) {
+    var idx = (slidePos + i) % SLIDES.length;
+    if (slides[idx]) slides[idx].style.display = '';
+  }
+}
+
+function prevSlide() { slidePos = (slidePos - 1 + SLIDES.length) % SLIDES.length; updateCarouselView(); var d=e("carouselDots"); if(d){d.querySelectorAll(".cdot").forEach(function(x,i){x.classList.toggle("active",i===slidePos);});} }
+function nextSlide() { slidePos = (slidePos + 1) % SLIDES.length; updateCarouselView(); var d=e("carouselDots"); if(d){d.querySelectorAll(".cdot").forEach(function(x,i){x.classList.toggle("active",i===slidePos);});} }
+function goTo(i) { slidePos = i; updateCarouselView(); var d=e("carouselDots"); if(d){d.querySelectorAll(".cdot").forEach(function(x,j){x.classList.toggle("active",j===slidePos);});} }
 
 /* ═══════════════════════════════════════════════
    TIMELINE
@@ -1624,7 +1646,7 @@ function toggleSchool() {
 function evacRoutes() {
   var stationInfo =
     '<div style="background:#FFF0F0;border:2px solid var(--red-mid);border-radius:12px;padding:16px;margin-bottom:14px;">' +
-    '<div style="font-size:17px;font-weight:900;color:var(--red-dark);margin-bottom:10px;">⚠ 防護站位置（須經過方可前往收容所）</div>' +
+    '<div style="font-size:17px;font-weight:900;color:var(--red-dark);margin-bottom:10px;">防護站位置</div>' +
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
     '<div style="background:#fff;border-radius:8px;padding:12px;border-left:4px solid var(--blue-mid);">' +
     '<div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">核二廠東行方向</div>' +
@@ -1680,7 +1702,7 @@ function evacRoutes() {
   }).join('');
 
   /* Leaflet map */
-  var mapDiv = '<div id="evacMap" style="height:400px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gray-border);margin-bottom:14px;"></div>';
+  var mapDiv = '<div style="margin-bottom:14px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gray-border);"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1943Ml9W9hQZZr8ZPqjjmnvAJAbqBc3g&ehbc=2E312F&noprof=1" width="100%" height="420" frameborder="0" style="display:block;"></iframe></div>';
 
   return stationInfo +
     modeToggle +
@@ -2157,100 +2179,6 @@ selectStage(2);
     </div>
   </div>
 </div>
-
-<!-- ═══ TOP NAVIGATION ═══ -->
-<nav class="top-nav" id="topNav">
-  <div class="top-nav-inner">
-    <div class="nav-item">
-      <span class="nav-link">應變資訊</span>
-      <div class="nav-sub">
-        <a href="timeline.html" target="_blank">核子事故應變階段</a>
-        <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
-        <a href="#section-station" onclick="smoothTo('section-station')">防護站</a>
-        <a href="#section-shelter" onclick="smoothTo('section-shelter')">避難收容處所</a>
-        <a href="#section-epz" onclick="smoothTo('section-epz')">緊急應變計畫區(EPZ)圖</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <span class="nav-link">核子事故防護影片</span>
-      <div class="nav-sub">
-        <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
-        <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <span class="nav-link">相關連結</span>
-      <div class="nav-sub">
-        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
-        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
-        <a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<!-- ═══ SIDEBAR + CONTENT WRAPPER ═══ -->
-<div class="content-with-sidebar" style="display:block;">
-
-<div class="page">
-
-<!-- ═══ NEWS TABS ═══ -->
-<div style="margin-top:3px;padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
-  <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
-</div>
-<div class="news-tabs">
-  <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
-  <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
-  <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
-</div>
-<div class="news-tab-panel">
-  <div id="tabContent"></div>
-  <div class="news-more">
-    <button class="news-more-btn" id="moreBtn" onclick="toggleMore()">更多 +</button>
-  </div>
-</div>
-
-<!-- ═══ INFOGRAPHIC CAROUSEL ═══ -->
-<div class="carousel-section">
-  <div class="carousel-wrap">
-    <div class="carousel-track" id="carouselTrack"></div>
-  </div>
-  <div class="carousel-controls">
-    <button class="carousel-arrow" onclick="prevSlide()">&#8249;</button>
-    <div class="carousel-dots" id="carouselDots"></div>
-    <button class="carousel-arrow" onclick="nextSlide()">&#8250;</button>
-  </div>
-</div>
-
-
-
-<!-- ═══ GPS + PERSONA ═══ -->
-<div class="sec">
-  <span class="sec-left">我的位置與家人情況</span>
-  <span id="gpsInline" class="sec-gps">
-    <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
-  </span>
-</div>
-
-<div class="persona-panel" style="margin-bottom:14px;">
-  <div class="persona-label">我的情況是…</div>
-  <div class="persona-row-h">
-    <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
-    <button class="persona-btn-h" onclick="setPersona('family',this)">家中小孩學校於EPZ範圍內</button>
-    <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
-  </div>
-</div>
-
-<div id="section-assembly" style="position:relative;top:-80px;visibility:hidden;height:0;"></div>
-<!-- ═══ CONTENT ═══ -->
-<div class="sec">行動指引</div>
-<div id="mainContent"></div>
-
-</div><!-- /page -->
-
-
-
-</div><!-- /content-with-sidebar -->
 
 <!-- ═══ NSC FOOTER ═══ -->
 <div style="background:#060F1A;color:#A0BDD8;padding:32px 32px 20px;margin-top:40px;">
