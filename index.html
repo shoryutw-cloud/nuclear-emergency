@@ -7812,70 +7812,106 @@ const SCHOOLS = [
 
 /* ═══ 核二廠 避難收容處所（依行政區）PDF 表4-3 ═══ */
 const SHELTERS_BY_DISTRICT = {
-  '金山區': [
-    { name:'新莊體育館（新莊運動場）', addr:'新北市新莊區中華路一段75號', dist:'28公里',
-      route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 新泰路 → 和興街 → 中華路、公園路' },
-    { name:'頭前國中', addr:'新北市新莊區頭前里', dist:'26.1公里',
-      route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段' },
-  ],
-  '萬里區（野柳里、萬里里、北基里）': [
-    { name:'三重綜合體育館', addr:'新北市三重區新北大道一段2號', dist:'23.11公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 國道3號 → 國道1號 → 三重交流道 → 重陽路四段 → 中正北路 → 新北大道一段' },
-    { name:'三重商工', addr:'新北市三重區中正北路163號', dist:'23.32公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 國道3號 → 國道1號 → 三重交流道 → 三和路三段 → 自強路三段 → 忠孝路二段 → 中正北路' },
-  ],
-  '萬里區（龜吼里）': [
-    { name:'泰山體育館', addr:'新北市泰山區公園路52號', dist:'28.65公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 國道1號 → 五股交流道 → 台65線 → 楓江路 → 明志路一段 → 公園路' },
-    { name:'泰山高中', addr:'新北市泰山區辭修路7號', dist:'28.24公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 國道1號 → 五股交流道 → 台65線 → 楓江路 → 明志路一段 → 辭修路' },
-    { name:'同榮國小', addr:'新北市泰山區公園路33號', dist:'28.63公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 國道1號 → 五股交流道 → 台65線 → 楓江路 → 明志路一段 → 公園路' },
-  ],
-  '萬里區（中幅里、雙興里）': [
-    { name:'堅貞營區', addr:'新北市五股區', dist:'28.3公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 麥金路 → 國道1號 → 五股交流道 → 新五路 → 自強路 → 成泰路' },
-  ],
-  '萬里區（溪底里、崁腳里）': [
-    { name:'五股成泰路收容所', addr:'新北市五股區成泰路1段175號', dist:'約29公里',
-      route:'基隆市消防局防災廣場 → 基金一路 → 麥金路 → 國道1號 → 五股交流道 → 新五路 → 自強路 → 成泰路' },
-  ],
-  '石門區（草里里）': [
-    { name:'新莊思源路收容所', addr:'新北市新莊區思源路485號', dist:'約27公里',
-      route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段 → 思源路' },
-  ],
+  '金山區': {
+    '磺港里': { shelters:['新莊體育館'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 新泰路 → 和興街 → 中華路' },
+    '清泉里': { shelters:['新莊體育館'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 新泰路 → 和興街 → 中華路' },
+    '兩湖里': { shelters:['板橋體育館','板橋國小'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 縣民大道' },
+    '萬壽里': { shelters:['板橋體育館','板橋國小'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 縣民大道' },
+    '六股里': { shelters:['板樹體育館','樹林高中'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 國道3號 → 土城交流道 → 台65線 → 水源街' },
+    '五湖里': { shelters:['板橋體育館','板橋國小'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 縣民大道' },
+    '永興里': { shelters:['板樹體育館','樹林高中'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 國道3號 → 土城交流道 → 台65線' },
+    '美田里': { shelters:['板橋體育館','板橋國小'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 縣民大道' },
+    '三界里': { shelters:['新莊體育館'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 新泰路 → 和興街 → 中華路' },
+    '西湖里': { shelters:['新莊體育館'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 新泰路 → 和興街 → 中華路' },
+    '重和里': { shelters:['新莊體育館'], route:'石門洞停車場 → 陽金公路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 中華路' },
+    '大同里': { shelters:['新莊體育館'], route:'石門洞停車場 → 中山路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 中華路' },
+    '和平里': { shelters:['新莊體育館'], route:'石門洞停車場 → 中山路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 中華路' },
+    '豐漁里': { shelters:['新莊體育館'], route:'石門洞停車場 → 民生路 → 中山路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 大漢橋 → 中正路 → 中華路' },
+    '金美里': { shelters:['新莊體育館','頭前國中'], route:'石門洞停車場 → 忠孝一路 → 和平街 → 中山路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段' },
+  },
+  '萬里區': {
+    '野柳里': { shelters:['三重綜合體育館','三重商工'], route:'基隆市消防局防災廣場 → 基金一路 → 國道3號 → 國道1號 → 三重交流道 → 重陽路四段 → 中正北路 → 新北大道一段' },
+    '萬里里': { shelters:['三重綜合體育館','三重商工'], route:'基隆市消防局防災廣場 → 基金一路 → 國道3號 → 國道1號 → 三重交流道 → 重陽路四段 → 中正北路 → 新北大道一段' },
+    '北基里': { shelters:['三重綜合體育館','三重商工'], route:'基隆市消防局防災廣場 → 基金一路 → 國道3號 → 國道1號 → 三重交流道 → 重陽路四段 → 中正北路 → 新北大道一段' },
+    '龜吼里': { shelters:['泰山體育館','泰山高中'], route:'基隆市消防局防災廣場 → 基金一路 → 國道1號 → 五股交流道 → 台65線 → 楓江路 → 明志路一段 → 公園路' },
+    '中幅里': { shelters:['泰山體育館','泰山高中','同榮國小'], route:'基隆市消防局防災廣場 → 基金一路 → 中幅路 → 國道1號 → 五股交流道 → 台65線 → 楓江路 → 明志路一段' },
+    '雙興里': { shelters:['堅貞營區'], route:'基隆市消防局防災廣場 → 基金一路 → 麥金路 → 國道1號 → 五股交流道 → 新五路 → 自強路 → 成泰路' },
+    '溪底里': { shelters:['五股成泰路收容所'], route:'基隆市消防局防災廣場 → 基金一路 → 北28鄉道 → 萬崁路 → 中幅路 → 台2線 → 國道1號 → 五股交流道 → 新五路 → 自強路 → 成泰路' },
+    '崁腳里': { shelters:['五股成泰路收容所'], route:'基隆市消防局防災廣場 → 基金一路 → 萬崁路 → 中幅路 → 台2線 → 國道1號 → 五股交流道 → 新五路 → 自強路 → 成泰路' },
+    '磺潭里': { shelters:['新莊思源路收容所'], route:'基隆市消防局防災廣場 → 員潭路 → 加投路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段 → 思源路' },
+    '大鵬里': { shelters:['新莊思源路收容所'], route:'基隆市消防局防災廣場 → 加投路 → 基金公路 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段 → 思源路' },
+  },
+  '石門區': {
+    '草里里': { shelters:['新莊思源路收容所'], route:'石門洞停車場 → 淡金公路 → 台2線 → 關渡大橋 → 龍米路 → 成泰路 → 台64線 → 疏洪西路 → 光復路二段 → 新北大道二段 → 思源路' },
+  },
+};
+
+const SHELTER_ADDRS = {
+  '新莊體育館': '新北市新莊區中華路一段75號',
+  '頭前國中': '新北市新莊區思源路',
+  '板橋體育館': '新北市板橋區民權路117號',
+  '板橋國小': '新北市板橋區民生路',
+  '板樹體育館': '新北市樹林區水源街81號',
+  '樹林高中': '新北市樹林區',
+  '三重綜合體育館': '新北市三重區新北大道一段2號',
+  '三重商工': '新北市三重區中正北路163號',
+  '泰山體育館': '新北市泰山區公園路52號',
+  '泰山高中': '新北市泰山區辭修路7號',
+  '同榮國小': '新北市泰山區公園路33號',
+  '堅貞營區': '新北市五股區',
+  '五股成泰路收容所': '新北市五股區成泰路1段175號',
+  '新莊思源路收容所': '新北市新莊區思源路485號',
 };
 
 function renderShelterPicker() {
   var districts = Object.keys(SHELTERS_BY_DISTRICT);
-  var opts = districts.map(function(d) {
-    return '<option value="' + d + '">' + d + '</option>';
-  }).join('');
+  var distOpts = districts.map(function(d){ return '<option value="'+d+'">'+d+'</option>'; }).join('');
   return '<div class="shelter-picker">' +
     '<div class="shelter-picker-title">請選擇您居住的行政區，查看對應的收容處所位置</div>' +
-    '<select id="shelterDistSel" onchange="showShelterResult()" class="assembly-select" style="width:100%;margin-bottom:10px;">' +
-    '<option value="">選擇行政區</option>' + opts +
-    '</select>' +
+    '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">' +
+    '<select id="shelterDistSel" onchange="updateShelterVillageSel()" class="assembly-select" style="flex:1;min-width:140px;">' +
+    '<option value="">選擇行政區</option>' + distOpts + '</select>' +
+    '<select id="shelterVilSel" onchange="showShelterResult()" class="assembly-select" style="flex:1;min-width:140px;">' +
+    '<option value="">選擇里別</option></select>' +
+    '</div>' +
     '<div id="shelterResult"></div>' +
     '</div>';
 }
 
-function showShelterResult() {
+function updateShelterVillageSel() {
   var district = document.getElementById('shelterDistSel').value;
+  var vilSel = document.getElementById('shelterVilSel');
   var el = document.getElementById('shelterResult');
-  if (!district || !SHELTERS_BY_DISTRICT[district]) { el.innerHTML = ''; return; }
-  var shelters = SHELTERS_BY_DISTRICT[district];
-  var cards = shelters.map(function(s) {
-    return '<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:10px;border:1.5px solid var(--gray-border);">' +
-      '<div style="font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:6px;">🏟 ' + s.name + '</div>' +
-      '<div style="font-size:13px;color:var(--text-muted);margin-bottom:6px;">📍 ' + s.addr + '（距核二廠約' + s.dist + '）</div>' +
-      '<div style="font-size:13px;font-weight:700;color:var(--blue-dark);margin-bottom:4px;">🚗 防護站 → 收容所路線：</div>' +
-      '<div style="font-size:12px;color:var(--text-muted);line-height:1.7;background:var(--gray-bg);border-radius:8px;padding:8px 10px;">' + s.route + '</div>' +
-      '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.addr) + '" target="_blank" ' +
-      'style="display:inline-block;margin-top:10px;background:var(--blue-mid);color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">🗺 導航至收容所</a>' +
+  if (vilSel) vilSel.innerHTML = '<option value="">選擇里別</option>';
+  if (el) el.innerHTML = '';
+  if (!district || !SHELTERS_BY_DISTRICT[district]) return;
+  Object.keys(SHELTERS_BY_DISTRICT[district]).forEach(function(v) {
+    var opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    vilSel.appendChild(opt);
+  });
+}
+
+function showShelterResult() {
+  var district = document.getElementById('shelterDistSel') && document.getElementById('shelterDistSel').value;
+  var village = document.getElementById('shelterVilSel') && document.getElementById('shelterVilSel').value;
+  var el = document.getElementById('shelterResult');
+  if (!el) return;
+  if (!district || !village) { el.innerHTML = ''; return; }
+  var info = SHELTERS_BY_DISTRICT[district] && SHELTERS_BY_DISTRICT[district][village];
+  if (!info) { el.innerHTML = ''; return; }
+  var cards = info.shelters.map(function(name) {
+    var addr = SHELTER_ADDRS[name] || name;
+    return '<div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:8px;border:1.5px solid var(--gray-border);">' +
+      '<div style="font-size:14px;font-weight:700;color:var(--blue-dark);margin-bottom:3px;">🏟 ' + name + '</div>' +
+      '<div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">📍 ' + addr + '</div>' +
+      '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addr) + '" target="_blank" ' +
+      'style="display:inline-block;background:var(--blue-mid);color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">🗺 導航</a>' +
       '</div>';
   }).join('');
-  el.innerHTML = cards;
+  el.innerHTML = cards +
+    '<div style="font-size:13px;font-weight:700;color:var(--blue-dark);margin:8px 0 4px;">🚗 防護站 → 收容所路線</div>' +
+    '<div style="font-size:12px;color:var(--text-muted);line-height:1.7;background:var(--gray-bg);border-radius:8px;padding:8px 10px;">' + info.route + '</div>';
 }
 
 
@@ -8369,6 +8405,7 @@ function renderContent() {
     h = '<div style="text-align:center;padding:28px 20px;font-size:16px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);margin-bottom:16px;">請先選擇上面您的情況，以出現對應之行動指引</div>';
     h += evac_sec + evacRoutes();
     h += '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+    h += '<div class="sec">食衣住行</div>';
     h += lsGrid([
       ['食', '只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水', '禁止食用戶外蔬菜水果'],
       ['衣', '換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩', ''],
