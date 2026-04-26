@@ -7609,18 +7609,18 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
-  <span class="sec-left">我的位置與家人情況</span>
+  <span class="sec-left">我離電廠距離與家庭情況</span>
   <span id="gpsInline" class="sec-gps">
     <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
   </span>
 </div>
 
 <div class="persona-panel" style="margin-bottom:14px;">
-  <div class="persona-label">我的情況是…</div>
+  <div class="persona-label">我的家庭情況是…</div>
   <div class="persona-row-h">
-    <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
-    <button class="persona-btn-h" onclick="setPersona('family',this)">小孩學校於EPZ範圍內</button>
+    <button class="persona-btn-h" onclick="setPersona('family',this)">孩童就讀EPZ範圍內學校</button>
     <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
+    <button class="persona-btn-h" onclick="setPersona('single',this)">非前述情況</button>
   </div>
 </div>
 
