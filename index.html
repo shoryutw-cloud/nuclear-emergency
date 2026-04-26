@@ -570,13 +570,13 @@ body{
 .carousel-section{margin-top:24px;}
 .carousel-section-title{font-size:20px;font-weight:900;color:var(--blue-dark);margin-bottom:12px;}
 .carousel-wrap{border-radius:12px;overflow:hidden;}
-.carousel-track{display:flex;height:240px;gap:8px;padding:0 4px;}
+.carousel-track{display:flex;height:240px;gap:16px;padding:0 8px;}
 .cslide{
   flex:0 0 calc(33.33% + 22px);position:relative;overflow:hidden;
   margin-right:-22px;
   clip-path:polygon(0 0,calc(100% - 22px) 0,100% 100%,0 100%);cursor:pointer;
 }
-.cslide.last{flex:0 0 calc(33.33% - 6px);}
+.cslide.last{flex:0 0 calc(33.33% - 12px);}
 .cslide img{width:115%;height:100%;object-fit:cover;object-position:center;display:block;}
 .cslide-caption{
   position:absolute;bottom:0;left:0;right:0;
@@ -912,6 +912,104 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .sht-placement{color:var(--blue-dark);}
 .sht-div{width:12px;background:var(--gray-border);padding:0!important;border:none;}
 .sht-empty{background:var(--gray-bg);}
+
+/* ═══ TOP NAV ═══ */
+.top-nav{
+  background:#fff;border-bottom:2px solid var(--blue-mid);
+  position:sticky;top:0;z-index:90;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.top-nav-inner{
+  display:flex;align-items:stretch;padding:0 24px;
+  max-width:100%;
+}
+.nav-item{position:relative;}
+.nav-link{
+  display:flex;align-items:center;gap:6px;
+  padding:12px 18px;font-size:15px;font-weight:700;
+  color:var(--blue-dark);cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;transition:all 0.15s;
+  user-select:none;
+}
+.nav-link::after{content:'∨';font-size:11px;opacity:0.6;}
+.nav-item:hover .nav-link{color:var(--blue-mid);border-bottom-color:var(--blue-mid);}
+.nav-sub{
+  display:none;position:absolute;top:100%;left:0;
+  background:var(--blue-dark);min-width:200px;
+  border-radius:0 0 10px 10px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  z-index:200;padding:6px 0;
+}
+.nav-item:hover .nav-sub{display:block;}
+.nav-sub a{
+  display:block;padding:10px 20px;font-size:14px;
+  color:rgba(255,255,255,0.88);text-decoration:none;
+  transition:background 0.12s;
+}
+.nav-sub a:hover{background:rgba(255,255,255,0.12);color:#fff;}
+
+/* ═══ CONTENT WITH SIDEBAR ═══ */
+.content-with-sidebar{display:flex;align-items:flex-start;}
+.left-sidebar{
+  width:210px;flex-shrink:0;
+  position:sticky;top:0;
+  max-height:100vh;overflow-y:auto;
+  background:#fff;border-right:1px solid var(--gray-border);
+  padding:0 0 40px;
+}
+.left-sidebar::-webkit-scrollbar{width:4px;}
+.left-sidebar::-webkit-scrollbar-thumb{background:var(--gray-border);}
+.left-nav-title{
+  font-size:13px;font-weight:700;color:#fff;
+  background:var(--blue-dark);padding:12px 16px;
+  letter-spacing:0.05em;
+}
+.left-nav-list{list-style:none;margin:0;padding:0;}
+.left-nav-parent{}
+.left-nav-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 16px;font-size:14px;font-weight:700;
+  color:var(--blue-dark);cursor:pointer;
+  border-bottom:1px solid var(--gray-border);
+  transition:background 0.12s;
+}
+.left-nav-header:hover{background:var(--blue-light);}
+.left-nav-header.open{background:var(--blue-light);color:var(--blue-mid);}
+.left-nav-arrow{font-size:12px;transition:transform 0.2s;}
+.left-nav-header.open .left-nav-arrow{transform:rotate(180deg);}
+.left-nav-children{
+  display:none;list-style:none;margin:0;padding:0;
+  background:#FAFBFD;border-bottom:1px solid var(--gray-border);
+}
+.left-nav-children.open{display:block;}
+.left-nav-children li a{
+  display:block;padding:9px 16px 9px 28px;
+  font-size:13px;color:var(--text-muted);text-decoration:none;
+  border-bottom:1px solid var(--gray-border);
+  transition:all 0.12s;
+}
+.left-nav-children li a:hover{
+  background:var(--blue-light);color:var(--blue-mid);
+  padding-left:32px;
+}
+.page{flex:1;min-width:0;padding:0 28px 80px;}
+
+/* Banner compact on scroll */
+.banner.scrolled .banner-status-row{display:none;}
+.banner.scrolled{padding:7px 28px;}
+.banner.scrolled .banner-sub{display:none;}
+
+/* blevel-btn: one line */
+.blevel-btn span{display:none;}
+
+@media(max-width:900px){
+  .left-sidebar{display:none;}
+  .page{padding:0 14px 60px;}
+}
+@media(max-width:600px){
+  .top-nav-inner{overflow-x:auto;}
+  .nav-link{padding:10px 12px;font-size:13px;}
+}
 </style>
 </head>
 <body>
@@ -932,17 +1030,85 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   <!-- Right: Level buttons + Status -->
   <div class="banner-right">
     <div class="banner-level-row">
-      <button class="blevel-btn l1" onclick="setLevel(1,this)">第一級<span>緊急戒備</span></button>
-      <button class="blevel-btn l2 active" onclick="setLevel(2,this)">第二級<span>廠區緊急</span></button>
-      <button class="blevel-btn l3" onclick="setLevel(3,this)">第三級<span>全面緊急</span></button>
+      <button class="blevel-btn l1" onclick="setLevel(1,this)">第一級-緊急戒備事故</button>
+      <button class="blevel-btn l2 active" onclick="setLevel(2,this)">第二級-廠區緊急事故</button>
+      <button class="blevel-btn l3" onclick="setLevel(3,this)">第三級-全面緊急事故</button>
     </div>
     <div class="banner-status-row">
       <div class="banner-status-text" id="bannerStatusText"></div>
       <div class="banner-status-tags" id="bannerStatusTags"></div>
-      <div class="banner-update">更新 <span id="clockEl">--</span></div>
     </div>
   </div>
 </div>
+
+<!-- ═══ TOP NAVIGATION ═══ -->
+<nav class="top-nav" id="topNav">
+  <div class="top-nav-inner">
+    <div class="nav-item">
+      <span class="nav-link">應變資訊</span>
+      <div class="nav-sub">
+        <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
+        <a href="#section-station" onclick="smoothTo('section-station')">防護站</a>
+        <a href="#section-shelter" onclick="smoothTo('section-shelter')">避難收容處所</a>
+        <a href="#section-epz" onclick="smoothTo('section-epz')">緊急應變計畫區(EPZ)圖</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">核子事故防護影片</span>
+      <div class="nav-sub">
+        <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
+        <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">相關連結</span>
+      <div class="nav-sub">
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SIDEBAR + CONTENT WRAPPER ═══ -->
+<div class="content-with-sidebar">
+
+<aside class="left-sidebar" id="leftSidebar">
+  <div class="left-nav-title">目錄</div>
+  <ul class="left-nav-list">
+    <li class="left-nav-parent">
+      <div class="left-nav-header" onclick="toggleLeftNav(this)">
+        應變資訊<span class="left-nav-arrow">∨</span>
+      </div>
+      <ul class="left-nav-children">
+        <li><a href="#" onclick="smoothTo('section-assembly');return false;">集結點</a></li>
+        <li><a href="#" onclick="smoothTo('section-station');return false;">防護站</a></li>
+        <li><a href="#" onclick="smoothTo('section-shelter');return false;">避難收容處所</a></li>
+        <li><a href="#" onclick="smoothTo('section-epz');return false;">緊急應變計畫區(EPZ)圖</a></li>
+      </ul>
+    </li>
+    <li class="left-nav-parent">
+      <div class="left-nav-header" onclick="toggleLeftNav(this)">
+        核子事故防護影片<span class="left-nav-arrow">∨</span>
+      </div>
+      <ul class="left-nav-children">
+        <li><a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a></li>
+        <li><a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a></li>
+      </ul>
+    </li>
+    <li class="left-nav-parent">
+      <div class="left-nav-header" onclick="toggleLeftNav(this)">
+        相關連結<span class="left-nav-arrow">∨</span>
+      </div>
+      <ul class="left-nav-children">
+        <li><a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a></li>
+        <li><a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a></li>
+        <li><a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a></li>
+      </ul>
+    </li>
+  </ul>
+</aside>
 
 <div class="page">
 
@@ -1057,6 +1223,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   </div>
 </div>
 
+<div id="section-assembly" style="position:relative;top:-80px;visibility:hidden;height:0;"></div>
 <!-- ═══ CONTENT ═══ -->
 <div class="sec">行動指引</div>
 <div id="mainContent"></div>
@@ -1947,6 +2114,7 @@ selectStage(2);
 
 </script>
 
+</div><!-- /content-with-sidebar -->
 
 <!-- ═══ NSC FOOTER ═══ -->
 <div style="background:#060F1A;color:#A0BDD8;padding:32px 32px 20px;margin-top:40px;">
