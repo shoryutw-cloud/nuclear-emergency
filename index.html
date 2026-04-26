@@ -1689,9 +1689,8 @@ function evacRoutes() {
     assemblyPickerHTML() +
     '</div></div>';
 
-  /* Route cards - 3 col, no nav button */
-  var cards = ROUTES.map(function(r) {
-    return '<div class="route-card" style="border-left:4px solid ' + r.color + ';padding:12px 14px;">' +
+  var routeCards = ROUTES.map(function(r) {
+    return '<div class="route-card" style="border-left:4px solid ' + r.color + ';">' +
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
       '<span style="background:' + r.color + ';color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;">' + r.label + '</span>' +
       '<span style="font-size:11px;color:var(--text-muted);">' + r.plant + '</span>' +
@@ -1701,18 +1700,28 @@ function evacRoutes() {
       '</div>';
   }).join('');
 
-  /* Leaflet map */
-  var mapDiv = '<div style="margin-bottom:14px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gray-border);"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1943Ml9W9hQZZr8ZPqjjmnvAJAbqBc3g&ehbc=2E312F&noprof=1" width="100%" height="420" frameborder="0" style="display:block;"></iframe></div>';
+  var routeList = '<div class="route-grid" style="grid-template-columns:1fr 1fr;">' + routeCards + '</div>';
+
+  var mapEmbed =
+    '<div style="border-radius:10px;overflow:hidden;border:1.5px solid var(--gray-border);">' +
+    '<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1943Ml9W9hQZZr8ZPqjjmnvAJAbqBc3g&ehbc=2E312F&noprof=1" width="100%" height="440" frameborder="0" style="display:block;"></iframe>' +
+    '</div>';
+
+  var mapAndCards =
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;align-items:start;">' +
+    '<div>' + routeList + '</div>' +
+    '<div>' + mapEmbed + '</div>' +
+    '</div>';
 
   return stationInfo +
     modeToggle +
     carContent +
     noCarContent +
     '<div class="sec" style="margin-top:16px;">疏散路線地圖</div>' +
-    mapDiv +
-    '<div class="route-grid">' + cards + '</div>' +
+    mapAndCards +
     '<div class="flow-hint">疏散流程：<strong style="color:var(--red-mid);">集結點</strong>（無車者）或直接 → <strong style="color:var(--red-mid);">防護站</strong>（輻射偵測＋除污）→ 登記報到 → <strong>避難收容所</strong>或依親收容</div>';
 }
+
 
 function assemblyPickerHTML() {
   var districts = Object.keys(ASSEMBLY_POINTS);
@@ -2150,6 +2159,127 @@ setLevel(2);
 selectStage(2);
 
 </script>
+</head>
+<body>
+
+<!-- ═══ BANNER ═══ -->
+<div class="banner">
+  <!-- Left: title only, no logo -->
+  <div class="banner-left">
+    <div class="banner-text-wrap">
+      <div class="banner-row1">
+        <span class="banner-title" style="font-size:26px;">核子事故資訊專區<span style="font-size:14px;font-weight:500;opacity:0.7;margin-left:8px;">(測試區)</span></span>
+        <span class="level-pill" id="bannerPill">第二級警戒</span>
+        <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;">核能二廠</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Level buttons + Status -->
+  <div class="banner-right">
+    <div class="banner-level-row">
+      <button class="blevel-btn l1" onclick="setLevel(1,this)">第一級-緊急戒備事故</button>
+      <button class="blevel-btn l2 active" onclick="setLevel(2,this)">第二級-廠區緊急事故</button>
+      <button class="blevel-btn l3" onclick="setLevel(3,this)">第三級-全面緊急事故</button>
+    </div>
+    <div class="banner-status-row">
+      <div class="banner-status-text" id="bannerStatusText"></div>
+      <div class="banner-status-tags" id="bannerStatusTags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOP NAVIGATION ═══ -->
+<nav class="top-nav" id="topNav">
+  <div class="top-nav-inner">
+    <div class="nav-item">
+      <span class="nav-link">應變資訊</span>
+      <div class="nav-sub">
+        <a href="timeline.html" target="_blank">核子事故應變階段</a>
+        <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
+        <a href="#section-station" onclick="smoothTo('section-station')">防護站</a>
+        <a href="#section-shelter" onclick="smoothTo('section-shelter')">避難收容處所</a>
+        <a href="#section-epz" onclick="smoothTo('section-epz')">緊急應變計畫區(EPZ)圖</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">核子事故防護影片</span>
+      <div class="nav-sub">
+        <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
+        <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <span class="nav-link">相關連結</span>
+      <div class="nav-sub">
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
+        <a href="https://www.nusc.gov.tw/" target="_blank">核子事故說明</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SIDEBAR + CONTENT WRAPPER ═══ -->
+<div class="content-with-sidebar" style="display:block;">
+
+<div class="page">
+
+<!-- ═══ NEWS TABS ═══ -->
+<div style="margin-top:3px;padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
+  <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
+</div>
+<div class="news-tabs">
+  <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
+  <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
+  <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
+</div>
+<div class="news-tab-panel">
+  <div id="tabContent"></div>
+  <div class="news-more">
+    <button class="news-more-btn" id="moreBtn" onclick="toggleMore()">更多 +</button>
+  </div>
+</div>
+
+<!-- ═══ INFOGRAPHIC CAROUSEL ═══ -->
+<div class="carousel-section">
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-arrow" onclick="prevSlide()">&#8249;</button>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <button class="carousel-arrow" onclick="nextSlide()">&#8250;</button>
+  </div>
+</div>
+
+
+
+<!-- ═══ GPS + PERSONA ═══ -->
+<div class="sec">
+  <span class="sec-left">我的位置與家人情況</span>
+  <span id="gpsInline" class="sec-gps">
+    <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
+  </span>
+</div>
+
+<div class="persona-panel" style="margin-bottom:14px;">
+  <div class="persona-label">我的情況是…</div>
+  <div class="persona-row-h">
+    <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
+    <button class="persona-btn-h" onclick="setPersona('family',this)">家中小孩學校於EPZ範圍內</button>
+    <button class="persona-btn-h" onclick="setPersona('disabled',this)">家有行動不便者</button>
+  </div>
+</div>
+
+<div id="section-assembly" style="position:relative;top:-80px;visibility:hidden;height:0;"></div>
+<!-- ═══ CONTENT ═══ -->
+<div class="sec">行動指引</div>
+<div id="mainContent"></div>
+
+</div><!-- /page -->
+
+
 </head>
 <body>
 
