@@ -8066,8 +8066,7 @@ function gotGPS(lat, lng) {
   autoSelectByGPS(lat, lng);
   el.innerHTML = '<span class="gps-inline-dot ok"></span>' +
     '距 <strong>' + n.name + '</strong> 約 <strong>' + km.toFixed(1) + ' 公里</strong>' +
-    '&ensp;<span class="gips-zone ' + zc + '">' + zl + '</span>' +
-    '&ensp;
+    '&ensp;<span class="gips-zone ' + zc + '">' + zl + '</span>' ;
 }
 
 function showGpsError(msg, showRetry) {
