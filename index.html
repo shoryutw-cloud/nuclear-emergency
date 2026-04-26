@@ -8428,16 +8428,21 @@ function renderContent() {
 }
 
 function renderSingle() {
+  var evac_sec = '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>';
+  var common2 = evac_sec + evacRoutes() + '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+  var commonAll = '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+
   if (currentLevel === 1) {
     return '<div class="action-block amber">' +
       '<div class="block-title">📋 目前不需疏散，保持警覺</div>' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span><span>確認手機通知開啟，收聽中廣、警廣或電視新聞</span></li>' +
       '<li><span class="step-num">2</span><span>準備緊急包：身分證、健保卡、藥品、換洗衣物、3日份食物</span></li>' +
-      '<li><span class="step-num">3</span><span>確認家中碘片（KI）存量，向衛生所詢問發放情況</span></li>' +
+      '<li><span class="step-num">3</span><span>確認家中碘片存量，向衛生所詢問發放情況</span></li>' +
       '<li><span class="step-num">4</span><span>遠離海灘、公園等戶外場所（景區已關閉）</span></li>' +
       '</ul></div>' +
-      '<div class="sec">避難收容處所</div>' + renderShelterPicker() + '<div class="sec">食衣住行</div>' +
+      commonAll +
+      '<div class="sec">食衣住行</div>' +
       lsGrid([
         ['食', '正常飲食，備齊3日份不需烹調的食品（餅乾、罐頭）', ''],
         ['衣', '備好長袖衣物、口罩。若需外出穿著覆蓋皮膚的衣物', ''],
@@ -8447,16 +8452,15 @@ function renderSingle() {
   }
   if (currentLevel === 2) {
     return '<div class="action-block orange">' +
-      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span><span>使用上方 GPS 確認您住家距核電廠的距離</span></li>' +
       '<li><span class="step-num">2</span><span><strong>住家距電廠3公里以內</strong>：收到疏散命令後立即撤離，前往集結點</span></li>' +
       '<li><span class="step-num">3</span><span><strong>住家距電廠3–8公里</strong>：關閉門窗、密封縫隙，進行室內掩蔽，等待指示</span></li>' +
-      '<li><span class="step-num">4</span><span>前往衛生所領取碘片（KI），等候官方通知服用</span></li>' +
+      '<li><span class="step-num">4</span><span>前往衛生所領取碘片，等候官方通知服用</span></li>' +
       '<li><span class="step-num">5</span><span>持續收聽廣播，等待官方疏散命令</span></li>' +
       '</ul></div>' +
-      '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>' + evacRoutes() +
-      '<div class="sec">避難收容處所</div>' + renderShelterPicker() + '<div class="sec">食衣住行</div>' +
+      common2 +
+      '<div class="sec">食衣住行</div>' +
       lsGrid([
         ['食', '只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水', '禁止食用戶外蔬菜水果'],
         ['衣', '換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩', ''],
@@ -8470,14 +8474,24 @@ function renderSingle() {
     '<li><span class="step-num">1</span><span>收到疏散命令後，<strong>立刻出發，不要猶豫</strong></span></li>' +
     '<li><span class="step-num">2</span><span>拿好緊急包：證件、藥品、手機充電器、現金、食物飲水</span></li>' +
     '<li><span class="step-num">3</span><span>關閉家中瓦斯、電源後離開並鎖門</span></li>' +
-    '<li><span class="step-num">4</span><span>服用碘片（KI）——出發前30分鐘服用效果最佳</span></li>' +
+    '<li><span class="step-num">4</span><span>服用碘片——等官方通知，出發前服用效果最佳</span></li>' +
     '<li><span class="step-num">5</span><span>前往所在里的集結點，等候引導前往防護站</span></li>' +
     '</ul></div>' +
-    '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>' + evacRoutes() +
-    '<div class="sec">🏟 避難收容所</div>' + shelterCards();
+    common2 +
+    '<div class="sec">食衣住行</div>' +
+    lsGrid([
+      ['食', '只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水', '禁止食用戶外蔬菜水果'],
+      ['衣', '換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩', ''],
+      ['住', '關閉所有門窗，用濕毛巾封縫隙，關閉冷氣及換氣扇', ''],
+      ['行', '3公里以內：立即疏散。3–8公里：就地掩蔽等指示', ''],
+    ]);
 }
 
 function renderFamily() {
+  var evac_sec = '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>';
+  var common2 = evac_sec + evacRoutes() + '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+  var commonAll = '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+
   if (currentLevel === 1) {
     return '<div class="action-block amber">' +
       '<div class="block-title">📢 學校暫未停課，保持聯繫</div>' +
@@ -8487,20 +8501,27 @@ function renderFamily() {
       '<li><span class="step-num">3</span><span>告知孩子聽到警報要<strong>留在學校等候，不要自行跑出來</strong></span></li>' +
       '<li><span class="step-num">4</span><span>確認學校已備案指定接送人名單</span></li>' +
       '</ul></div>' +
-      schoolSection();
+      schoolSection() +
+      commonAll +
+      '<div class="sec">食衣住行</div>' +
+      lsGrid([
+        ['食', '正常飲食，備齊3日份不需烹調的食品（餅乾、罐頭）', ''],
+        ['衣', '備好長袖衣物、口罩。若需外出穿著覆蓋皮膚的衣物', ''],
+        ['住', '留在室內，暫不需密封。儲備一缸清潔飲用水', ''],
+        ['行', '暫不疏散。確認油量充足，熟悉疏散路線方向（往南往東）', ''],
+      ]);
   }
   if (currentLevel === 2) {
     return '<div class="action-block orange">' +
-      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span><span>政府宣布EPZ內<strong>停止上班上課</strong>，立即聯繫學校確認孩子狀況</span></li>' +
       '<li><span class="step-num">2</span><span>學校協助聯繫家屬並安排接送——<strong>等待學校通知</strong>或前往學校接孩子</span></li>' +
-      '<li><span class="step-num">3</span><span>接到孩子後：若<strong>住家距電廠3公里以內</strong>，立即前往集結點疏散；若<strong>住家距電廠3–8公里</strong>，回家進行室內掩蔽</span></li>' +
+      '<li><span class="step-num">3</span><span>接到孩子後：若<strong>住家距電廠3公里以內</strong>立即前往集結點疏散；若<strong>住家距電廠3–8公里</strong>回家進行室內掩蔽</span></li>' +
       '<li><span class="step-num">4</span><span>在防護站報到時，全家一起登記，確保不分散</span></li>' +
       '</ul></div>' +
       schoolSection() +
-      '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>' + evacRoutes() +
-      '<div class="sec">避難收容處所</div>' + renderShelterPicker() + '<div class="sec">食衣住行</div>' +
+      common2 +
+      '<div class="sec">食衣住行</div>' +
       lsGrid([
         ['食', '備好孩子副食品、奶粉或乾糧，3日份封裝食物', '禁止食用外購或戶外食物'],
         ['衣', '幫孩子穿長袖、帽子，帶兒童適用口罩及備用衣物', ''],
@@ -8514,16 +8535,31 @@ function renderFamily() {
     '<li><span class="step-num">1</span><span><strong>立刻前往孩子學校接人</strong>，出示身分證明文件</span></li>' +
     '<li><span class="step-num">2</span><span>學校校方人員協助點交，確認交給正確家屬</span></li>' +
     '<li><span class="step-num">3</span><span>接到孩子後，<strong>立刻前往所在里的集結點</strong></span></li>' +
-    '<li><span class="step-num">4</span><span>依孩子年齡服用碘片（KI）——等官方通知，出發前30分鐘服用</span></li>' +
+    '<li><span class="step-num">4</span><span>依孩子年齡服用碘片——等官方通知，出發前服用效果最佳</span></li>' +
     '<li><span class="step-num">5</span><span>防護站完成輻射檢測除污後，全家前往避難收容所<strong>一起登記入住</strong></span></li>' +
     '</ul></div>' +
     schoolSection() +
-    '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>' + evacRoutes() +
-    '<div class="sec">🏟 避難收容所（設有家庭區、哺乳室、兒童照護區）</div>' + shelterCards();
+    common2 +
+    '<div class="sec">食衣住行</div>' +
+    lsGrid([
+      ['食', '備好孩子副食品、奶粉或乾糧，3日份封裝食物', '禁止食用外購或戶外食物'],
+      ['衣', '幫孩子穿長袖、帽子，帶兒童適用口罩及備用衣物', ''],
+      ['住', '3–8公里：密封家中，孩子留在室內最大房間', ''],
+      ['行', '接孩子後出發。無車者到集結點等候免費接駁巴士', ''],
+    ]);
 }
 
 function renderDisabled() {
-  const officeTel = '<div class="vuln-card" style="margin-top:0">' +
+  var evac_sec = '<div class="sec"><span>疏散路線－<span style="color:var(--red-mid);">請先至防護站</span>完成輻射偵測與除污，<span style="color:var(--red-mid);">再至避難收容所</span>或依親收容</span></div>';
+  var common2 = evac_sec + evacRoutes() + '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+  var commonAll = '<div class="sec">避難收容處所</div>' + renderShelterPicker();
+  var foodGrid = '<div class="sec">食衣住行</div>' + lsGrid([
+    ['食', '只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水', '禁止食用戶外蔬菜水果'],
+    ['衣', '換上長袖衣物覆蓋全身皮膚，準備N95或一般口罩', ''],
+    ['住', '關閉所有門窗，用濕毛巾封縫隙，關閉冷氣及換氣扇', ''],
+    ['行', '等候政府派員接送，不要自行嘗試步行移動', ''],
+  ]);
+  var officeTel = '<div class="vuln-card" style="margin-top:0">' +
     '<div class="vuln-title" style="font-size:16px;">各區公所聯絡電話</div>' +
     '<div class="vuln-items">' +
     '<div class="vuln-item">三芝區公所：<strong>02-2636-2111</strong></div>' +
@@ -8540,25 +8576,24 @@ function renderDisabled() {
       '<div class="vuln-item">🚐 <div>政府備有 <span class="badge-num">復康巴士394輛</span>，提前向區公所確認您的接送需求已登記</div></div>' +
       '<div class="vuln-item">📞 <div>告知鄰居或里長您的行動狀況，建立互助聯繫</div></div>' +
       '<div class="vuln-item">💊 <div>準備好3日份常備藥品及輔具，放在門邊方便取用</div></div>' +
-      '</div></div>' + officeTel;
+      '</div></div>' + officeTel +
+      commonAll + foodGrid;
   }
   if (currentLevel === 2) {
     return '<div class="action-block blue">' +
-      '' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">1</span><span>廠區緊急階段政府<strong>優先疏散弱勢族群</strong>（行動不便者、老人、嬰幼兒、孕婦）</span></li>' +
       '<li><span class="step-num">2</span><span>若已在名冊，里長或區公所人員會<strong>主動聯繫您</strong>安排接送</span></li>' +
       '<li><span class="step-num">3</span><span>若尚未登記，立即撥打 <strong>1999</strong> 或區公所電話報名</span></li>' +
       '<li><span class="step-num">4</span><span>等候時維持室內掩蔽、關閉門窗</span></li>' +
       '</ul></div>' +
-      '<div class="vuln-card">' +
-      '<div class="vuln-title">🚑 行動不便者接送安排</div>' +
-      '<div class="vuln-items">' +
+      '<div class="vuln-card"><div class="vuln-title">🚑 行動不便者接送安排</div><div class="vuln-items">' +
       '<div class="vuln-item">🚐 <div><strong>復康巴士：</strong>政府備有<span class="badge-num">394輛復康巴士</span>，專門接送行動不便者</div></div>' +
       '<div class="vuln-item">🚌 <div><strong>低底盤公車：</strong>接駁公車含無障礙低底盤車輛</div></div>' +
       '<div class="vuln-item">🛥 <div><strong>海上疏散：</strong>港口附近居民可由漁船、藍色公路船舶（約29艘）協助</div></div>' +
       '<div class="vuln-item">🏥 <div><strong>護理機構：</strong>EPZ 內護理之家及安養中心已規劃後送醫院，無需自行安排</div></div>' +
-      '</div></div>' + officeTel;
+      '</div></div>' + officeTel +
+      common2 + foodGrid;
   }
   return '<div class="action-block red">' +
     '<div class="block-title">🚨 現在撥打1999或請鄰居協助</div>' +
@@ -8566,20 +8601,16 @@ function renderDisabled() {
     '<li><span class="step-num">1</span><span>若尚未接到政府聯繫，<strong>立刻撥打1999或119</strong>，告知姓名、地址、行動狀況</span></li>' +
     '<li><span class="step-num">2</span><span>告知鄰居或里長您需要協助搬運輔具</span></li>' +
     '<li><span class="step-num">3</span><span>等待復康巴士抵達，<strong>不要自行嘗試步行</strong></span></li>' +
-    '<li><span class="step-num">4</span><span>等官方通知後服用碘片（KI）</span></li>' +
+    '<li><span class="step-num">4</span><span>等官方通知後服用碘片</span></li>' +
     '<li><span class="step-num">5</span><span>收容所設有<strong>弱勢特別照護寢區</strong>及醫護人員駐點</span></li>' +
     '</ul></div>' +
-    '<div class="vuln-card">' +
-    '<div class="vuln-title">♿ 收容所無障礙設施</div>' +
-    '<div class="vuln-items">' +
+    '<div class="vuln-card"><div class="vuln-title">♿ 收容所無障礙設施</div><div class="vuln-items">' +
     '<div class="vuln-item">🛏 <div>設有<strong>弱勢特別照護寢區</strong>，提供較寬敞空間及醫護支援</div></div>' +
     '<div class="vuln-item">🚿 <div><strong>無障礙浴廁</strong>及專人協助除污洗淨</div></div>' +
     '<div class="vuln-item">👩‍⚕️ <div>醫護人員及社工常駐，協助慢性病患、臥床者日常照護</div></div>' +
-    '</div></div>' +
-    officeTel +
-    '<div class="sec">🏟 避難收容所</div>' + shelterCards();
+    '</div></div>' + officeTel +
+    common2 + foodGrid;
 }
-
 
 function shelterCards() {
   var cards = SHELTERS.map(function(x) {
