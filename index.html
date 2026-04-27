@@ -10426,6 +10426,14 @@ const GLOSSARY = [
   },
 ];
 
+
+function toggleGlossaryAnswer(row) {
+  var ans = row.querySelector('.glossary-answer');
+  if (!ans) return;
+  var isOpen = ans.style.display !== 'none';
+  ans.style.display = isOpen ? 'none' : 'block';
+  row.querySelector('.press-title').style.color = isOpen ? '' : 'var(--blue-mid)';
+}
 function switchTab(tab, el) {
   currentTab = tab;
   showAll = false;
@@ -10441,12 +10449,21 @@ function toggleMore() {
 
 function renderTabContent() {
   if (currentTab === 'glossary') {
-    e('tabContent').innerHTML = GLOSSARY.map(function(item) {
-      return '<div class="glossary-item">' +
-        '<div class="glossary-q">' + item.q + '</div>' +
-        '<div class="glossary-a">' + item.a.replace(/\n/g,'<br>') + '</div>' +
+    var gRows = GLOSSARY.map(function(item, i) {
+      var num = String(i + 1).padStart(2, '0');
+      return '<div class="press-item" style="cursor:pointer" onclick="toggleGlossaryAnswer(this)">' +
+        '<div class="press-date">' +
+        '<div class="press-date-top">詞彙</div>' +
+        '<div class="press-date-day">' + num + '</div>' +
+        '</div>' +
+        '<div class="press-div"></div>' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div class="press-title">' + item.q + '</div>' +
+        '<div class="glossary-answer" style="display:none;font-size:13px;color:var(--text-main);line-height:1.85;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-border);">' + item.a + '</div>' +
+        '</div>' +
         '</div>';
     }).join('');
+    e('tabContent').innerHTML = '<div class="press-grid" style="grid-template-columns:1fr;">' + gRows + '</div>';
     if (e('moreBtn')) e('moreBtn').style.display = 'none';
     return;
   }
@@ -10689,7 +10706,7 @@ function routeMapSection() {
       '<div style="font-size:12px;color:var(--text-muted);line-height:1.5;margin-top:3px;">' + r.path + '</div>' +
       '</div>';
   }).join('');
-  return '<div class="sec" style="margin-top:16px;">請於<span style="color:var(--red-mid);">通過防護站後</span>，再疏散至避難收容所或依親收容</div>' +
+  return '<div class="sec" style="margin-top:16px;">請於通過防護站後，再往其他地方疏散</div>' +
     '<div class="flow-hint" style="margin-bottom:12px;">疏散路線：<strong style="color:var(--red-mid);">點選地圖上對應之路線編號可進行導航</strong> </div>' +
     '<div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:14px;">' +
     '<div style="flex:0 0 440px;">' + routeCards + '</div>' +
