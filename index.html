@@ -1001,7 +1001,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -1092,8 +1092,23 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .glossary-q{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}
 .glossary-a{font-size:13px;color:var(--text-main);line-height:1.85;}
 .glossary-item{padding:16px 20px;border-bottom:1px solid var(--gray-border);}.glossary-item:last-child{border-bottom:none;}.glossary-q{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}.glossary-a{font-size:13px;color:var(--text-main);line-height:1.85;}
-@media(min-width:1400px){.page{padding:0 8vw 80px;}}
-@media(min-width:1800px){.page{padding:0 12vw 80px;}}
+@media(min-width:1400px){.page{padding:0 60px 80px;}}
+@media(min-width:1600px){.page{padding:0 80px 80px;}}
+
+/* ═══ SCROLL TO TOP ═══ */
+#scrollTopBtn{
+  position:fixed;bottom:28px;right:28px;z-index:999;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--blue-dark);color:#fff;
+  border:none;cursor:pointer;
+  font-size:20px;line-height:1;
+  box-shadow:0 4px 16px rgba(0,0,0,0.25);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.25s,transform 0.25s;
+  display:flex;align-items:center;justify-content:center;
+}
+#scrollTopBtn.visible{opacity:1;pointer-events:auto;}
+#scrollTopBtn:hover{background:var(--blue-mid);transform:translateY(-3px);}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -2102,7 +2117,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -2193,8 +2208,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 .glossary-q{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}
 .glossary-a{font-size:13px;color:var(--text-main);line-height:1.85;}
 .glossary-item{padding:16px 20px;border-bottom:1px solid var(--gray-border);}.glossary-item:last-child{border-bottom:none;}.glossary-q{font-size:15px;font-weight:700;color:var(--blue-dark);margin-bottom:10px;}.glossary-a{font-size:13px;color:var(--text-main);line-height:1.85;}
-@media(min-width:1400px){.page{padding:0 8vw 80px;}}
-@media(min-width:1800px){.page{padding:0 12vw 80px;}}
+@media(min-width:1400px){.page{padding:0 60px 80px;}}
+@media(min-width:1600px){.page{padding:0 80px 80px;}}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -3203,7 +3218,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -4296,7 +4311,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -5389,7 +5404,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -6482,7 +6497,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -7557,7 +7572,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -8590,7 +8605,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   background:var(--blue-light);color:var(--blue-mid);
   padding-left:32px;
 }
-.page{padding:0 6vw 80px;max-width:1200px;margin:0 auto;}
+.page{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
 
 /* Banner compact on scroll */
 .banner.scrolled .banner-status-row{display:none;}
@@ -8805,6 +8820,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 
 
+
+<button id="scrollTopBtn" onclick="smoothScrollTop()" title="回到頂端">↑</button>
 
 <script>
 
@@ -9938,6 +9955,18 @@ selectStage(2);
 
 
 
+
+/* ═══ SCROLL TO TOP ═══ */
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+  if (window.scrollY > 300) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+function smoothScrollTop() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
 </script>
 </body>
 </html>
