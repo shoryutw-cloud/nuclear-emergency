@@ -10282,10 +10282,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
-  <span class="sec-left">我需要疏散或掩蔽嗎？</span>
-  <span id="gpsInline" class="sec-gps">
-    <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
-  </span>
+  <span class="sec-left">我需要疏散或掩蔽嗎？<span style="font-size:14px;font-weight:400;color:var(--text-muted);margin-left:10px;">請先點 <button id="gpsPermBtn2" onclick="requestGPS()" class="gps-perm-btn" style="display:inline-flex;padding:4px 12px;font-size:13px;vertical-align:middle;">📍 授權定位</button> 以顯示對應行動指引</span></span>
+  <span id="gpsInline" class="sec-gps"></span>
 </div>
 <!-- 手動選距離（GPS 失敗時顯示）-->
 <div id="manualZonePicker" style="display:none;" class="manual-zone-panel">
@@ -10309,8 +10307,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 <div id="section-assembly" style="position:relative;top:-80px;visibility:hidden;height:0;"></div>
 <!-- ═══ CONTENT ═══ -->
-<div class="sec">行動指引</div>
-<div id="mainContent"></div>
+<div class="sec" id="actionGuideSection" style="display:none;">行動指引</div>
+<div id="mainContent" style="display:none;"></div>
 
 </div><!-- /page -->
 </div><!-- /content-with-sidebar -->
@@ -10758,10 +10756,14 @@ function gotGPS(lat, lng) {
   else if (km <= 8)  userZone = 'z8';
   else if (km <= 16) userZone = 'z16';
   else               userZone = 'zout';
+  showActionGuide();
   updatePersonaVisibility();
   // Hide manual picker if showing
   var mp = e('manualZonePicker');
   if (mp) mp.style.display = 'none';
+  // Hide subtitle GPS hint once located
+  var hint = document.querySelector('.sec-left span');
+  if (hint) hint.style.display = 'none';
   renderContent();
 }
 
@@ -10809,6 +10811,13 @@ function setLevel(l) {
 
 
 
+
+function showActionGuide() {
+  var sec = document.getElementById('actionGuideSection');
+  var mc = document.getElementById('mainContent');
+  if (sec) sec.style.display = '';
+  if (mc) mc.style.display = '';
+}
 function updatePersonaVisibility() {
   var panel = document.getElementById('personaPanel');
   if (!panel) return;
@@ -10832,6 +10841,7 @@ function setZone(zone, el) {
     dotEl.innerHTML = '<span class="gps-inline-dot ok" style="background:var(--blue-mid);animation:none;"></span>' +
       '<span style="font-size:14px;">手動選擇：<strong>' + labels[zone] + '</strong></span>';
   }
+  showActionGuide();
   updatePersonaVisibility();
   renderContent();
 }
@@ -11200,8 +11210,8 @@ function renderContent() {
     var map = {
       z3:   { cls:'z3',   icon:'🔴', title:'您位於 3公里以內・須立即疏散',         sub:'收到疏散命令後立即離開，前往最近集結點，搭疏散專車至防護站。' },
       z8:   { cls:'z8',   icon:'🟠', title:'您位於 3～8公里・請進行室內掩蔽',      sub:'關閉所有門窗與換氣設備，用膠帶或濕毛巾封縫隙，等待官方解除指示。' },
-      z16:  { cls:'z16',  icon:'🟡', title:'您位於 8～16公里・持續關注官方資訊',   sub:'目前不需疏散，保持警覺，收聽廣播，備好緊急包以備升級通知。' },
-      zout: { cls:'zout', icon:'🟢', title:'您位於 16公里以外・一般注意',          sub:'目前無需特別行動，持續收聽官方廣播，關注事故等級是否升高。' }
+      z16:  { cls:'z16',  icon:'🟡', title:'您位於 8～16公里・無須疏散或掩蔽',   sub:'目前不需疏散或掩蔽，保持警覺，收聽廣播，備好緊急包以備升級通知。' },
+      zout: { cls:'zout', icon:'🟢', title:'您位於 16公里以外・無須疏散或掩蔽',   sub:'目前無需疏散或掩蔽，持續收聽官方廣播，關注事故等級是否升高。' }
     };
     var d = map[userZone];
     return '<div class="zone-action-banner ' + d.cls + '">' +
