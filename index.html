@@ -11218,6 +11218,15 @@ function renderContent() {
     return;
   }
 
+  // ── If z3/z8 but persona not yet selected, wait ──
+  if ((userZone === 'z3' || userZone === 'z8') && currentPersona === null) {
+    h = '<div style="text-align:center;padding:28px 20px;font-size:15px;color:var(--text-muted);background:var(--gray-bg);border-radius:14px;border:1.5px dashed var(--gray-border);margin-bottom:16px;">' +
+      '👆 請選擇上方「我的家庭情況」<br>以顯示對應行動指引' +
+      '</div>';
+    e('mainContent').innerHTML = h;
+    return;
+  }
+
   // ── Zone-specific content ──
   if (userZone === 'zout') {
     // 16km+ 一般注意
