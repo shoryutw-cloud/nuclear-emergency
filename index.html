@@ -10281,7 +10281,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 
 <!-- ═══ GPS + PERSONA ═══ -->
 <div class="sec">
-  <span class="sec-left">我的位置與家人情況</span>
+  <span class="sec-left">我需要疏散或掩蔽嗎？</span>
   <span id="gpsInline" class="sec-gps">
     <button id="gpsPermBtn" onclick="requestGPS()" class="gps-perm-btn">📍 點此授權定位</button>
   </span>
@@ -10297,8 +10297,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   </div>
 </div>
 
-<div class="persona-panel" style="margin-bottom:14px;">
-  <div class="persona-label">我的情況是…</div>
+<div class="persona-panel" id="personaPanel" style="margin-bottom:14px;display:none;">
+  <div class="persona-label">我的家庭情況</div>
   <div class="persona-row-h">
     <button class="persona-btn-h" onclick="setPersona('single',this)">單身 / 單獨居住</button>
     <button class="persona-btn-h" onclick="setPersona('family',this)">家中小孩學校於EPZ範圍內</button>
@@ -10757,6 +10757,7 @@ function gotGPS(lat, lng) {
   else if (km <= 8)  userZone = 'z8';
   else if (km <= 16) userZone = 'z16';
   else               userZone = 'zout';
+  updatePersonaVisibility();
   // Hide manual picker if showing
   var mp = e('manualZonePicker');
   if (mp) mp.style.display = 'none';
@@ -10806,6 +10807,18 @@ function setLevel(l) {
 }
 
 
+
+function updatePersonaVisibility() {
+  var panel = document.getElementById('personaPanel');
+  if (!panel) return;
+  var needPersona = (userZone === 'z3' || userZone === 'z8');
+  panel.style.display = needPersona ? '' : 'none';
+  // Reset persona selection when hiding
+  if (!needPersona) {
+    currentPersona = null;
+    document.querySelectorAll('.persona-btn-h').forEach(b => b.classList.remove('active'));
+  }
+}
 function setZone(zone, el) {
   userZone = zone;
   // Highlight selected button
@@ -10818,6 +10831,7 @@ function setZone(zone, el) {
     dotEl.innerHTML = '<span class="gps-inline-dot ok" style="background:var(--blue-mid);animation:none;"></span>' +
       '<span style="font-size:13px;">手動選擇：<strong>' + labels[zone] + '</strong></span>';
   }
+  updatePersonaVisibility();
   renderContent();
 }
 function setPersona(p, el) {
