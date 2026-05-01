@@ -342,6 +342,7 @@ body{
   font-size:14px;font-weight:700;color:#fff;margin-top:3px;
 }
 .red   .step-num{background:var(--red-mid);}
+.action-block .step-num{background:var(--blue-mid);}  /* fallback */
 .orange .step-num{background:var(--orange);}
 .amber .step-num{background:var(--amber);}
 .blue  .step-num{background:var(--blue-mid);}
@@ -11272,13 +11273,13 @@ function renderContent() {
       '<li><span class="step-num">4</span><span>前往最高樓層的中央房間（遠離外牆）</span></li>' +
       '<li><span class="step-num">5</span><span>等待官方廣播通知才可外出</span></li>' +
       '</ul></div>' +
-      '<div class="action-block" style="border:1.5px solid var(--gray-border);margin-top:12px;"><div class="block-title">💊 碘片相關</div>' +
+      '<div class="action-block blue" style="margin-top:12px;"><div class="block-title">💊 碘片相關</div>' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">Q</span><span><strong>碘片去哪領？</strong> 平時在各區衛生所免費領取，事故時政府會廣播發放點</span></li>' +
       '<li><span class="step-num">Q</span><span><strong>什麼時候吃？</strong> 政府廣播指示後才服用，不可自行判斷提前吃</span></li>' +
       '<li><span class="step-num">Q</span><span><strong>沒吃到怎辦？</strong> 待在室內掩蔽，減少輻射吸入，事後向衛生所詢問</span></li>' +
       '</ul></div>' +
-      '<div class="action-block" style="border:1.5px solid var(--gray-border);margin-top:12px;"><div class="block-title">🍽 掩蔽期間食衣住行</div>' +
+      '<div class="action-block green" style="margin-top:12px;"><div class="block-title">🍽 掩蔽期間食衣住行</div>' +
       '<ul class="block-steps">' +
       '<li><span class="step-num">食</span><span>只吃室內儲備食物，飲用瓶裝水或預先儲備的自來水，禁止食用戶外蔬菜水果</span></li>' +
       '<li><span class="step-num">衣</span><span>穿長袖衣物覆蓋全身，佩戴口罩（N95最佳），進出時立即更換衣物</span></li>' +
@@ -11287,14 +11288,14 @@ function renderContent() {
       '</ul></div>';
     // Persona refinements
     if (currentPersona === 'family') {
-      h += '<div class="action-block" style="border:1.5px solid var(--blue-mid);margin-top:12px;"><div class="block-title">🏫 孩子在學校怎辦？</div>' +
+      h += '<div class="action-block" class="action-block blue" style="margin-top:12px;"><div class="block-title">🏫 孩子在學校怎辦？</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>已宣布停課，請前往學校接孩子。學校會統一安排室內等候</span></li>' +
         '<li><span class="step-num">2</span><span>接到孩子後，車窗關閉，返家進行室內掩蔽</span></li>' +
         '</ul></div>';
     }
     if (currentPersona === 'disabled') {
-      h += '<div class="action-block" style="border:1.5px solid var(--blue-mid);margin-top:12px;"><div class="block-title">♿ 行動不便者</div>' +
+      h += '<div class="action-block" class="action-block blue" style="margin-top:12px;"><div class="block-title">♿ 行動不便者</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>在門窗放置「我需要協助」指示牌，政府會派人協助</span></li>' +
         '<li><span class="step-num">2</span><span>撥打 1999 登記需求，復康巴士已待命</span></li>' +
@@ -11320,7 +11321,7 @@ function renderContent() {
       '</ul></div>';
     // Persona refinements
     if (currentPersona === 'disabled') {
-      h += '<div class="action-block" style="border:1.5px solid #C0392B;margin-top:12px;"><div class="block-title">♿ 行動不便者優先協助</div>' +
+      h += '<div class="action-block" class="action-block red" style="margin-top:12px;"><div class="block-title">♿ 行動不便者優先協助</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>在門窗放置「我需要協助」指示牌</span></li>' +
         '<li><span class="step-num">2</span><span>撥打 <strong>1999</strong> 登記，復康巴士 394 輛已待命</span></li>' +
@@ -11328,7 +11329,7 @@ function renderContent() {
         '</ul></div>';
     }
     if (currentPersona === 'family') {
-      h += '<div class="action-block" style="border:1.5px solid #C0392B;margin-top:12px;"><div class="block-title">🏫 先去接孩子</div>' +
+      h += '<div class="action-block" class="action-block red" style="margin-top:12px;"><div class="block-title">🏫 先去接孩子</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>學校已停課，請立即前往學校接孩子後一同疏散</span></li>' +
         '<li><span class="step-num">2</span><span>接孩子途中車窗關閉，盡快疏散至集結點</span></li>' +
