@@ -11298,14 +11298,14 @@ function renderContent() {
       '</ul></div>';
     // Persona refinements
     if (currentPersona === 'family') {
-      h += '<div class="action-block" class="action-block blue" style="margin-top:12px;"><div class="block-title">🏫 孩子在學校怎辦？</div>' +
+      h += '<div class="action-block blue" style="margin-top:12px;"><div class="block-title">🏫 孩子在學校怎辦？</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>已宣布停課，請前往學校接孩子。學校會統一安排室內等候</span></li>' +
         '<li><span class="step-num">2</span><span>接到孩子後，車窗關閉，返家進行室內掩蔽</span></li>' +
         '</ul></div>';
     }
     if (currentPersona === 'disabled') {
-      h += '<div class="action-block" class="action-block blue" style="margin-top:12px;"><div class="block-title">♿ 行動不便者</div>' +
+      h += '<div class="action-block blue" style="margin-top:12px;"><div class="block-title">♿ 行動不便者</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>在門窗放置「我需要協助」指示牌，政府會派人協助</span></li>' +
         '<li><span class="step-num">2</span><span>撥打 1999 登記需求，復康巴士已待命</span></li>' +
@@ -11331,7 +11331,7 @@ function renderContent() {
       '</ul></div>';
     // Persona refinements
     if (currentPersona === 'disabled') {
-      h += '<div class="action-block" class="action-block red" style="margin-top:12px;"><div class="block-title">♿ 行動不便者優先協助</div>' +
+      h += '<div class="action-block red" style="margin-top:12px;"><div class="block-title">♿ 行動不便者優先協助</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>在門窗放置「我需要協助」指示牌</span></li>' +
         '<li><span class="step-num">2</span><span>撥打 <strong>1999</strong> 登記，復康巴士 394 輛已待命</span></li>' +
@@ -11339,11 +11339,12 @@ function renderContent() {
         '</ul></div>';
     }
     if (currentPersona === 'family') {
-      h += '<div class="action-block" class="action-block red" style="margin-top:12px;"><div class="block-title">🏫 先去接孩子</div>' +
+      h += '<div class="action-block red" style="margin-top:12px;"><div class="block-title">🏫 先去接孩子</div>' +
         '<ul class="block-steps">' +
         '<li><span class="step-num">1</span><span>學校已停課，請立即前往學校接孩子後一同疏散</span></li>' +
         '<li><span class="step-num">2</span><span>接孩子途中車窗關閉，盡快疏散至集結點</span></li>' +
         '</ul></div>';
+      h += '<div class="school-block"><div class="school-block-header">📋 各校停課狀態與安置學校</div>' + schoolTable() + '</div>';
     }
     h += evac_sec + evacRoutes() + routeMapSection();
     h += '<div class="sec">避難收容處所</div>' + renderShelterPicker();
