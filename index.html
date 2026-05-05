@@ -10427,14 +10427,14 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
 </div>
 <div class="news-tabs" id="newsTabsDesktop">
-  <button class="ntab active" onclick="switchTab('news',this)">最新資訊</button>
+  <button class="ntab active" onclick="switchTab('news',this)">事故最新資訊</button>
   <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
   <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
   <button class="ntab" onclick="switchTab('glossary',this)">核子事故小辭典</button>
 </div>
 <div class="news-tabs-mobile" id="newsTabsMobile">
   <select class="tab-select" onchange="switchTabMobile(this.value)">
-    <option value="news">最新資訊</option>
+    <option value="news">事故最新資訊</option>
     <option value="press">新聞稿</option>
     <option value="clarify">澄清專區</option>
     <option value="glossary">核子事故小辭典</option>
@@ -11615,6 +11615,7 @@ function renderContent() {
         '<li><span class="step-num">1</span><span>已宣布停課，請前往學校接孩子。學校會統一安排室內等候</span></li>' +
         '<li><span class="step-num">2</span><span>接到孩子後，車窗關閉，返家進行室內掩蔽</span></li>' +
         '</ul></div>';
+      h += '<div class="school-block"><div class="school-block-header">📋 各校停課狀態與安置學校</div>' + schoolTable() + '</div>';
     }
     if (currentPersona === 'disabled') {
       h += '<div class="action-block blue" style="margin-top:12px;"><div class="block-title">♿ 行動不便者</div>' +
