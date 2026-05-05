@@ -955,6 +955,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -1021,8 +1022,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -1115,25 +1117,26 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 #scrollTopBtn.visible{opacity:1;pointer-events:auto;}
 #scrollTopBtn:hover{background:var(--blue-mid);transform:translateY(-3px);}
 @media(max-width:600px){.carousel-track{height:220px;}}
+
+/* ── News tab mobile select ── */
+.news-tabs-mobile{display:none;}
+.tab-select{
+  width:100%;padding:10px 14px;
+  font-family:inherit;font-size:15px;font-weight:700;
+  color:var(--blue-dark);background:var(--white);
+  border:2px solid var(--blue-mid);border-radius:10px;
+  cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232B5FA4' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;margin-bottom:12px;
+}
+@media(max-width:600px){
+  #newsTabsDesktop{display:none;}
+  .news-tabs-mobile{display:block;}
+}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<style>
-/* ── NAV DROPDOWN FIX ── */
-@media(max-width:600px){
-  .top-nav-inner{overflow:visible !important;}
-  .nav-sub{
-    position:fixed !important;
-    left:8px !important; right:8px !important;
-    top:52px !important;
-    min-width:unset !important;
-    border-radius:10px !important;
-    z-index:9999 !important;
-  }
-}
-.nav-item.open .nav-sub{display:block !important;}
-</style>
 </head>
 <body>
 <!DOCTYPE html>
@@ -2159,8 +2162,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -3280,8 +3284,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -4386,8 +4391,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -5484,8 +5490,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -6582,8 +6589,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -7680,8 +7688,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -8760,8 +8769,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -9798,8 +9808,9 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   .page{padding:0 14px 60px;}
 }
 @media(max-width:600px){
-  .top-nav-inner{overflow-x:auto;}
+  .top-nav-inner{overflow:visible;}
   .nav-link{padding:10px 12px;font-size:13px;}
+  .nav-sub{position:fixed;top:52px;left:0;right:0;border-radius:0;min-width:unset;}
 }
 
 .cslide{
@@ -9882,7 +9893,17 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <div style="margin-top:3px;padding:10px 20px;border-radius:10px;background:rgba(192,57,43,0.06);border:1.5px solid rgba(192,57,43,0.2);text-align:center;">
   <span style="font-size:22px;font-weight:900;color:#B22222;">輻射外釋情形：</span><span id="radiationStatus" style="font-size:22px;font-weight:900;color:#B22222;">目前無任何外釋</span>
 </div>
-<div class="news-tabs">
+<!-- 手機版下拉 -->
+<div class="news-tabs-mobile">
+  <select class="tab-select" onchange="switchTabMobile(this.value)">
+    <option value="news">事故最新資訊</option>
+    <option value="press">新聞稿</option>
+    <option value="clarify">澄清專區</option>
+    <option value="glossary">核子事故小辭典</option>
+  </select>
+</div>
+<!-- 電腦版 tabs -->
+<div class="news-tabs" id="newsTabsDesktop">
   <button class="ntab active" onclick="switchTab('news',this)">事故最新資訊</button>
   <button class="ntab" onclick="switchTab('press',this)">新聞稿</button>
   <button class="ntab" onclick="switchTab('clarify',this)">澄清專區</button>
@@ -11150,16 +11171,34 @@ function smoothScrollTop() {
 </script>
 
 <script>
-function toggleNav(el,ev){
-  if(ev){ev.stopPropagation();}
-  var item=el.parentElement;
-  var isOpen=item.classList.contains('open');
-  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('open');});
+/* switchTabMobile */
+function switchTabMobile(tab) {
+  // find the matching desktop tab button and click it
+  var matched = null;
+  document.querySelectorAll('.ntab').forEach(function(t){
+    var oc = t.getAttribute('onclick') || '';
+    var m = oc.match(/'([^']+)'/);
+    if(m && m[1] === tab) matched = t;
+  });
+  if(matched) matched.click();
+  // sync select value
+  var sel = document.querySelector('.tab-select');
+  if(sel) sel.value = tab;
+}
+
+/* toggleNav */
+function toggleNav(el, ev) {
+  if(ev){ ev.stopPropagation(); ev.preventDefault(); }
+  var item = el.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('open'); });
   if(!isOpen) item.classList.add('open');
 }
-document.addEventListener('click',function(){
-  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('open');});
+document.addEventListener('click', function(){
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('open'); });
 });
+
+/* switchTab sync handled via onclick */
 </script>
 </body>
 </html>
