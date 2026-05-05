@@ -1017,6 +1017,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -2200,6 +2201,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -3382,6 +3384,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -4549,6 +4552,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -5708,6 +5712,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -6867,6 +6872,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -8026,6 +8032,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -9167,6 +9174,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -10266,6 +10274,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
   z-index:200;padding:6px 0;
 }
 .nav-item:hover .nav-sub{display:block;}
+.nav-item.open .nav-sub{display:block !important;position:fixed !important;left:0 !important;right:0 !important;min-width:unset !important;border-radius:0 !important;z-index:9999 !important;}
 .nav-sub a{
   display:block;padding:10px 20px;font-size:14px;
   color:rgba(255,255,255,0.88);text-decoration:none;
@@ -10380,7 +10389,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <nav class="top-nav" id="topNav">
   <div class="top-nav-inner">
     <div class="nav-item">
-      <span class="nav-link">應變資訊</span>
+      <span class="nav-link" onclick="toggleNav(this,event)">應變資訊</span>
       <div class="nav-sub">
         <a href="timeline.html" target="_blank">核子事故應變階段</a>
         <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
@@ -10390,14 +10399,14 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
       </div>
     </div>
     <div class="nav-item">
-      <span class="nav-link">核子事故防護影片</span>
+      <span class="nav-link" onclick="toggleNav(this,event)">核子事故防護影片</span>
       <div class="nav-sub">
         <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
         <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
       </div>
     </div>
     <div class="nav-item">
-      <span class="nav-link">相關連結</span>
+      <span class="nav-link" onclick="toggleNav(this,event)">相關連結</span>
       <div class="nav-sub">
         <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
         <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
@@ -12041,6 +12050,43 @@ function smoothScrollTop() {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+</script>
+
+<script>
+(function(){
+  function toggleNav(el, ev) {
+    if(ev){ ev.stopPropagation(); ev.preventDefault(); }
+    var item = el.parentElement;
+    var isOpen = item.classList.contains('open');
+    // Close all first
+    document.querySelectorAll('.nav-item').forEach(function(n){
+      n.classList.remove('open');
+      var s = n.querySelector('.nav-sub');
+      if(s) s.style.top = '';
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      // On mobile: set top dynamically so dropdown appears below nav
+      var sub = item.querySelector('.nav-sub');
+      var nav = document.getElementById('topNav');
+      if(sub && nav && window.innerWidth <= 768){
+        var rect = nav.getBoundingClientRect();
+        sub.style.top = rect.bottom + 'px';
+      }
+    }
+  }
+  // Expose globally
+  window.toggleNav = toggleNav;
+
+  // Close when clicking outside
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.nav-item').forEach(function(n){
+      n.classList.remove('open');
+      var s = n.querySelector('.nav-sub');
+      if(s) s.style.top = '';
+    });
+  });
+})();
 </script>
 </body>
 </html>
