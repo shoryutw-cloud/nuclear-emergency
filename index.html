@@ -1181,7 +1181,8 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-function toggleNav(el) {
+function toggleNav(el, event) {
+  if (event) { event.stopPropagation(); }
   var item = el.parentElement;
   var isOpen = item.classList.contains('open');
   // Close all
@@ -1191,7 +1192,13 @@ function toggleNav(el) {
 }
 // Close nav when clicking outside
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.nav-item')) {
+  var t = e.target;
+  var inside = false;
+  while (t) {
+    if (t.classList && t.classList.contains('nav-item')) { inside = true; break; }
+    t = t.parentElement;
+  }
+  if (!inside) {
     document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('open'); });
   }
 });
@@ -10404,7 +10411,7 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
 <nav class="top-nav" id="topNav">
   <div class="top-nav-inner">
     <div class="nav-item">
-      <span class="nav-link" onclick="toggleNav(this)">應變資訊</span>
+      <span class="nav-link" onclick="toggleNav(this, event)">應變資訊</span>
       <div class="nav-sub">
         <a href="timeline.html" target="_blank">核子事故應變階段</a>
         <a href="#section-assembly" onclick="smoothTo('section-assembly')">集結點</a>
@@ -10414,14 +10421,14 @@ body{background:linear-gradient(160deg,#EFF4FA 0%,#E8EFF8 50%,#EDF2F9 100%);}
       </div>
     </div>
     <div class="nav-item">
-      <span class="nav-link" onclick="toggleNav(this)">核子事故防護影片</span>
+      <span class="nav-link" onclick="toggleNav(this, event)">核子事故防護影片</span>
       <div class="nav-sub">
         <a href="https://www.youtube.com/watch?v=8a9a_YZv8dY" target="_blank">核子事故防護8點</a>
         <a href="https://www.youtube.com/watch?v=f3YmMqFqJzI" target="_blank">不可不知的核災應變</a>
       </div>
     </div>
     <div class="nav-item">
-      <span class="nav-link" onclick="toggleNav(this)">相關連結</span>
+      <span class="nav-link" onclick="toggleNav(this, event)">相關連結</span>
       <div class="nav-sub">
         <a href="https://www.nusc.gov.tw/" target="_blank">核災應變問答集</a>
         <a href="https://www.nusc.gov.tw/" target="_blank">核災應變我該怎麼做</a>
